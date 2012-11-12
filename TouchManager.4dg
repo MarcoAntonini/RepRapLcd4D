@@ -1,0 +1,62 @@
+#platform "uLCD-32PT_GFX2"
+#inherit "GfxInterface.4dg"
+#inherit "SerialManager.4dg"
+#inherit "GfxInterfaceConst.inc"
+#inherit "Constant.inc"
+
+var __X;
+var __Y;
+
+func TouchEvent(var x,var y)
+    var i;
+    var touched;
+    __X:=x;
+    __Y:=y;
+
+    touched:=img_Touched(hndl,-1);
+
+    if(WINDOW==W_MAIN)  //Window Main TouchEvent
+        if(touched==iImage1 || touched==iImage2) //Axis Move
+            for(i:=0; i<sizeof(AXIS_MOVE_TOUCH_REGION); i++)
+                if( checkRegion( @ AXIS_MOVE_TOUCH_REGION[i] ) ) //Moves the axes depending on the region Touched
+                    SerialPrintlnBuffer(AXIS_MOVE_TOUCH_ACTION[i]);
+                    pause(50);
+                    break;
+                endif
+            next
+        else if(touched==iImage3) //SD Card
+            //WINDOW:=W_SDCARD;
+        else if(touched==iWinbutton1) //Extruder Button
+            SerialPrintBuffer("G91\nG1 E");
+            SerialPrintNumber(str2w(str_Ptr(ex_setmm)));
+            SerialPrintBuffer(" F");
+            SerialPrintlnNumber(str2w(str_Ptr(ex_setmm_min)));
+            SerialPrintlnBuffer("G90");
+        else if(touched==iWinbutton2) //Reverse Button
+            SerialPrintBuffer("G91\nG1 E-");
+            SerialPrintNumber(str2w(str_Ptr(ex_setmm)));
+            SerialPrintBuffer(" F");
+            SerialPrintlnNumber(str2w(str_Ptr(ex_setmm_min)));
+            SerialPrintlnBuffer("G90");
+        else if(touched==iWinbutton3) //Extruder Off
+            SerialPrintlnBuffer("M104 S0");
+        else if(touched==iWinbutton4) //Bed Off
+            SerialPrintlnBuffer("M140 S0");
+        else if(touched==iWinbutton5) //Extruder Set
+            SerialPrintBuffer("M104 S");
+            SerialPrintlnNumber(str2w(str_Ptr(ex_setTemp)));
+        else if(touched==iWinbutton6) //Bed Set
+            SerialPrintBuffer("M140 S");
+            SerialPrintlnNumber(str2w(str_Ptr(bed_setTemp)));
+        endif
+    else if(WINDOW==W_SDCARD) //Window SDCard Touch event
+    endif
+endfunc
+
+func checkRegion(var p1x,var p1y ,var p2x,var p2y)
+    var ret := FALSE;
+    if( __X >= p1x && __X <= p2x && __Y >= p1y && __Y <= p2y)
+        ret := TRUE;
+    endif
+    return ret;
+endfunc

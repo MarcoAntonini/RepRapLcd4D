@@ -1,0 +1,1184 @@
+﻿Version     0.0
+Platform    uLCD-32PT-L
+PlatImage   'Basic uLCD-32PT'
+Depends
+end
+Options
+    Visualizer
+    Speed                        9600
+    Checksum                     No
+    ResponseSize                 2
+    Multidrop                    No
+    Destination                  2
+    SndBuf                       0
+end
+Form
+    Name                         Form1
+    Bgtype                       Color
+    Color                        BLACK
+    Image                        (None)
+    Source.Height                0
+    Source.Left                  0
+    Source.Top                   0
+    Source.Width                 0
+    OnActivate                   ''
+    OnCreate                     ''
+    OnRepeat                     ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+Image
+    Name                         Image1
+    Height                       180
+    Image                        control_xy.png
+    Left                         0
+    Source.Height                248
+    Source.Left                  0
+    Source.Top                   0
+    Source.Width                 247
+    Visible                      Yes
+    Top                          0
+    Width                        190
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+Image
+    Name                         Image2
+    Height                       180
+    Image                        control_z.png
+    Left                         188
+    Source.Height                244
+    Source.Left                  0
+    Source.Top                   0
+    Source.Width                 59
+    Visible                      Yes
+    Top                          0
+    Width                        41
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+Panel
+    Name                         Panel2
+    Color                        'Office 2003 Classic'
+    Height                       61
+    Left                         230
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Raised
+    Top                          0
+    Width                        90
+end
+Gauge
+    Name                         Gauge1
+    Analogue                     (None)
+    Bevel.BorderColor            clBtnFace
+    Bevel.BorderWidth            0
+    Bevel.InnerColor             BLACK
+    Bevel.InnerHighlight         clBtnHighlight
+    Bevel.InnerOutline           None
+    Bevel.InnerShadow            clBtnShadow
+    Bevel.InnerSpace             1
+    Bevel.InnerStyle             Lowered
+    Bevel.Innerwidth             2
+    Bevel.OuterColor             clBtnFace
+    Bevel.OuterHighlight         clBtnHighlight
+    Bevel.OuterOutline           Outer
+    Bevel.OuterShadow            clBtnShadow
+    Bevel.OuterSpace             0
+    Bevel.OuterStyle             Raised
+    Bevel.Outerwidth             1
+    Bevel.Visible                Yes
+    Color                        BLACK
+    Height                       20
+    Interval                     100
+    Left                         232
+    Maxvalue                     100
+    Minvalue                     0
+    Orientation                  Horizontal
+    Palette1.High                clLime
+    Palette1.Low                 clGreen
+    Palette2.High                clYellow
+    Palette2.Low                 clOlive
+    Palette3.High                clRed
+    Palette3.Low                 clMaroon
+    Percent1                     60
+    Percent2                     25
+    Spacing                      1
+    Step                         10
+    Style                        BottomLeft
+    TickHeight                   1
+    Timer                        (None)
+    Top                          20
+    Visible                      Yes
+    Width                        82
+    OnChanged                    ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+Label
+    Name                         Label2
+    4DGLFont.Font                FONT3
+    4DGLFont.Bold                No
+    4DGLFont.Italic              No
+    4DGLFont.Inverse             No
+    4DGLFont.Underline           No
+    4DGLFont.MagWidth            1
+    4DGLFont.MagHeight           1
+    4DGLFont.Opaque              Yes
+    BGcolor                      'Office 2003 Classic'
+    Caption                      00
+    FGcolor                      BLUE
+    Left                         245
+    Top                          44
+end
+Label
+    Name                         Label3
+    4DGLFont.Font                FONT3
+    4DGLFont.Bold                No
+    4DGLFont.Italic              No
+    4DGLFont.Inverse             No
+    4DGLFont.Underline           No
+    4DGLFont.MagWidth            1
+    4DGLFont.MagHeight           1
+    4DGLFont.Opaque              Yes
+    BGcolor                      'Office 2003 Classic'
+    Caption                      000
+    FGcolor                      BLUE
+    Left                         280
+    Top                          44
+end
+Label
+    Name                         Label4
+    4DGLFont.Font                FONT3
+    4DGLFont.Bold                No
+    4DGLFont.Italic              No
+    4DGLFont.Inverse             No
+    4DGLFont.Underline           No
+    4DGLFont.MagWidth            1
+    4DGLFont.MagHeight           1
+    4DGLFont.Opaque              Yes
+    BGcolor                      'Office 2003 Classic'
+    Caption                      /
+    FGcolor                      BLUE
+    Left                         268
+    Top                          44
+end
+Gauge
+    Name                         Gauge2
+    Analogue                     (None)
+    Bevel.BorderColor            clBtnFace
+    Bevel.BorderWidth            0
+    Bevel.InnerColor             BLACK
+    Bevel.InnerHighlight         clBtnHighlight
+    Bevel.InnerOutline           None
+    Bevel.InnerShadow            clBtnShadow
+    Bevel.InnerSpace             1
+    Bevel.InnerStyle             Lowered
+    Bevel.Innerwidth             2
+    Bevel.OuterColor             clBtnFace
+    Bevel.OuterHighlight         clBtnHighlight
+    Bevel.OuterOutline           Outer
+    Bevel.OuterShadow            clBtnShadow
+    Bevel.OuterSpace             0
+    Bevel.OuterStyle             Raised
+    Bevel.Outerwidth             1
+    Bevel.Visible                Yes
+    Color                        BLACK
+    Height                       20
+    Interval                     100
+    Left                         232
+    Maxvalue                     100
+    Minvalue                     0
+    Orientation                  Horizontal
+    Palette1.High                clLime
+    Palette1.Low                 clGreen
+    Palette2.High                clYellow
+    Palette2.Low                 clOlive
+    Palette3.High                clRed
+    Palette3.Low                 clMaroon
+    Percent1                     60
+    Percent2                     25
+    Spacing                      1
+    Step                         10
+    Style                        BottomLeft
+    TickHeight                   1
+    Timer                        (None)
+    Top                          80
+    Visible                      Yes
+    Width                        82
+    OnChanged                    ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+Label
+    Name                         Label6
+    4DGLFont.Font                FONT3
+    4DGLFont.Bold                No
+    4DGLFont.Italic              No
+    4DGLFont.Inverse             No
+    4DGLFont.Underline           No
+    4DGLFont.MagWidth            1
+    4DGLFont.MagHeight           1
+    4DGLFont.Opaque              Yes
+    BGcolor                      'Office 2003 Classic'
+    Caption                      000
+    FGcolor                      BLUE
+    Left                         240
+    Top                          104
+end
+Label
+    Name                         Label7
+    4DGLFont.Font                FONT3
+    4DGLFont.Bold                No
+    4DGLFont.Italic              No
+    4DGLFont.Inverse             No
+    4DGLFont.Underline           No
+    4DGLFont.MagWidth            1
+    4DGLFont.MagHeight           1
+    4DGLFont.Opaque              Yes
+    BGcolor                      'Office 2003 Classic'
+    Caption                      /
+    FGcolor                      BLUE
+    Left                         268
+    Top                          104
+end
+Label
+    Name                         Label8
+    4DGLFont.Font                FONT3
+    4DGLFont.Bold                No
+    4DGLFont.Italic              No
+    4DGLFont.Inverse             No
+    4DGLFont.Underline           No
+    4DGLFont.MagWidth            1
+    4DGLFont.MagHeight           1
+    4DGLFont.Opaque              Yes
+    BGcolor                      'Office 2003 Classic'
+    Caption                      000
+    FGcolor                      BLUE
+    Left                         280
+    Top                          104
+end
+Panel
+    Name                         Panel3
+    Color                        'Office 2003 Classic'
+    Height                       61
+    Left                         230
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Raised
+    Top                          60
+    Width                        90
+end
+Panel
+    Name                         Panel4
+    Color                        'Office 2003 Classic'
+    Height                       61
+    Left                         230
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Raised
+    Top                          120
+    Width                        90
+end
+Gauge
+    Name                         Gauge3
+    Analogue                     (None)
+    Bevel.BorderColor            clBtnFace
+    Bevel.BorderWidth            0
+    Bevel.InnerColor             BLACK
+    Bevel.InnerHighlight         clBtnHighlight
+    Bevel.InnerOutline           None
+    Bevel.InnerShadow            clBtnShadow
+    Bevel.InnerSpace             1
+    Bevel.InnerStyle             Lowered
+    Bevel.Innerwidth             2
+    Bevel.OuterColor             clBtnFace
+    Bevel.OuterHighlight         clBtnHighlight
+    Bevel.OuterOutline           Outer
+    Bevel.OuterShadow            clBtnShadow
+    Bevel.OuterSpace             0
+    Bevel.OuterStyle             Raised
+    Bevel.Outerwidth             1
+    Bevel.Visible                Yes
+    Color                        BLACK
+    Height                       20
+    Interval                     100
+    Left                         232
+    Maxvalue                     100
+    Minvalue                     0
+    Orientation                  Horizontal
+    Palette1.High                clLime
+    Palette1.Low                 clGreen
+    Palette2.High                clYellow
+    Palette2.Low                 clOlive
+    Palette3.High                clRed
+    Palette3.Low                 clMaroon
+    Percent1                     60
+    Percent2                     25
+    Spacing                      1
+    Step                         10
+    Style                        BottomLeft
+    TickHeight                   1
+    Timer                        (None)
+    Top                          140
+    Visible                      Yes
+    Width                        82
+    OnChanged                    ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+Label
+    Name                         Label10
+    4DGLFont.Font                FONT3
+    4DGLFont.Bold                No
+    4DGLFont.Italic              No
+    4DGLFont.Inverse             No
+    4DGLFont.Underline           No
+    4DGLFont.MagWidth            1
+    4DGLFont.MagHeight           1
+    4DGLFont.Opaque              Yes
+    BGcolor                      'Office 2003 Classic'
+    Caption                      000
+    FGcolor                      BLUE
+    Left                         240
+    Top                          164
+end
+Label
+    Name                         Label11
+    4DGLFont.Font                FONT3
+    4DGLFont.Bold                No
+    4DGLFont.Italic              No
+    4DGLFont.Inverse             No
+    4DGLFont.Underline           No
+    4DGLFont.MagWidth            1
+    4DGLFont.MagHeight           1
+    4DGLFont.Opaque              Yes
+    BGcolor                      'Office 2003 Classic'
+    Caption                      /
+    FGcolor                      BLUE
+    Left                         268
+    Top                          164
+end
+Label
+    Name                         Label12
+    4DGLFont.Font                FONT3
+    4DGLFont.Bold                No
+    4DGLFont.Italic              No
+    4DGLFont.Inverse             No
+    4DGLFont.Underline           No
+    4DGLFont.MagWidth            1
+    4DGLFont.MagHeight           1
+    4DGLFont.Opaque              Yes
+    BGcolor                      'Office 2003 Classic'
+    Caption                      000
+    FGcolor                      BLUE
+    Left                         280
+    Top                          164
+end
+Label
+    Name                         Label13
+    4DGLFont.Font                FONT2
+    4DGLFont.Bold                No
+    4DGLFont.Italic              No
+    4DGLFont.Inverse             No
+    4DGLFont.Underline           No
+    4DGLFont.MagWidth            1
+    4DGLFont.MagHeight           1
+    4DGLFont.Opaque              Yes
+    BGcolor                      BLACK
+    Caption                      Time:
+    FGcolor                      WHITE
+    Left                         4
+    Top                          232
+end
+Label
+    Name                         Label14
+    4DGLFont.Font                FONT2
+    4DGLFont.Bold                No
+    4DGLFont.Italic              No
+    4DGLFont.Inverse             No
+    4DGLFont.Underline           No
+    4DGLFont.MagWidth            1
+    4DGLFont.MagHeight           1
+    4DGLFont.Opaque              Yes
+    BGcolor                      BLACK
+    Caption                      00h00m
+    FGcolor                      WHITE
+    Left                         49
+    Top                          232
+end
+Label
+    Name                         Label15
+    4DGLFont.Font                FONT2
+    4DGLFont.Bold                No
+    4DGLFont.Italic              No
+    4DGLFont.Inverse             No
+    4DGLFont.Underline           No
+    4DGLFont.MagWidth            1
+    4DGLFont.MagHeight           1
+    4DGLFont.Opaque              Yes
+    BGcolor                      BLACK
+    Caption                      Z:
+    FGcolor                      WHITE
+    Left                         113
+    Top                          232
+end
+Label
+    Name                         Label16
+    4DGLFont.Font                FONT2
+    4DGLFont.Bold                No
+    4DGLFont.Italic              No
+    4DGLFont.Inverse             No
+    4DGLFont.Underline           No
+    4DGLFont.MagWidth            1
+    4DGLFont.MagHeight           1
+    4DGLFont.Opaque              Yes
+    BGcolor                      BLACK
+    Caption                      +000.51
+    FGcolor                      WHITE
+    Left                         129
+    Top                          232
+end
+Label
+    Name                         Label17
+    4DGLFont.Font                FONT2
+    4DGLFont.Bold                No
+    4DGLFont.Italic              No
+    4DGLFont.Inverse             No
+    4DGLFont.Underline           No
+    4DGLFont.MagWidth            1
+    4DGLFont.MagHeight           1
+    4DGLFont.Opaque              Yes
+    BGcolor                      BLACK
+    Caption                      cm
+    FGcolor                      WHITE
+    Left                         188
+    Top                          232
+end
+Label
+    Name                         Label18
+    4DGLFont.Font                FONT2
+    4DGLFont.Bold                No
+    4DGLFont.Italic              No
+    4DGLFont.Inverse             No
+    4DGLFont.Underline           No
+    4DGLFont.MagWidth            1
+    4DGLFont.MagHeight           1
+    4DGLFont.Opaque              Yes
+    BGcolor                      BLACK
+    Caption                      SD:
+    FGcolor                      WHITE
+    Left                         216
+    Top                          232
+end
+Label
+    Name                         Label19
+    4DGLFont.Font                FONT2
+    4DGLFont.Bold                No
+    4DGLFont.Italic              No
+    4DGLFont.Inverse             No
+    4DGLFont.Underline           No
+    4DGLFont.MagWidth            1
+    4DGLFont.MagHeight           1
+    4DGLFont.Opaque              Yes
+    BGcolor                      BLACK
+    Caption                      000
+    FGcolor                      WHITE
+    Left                         242
+    Top                          232
+end
+Label
+    Name                         Label20
+    4DGLFont.Font                FONT2
+    4DGLFont.Bold                No
+    4DGLFont.Italic              No
+    4DGLFont.Inverse             No
+    4DGLFont.Underline           No
+    4DGLFont.MagWidth            1
+    4DGLFont.MagHeight           1
+    4DGLFont.Opaque              Yes
+    BGcolor                      BLACK
+    Caption                      %
+    FGcolor                      WHITE
+    Left                         272
+    Top                          232
+end
+Panel
+    Name                         Panel1
+    Color                        'Office 2003 Classic'
+    Height                       3
+    Left                         0
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Raised
+    Top                          226
+    Width                        320
+end
+Panel
+    Name                         Panel5
+    Color                        'Office 2003 Classic'
+    Height                       4
+    Left                         0
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Raised
+    Top                          0
+    Width                        231
+end
+Panel
+    Name                         Panel6
+    Color                        'Office 2003 Classic'
+    Height                       4
+    Left                         0
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Raised
+    Top                          177
+    Width                        231
+end
+Panel
+    Name                         Panel7
+    Color                        'Office 2003 Classic'
+    Height                       180
+    Left                         0
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Raised
+    Top                          0
+    Width                        4
+end
+Panel
+    Name                         Panel8
+    Color                        'Office 2003 Classic'
+    Height                       180
+    Left                         227
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Raised
+    Top                          2
+    Width                        3
+end
+Image
+    Name                         Image3
+    Height                       12
+    Image                        sd.jpg
+    Left                         288
+    Source.Height                20
+    Source.Left                  0
+    Source.Top                   0
+    Source.Width                 30
+    Visible                      Yes
+    Top                          231
+    Width                        23
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+WinButton
+    Name                         Winbutton1
+    Appearance.Alignment         Center
+    Appearance.Layout            Left
+    Appearance.PictureAlignment  Right
+    Appearance.SimpleLayout      No
+    Appearance.Spacing           3
+    AutoSizeToPicture            No
+    Bevel                        Yes
+    BevelColor                   clWhite
+    Caption                      Extrude
+    Color                        'Office 2003 Classic'
+    Font.Color                   clWindowText
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    8
+    Font.Style                   []
+    Height                       14
+    Left                         4
+    Matrix                       -1
+    Momentary                    Yes
+    Picture                      (None)
+    StatusWhenOff.BGcolor        RED
+    StatusWhenOff.Caption        ''
+    StatusWhenOff.Glow           Yes
+    StatusWhenOff.Color          WHITE
+    StatusWhenOff.Effects        []
+    StatusWhenOff.Name           Tahoma
+    StatusWhenOff.Size           8
+    StatusWhenOff.Style          []
+    StatusWhenOff.Visible        Yes
+    StatusWhenOn.BGcolor         RED
+    StatusWhenOn.Caption         ''
+    StatusWhenOn.Glow            Yes
+    StatusWhenOn.Color           WHITE
+    StatusWhenOn.Effects         []
+    StatusWhenOn.Name            Tahoma
+    StatusWhenOn.Size            8
+    StatusWhenOn.Style           []
+    StatusWhenOn.Visible         Yes
+    Top                          183
+    Visible                      Yes
+    Width                        51
+    OnChanged                    ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+WinButton
+    Name                         Winbutton2
+    Appearance.Alignment         Center
+    Appearance.Layout            Left
+    Appearance.PictureAlignment  Right
+    Appearance.SimpleLayout      No
+    Appearance.Spacing           3
+    AutoSizeToPicture            No
+    Bevel                        Yes
+    BevelColor                   clWhite
+    Caption                      Reverse
+    Color                        'Office 2003 Classic'
+    Font.Color                   clWindowText
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    8
+    Font.Style                   []
+    Height                       14
+    Left                         4
+    Matrix                       -1
+    Momentary                    Yes
+    Picture                      (None)
+    StatusWhenOff.BGcolor        RED
+    StatusWhenOff.Caption        ''
+    StatusWhenOff.Glow           Yes
+    StatusWhenOff.Color          WHITE
+    StatusWhenOff.Effects        []
+    StatusWhenOff.Name           Tahoma
+    StatusWhenOff.Size           8
+    StatusWhenOff.Style          []
+    StatusWhenOff.Visible        Yes
+    StatusWhenOn.BGcolor         RED
+    StatusWhenOn.Caption         ''
+    StatusWhenOn.Glow            Yes
+    StatusWhenOn.Color           WHITE
+    StatusWhenOn.Effects         []
+    StatusWhenOn.Name            Tahoma
+    StatusWhenOn.Size            8
+    StatusWhenOn.Style           []
+    StatusWhenOn.Visible         Yes
+    Top                          199
+    Visible                      Yes
+    Width                        51
+    OnChanged                    ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+Label
+    Name                         Label21
+    4DGLFont.Font                FONT1
+    4DGLFont.Bold                No
+    4DGLFont.Italic              No
+    4DGLFont.Inverse             No
+    4DGLFont.Underline           No
+    4DGLFont.MagWidth            1
+    4DGLFont.MagHeight           1
+    4DGLFont.Opaque              Yes
+    BGcolor                      BLACK
+    Caption                      'Stringa Lunga di Messaggio / Errore e visualizzazione'
+    FGcolor                      WHITE
+    Left                         0
+    Top                          217
+end
+Panel
+    Name                         Panel9
+    Color                        'Office 2003 Classic'
+    Height                       14
+    Left                         60
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Raised
+    Top                          184
+    Width                        27
+end
+Panel
+    Name                         Panel10
+    Color                        'Office 2003 Classic'
+    Height                       14
+    Left                         60
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Raised
+    Top                          199
+    Width                        27
+end
+Label
+    Name                         Label22
+    4DGLFont.Font                FONT1
+    4DGLFont.Bold                No
+    4DGLFont.Italic              No
+    4DGLFont.Inverse             No
+    4DGLFont.Underline           No
+    4DGLFont.MagWidth            1
+    4DGLFont.MagHeight           1
+    4DGLFont.Opaque              Yes
+    BGcolor                      BLACK
+    Caption                      mm
+    FGcolor                      WHITE
+    Left                         92
+    Top                          188
+end
+Label
+    Name                         Label23
+    4DGLFont.Font                FONT1
+    4DGLFont.Bold                No
+    4DGLFont.Italic              No
+    4DGLFont.Inverse             No
+    4DGLFont.Underline           No
+    4DGLFont.MagWidth            1
+    4DGLFont.MagHeight           1
+    4DGLFont.Opaque              Yes
+    BGcolor                      BLACK
+    Caption                      mm/min
+    FGcolor                      WHITE
+    Left                         92
+    Top                          204
+end
+WinButton
+    Name                         Winbutton3
+    Appearance.Alignment         Center
+    Appearance.Layout            Left
+    Appearance.PictureAlignment  Right
+    Appearance.SimpleLayout      No
+    Appearance.Spacing           3
+    AutoSizeToPicture            No
+    Bevel                        Yes
+    BevelColor                   clWhite
+    Caption                      off
+    Color                        'Office 2003 Classic'
+    Font.Color                   clWindowText
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    8
+    Font.Style                   []
+    Height                       14
+    Left                         140
+    Matrix                       -1
+    Momentary                    Yes
+    Picture                      (None)
+    StatusWhenOff.BGcolor        RED
+    StatusWhenOff.Caption        ''
+    StatusWhenOff.Glow           Yes
+    StatusWhenOff.Color          WHITE
+    StatusWhenOff.Effects        []
+    StatusWhenOff.Name           Tahoma
+    StatusWhenOff.Size           8
+    StatusWhenOff.Style          []
+    StatusWhenOff.Visible        Yes
+    StatusWhenOn.BGcolor         RED
+    StatusWhenOn.Caption         ''
+    StatusWhenOn.Glow            Yes
+    StatusWhenOn.Color           WHITE
+    StatusWhenOn.Effects         []
+    StatusWhenOn.Name            Tahoma
+    StatusWhenOn.Size            8
+    StatusWhenOn.Style           []
+    StatusWhenOn.Visible         Yes
+    Top                          183
+    Visible                      Yes
+    Width                        28
+    OnChanged                    ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+WinButton
+    Name                         Winbutton4
+    Appearance.Alignment         Center
+    Appearance.Layout            Left
+    Appearance.PictureAlignment  Right
+    Appearance.SimpleLayout      No
+    Appearance.Spacing           3
+    AutoSizeToPicture            No
+    Bevel                        Yes
+    BevelColor                   clWhite
+    Caption                      off
+    Color                        'Office 2003 Classic'
+    Font.Color                   clWindowText
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    8
+    Font.Style                   []
+    Height                       14
+    Left                         140
+    Matrix                       -1
+    Momentary                    Yes
+    Picture                      (None)
+    StatusWhenOff.BGcolor        RED
+    StatusWhenOff.Caption        ''
+    StatusWhenOff.Glow           Yes
+    StatusWhenOff.Color          WHITE
+    StatusWhenOff.Effects        []
+    StatusWhenOff.Name           Tahoma
+    StatusWhenOff.Size           8
+    StatusWhenOff.Style          []
+    StatusWhenOff.Visible        Yes
+    StatusWhenOn.BGcolor         RED
+    StatusWhenOn.Caption         ''
+    StatusWhenOn.Glow            Yes
+    StatusWhenOn.Color           WHITE
+    StatusWhenOn.Effects         []
+    StatusWhenOn.Name            Tahoma
+    StatusWhenOn.Size            8
+    StatusWhenOn.Style           []
+    StatusWhenOn.Visible         Yes
+    Top                          199
+    Visible                      Yes
+    Width                        28
+    OnChanged                    ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+Panel
+    Name                         Panel11
+    Color                        'Office 2003 Classic'
+    Height                       14
+    Left                         172
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Raised
+    Top                          184
+    Width                        27
+end
+Label
+    Name                         Label24
+    4DGLFont.Font                FONT1
+    4DGLFont.Bold                No
+    4DGLFont.Italic              No
+    4DGLFont.Inverse             No
+    4DGLFont.Underline           No
+    4DGLFont.MagWidth            1
+    4DGLFont.MagHeight           1
+    4DGLFont.Opaque              Yes
+    BGcolor                      'Office 2003 Classic'
+    Caption                      200
+    FGcolor                      0x010101
+    Left                         63
+    Top                          188
+end
+Label
+    Name                         Label25
+    4DGLFont.Font                FONT1
+    4DGLFont.Bold                No
+    4DGLFont.Italic              No
+    4DGLFont.Inverse             No
+    4DGLFont.Underline           No
+    4DGLFont.MagWidth            1
+    4DGLFont.MagHeight           1
+    4DGLFont.Opaque              Yes
+    BGcolor                      'Office 2003 Classic'
+    Caption                      200
+    FGcolor                      0x010101
+    Left                         63
+    Top                          202
+end
+Panel
+    Name                         Panel12
+    Color                        'Office 2003 Classic'
+    Height                       14
+    Left                         172
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Raised
+    Top                          199
+    Width                        27
+end
+WinButton
+    Name                         Winbutton5
+    Appearance.Alignment         Center
+    Appearance.Layout            Left
+    Appearance.PictureAlignment  Right
+    Appearance.SimpleLayout      No
+    Appearance.Spacing           3
+    AutoSizeToPicture            No
+    Bevel                        Yes
+    BevelColor                   clWhite
+    Caption                      set
+    Color                        'Office 2003 Classic'
+    Font.Color                   clWindowText
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    8
+    Font.Style                   []
+    Height                       14
+    Left                         212
+    Matrix                       -1
+    Momentary                    Yes
+    Picture                      (None)
+    StatusWhenOff.BGcolor        RED
+    StatusWhenOff.Caption        ''
+    StatusWhenOff.Glow           Yes
+    StatusWhenOff.Color          WHITE
+    StatusWhenOff.Effects        []
+    StatusWhenOff.Name           Tahoma
+    StatusWhenOff.Size           8
+    StatusWhenOff.Style          []
+    StatusWhenOff.Visible        Yes
+    StatusWhenOn.BGcolor         RED
+    StatusWhenOn.Caption         ''
+    StatusWhenOn.Glow            Yes
+    StatusWhenOn.Color           WHITE
+    StatusWhenOn.Effects         []
+    StatusWhenOn.Name            Tahoma
+    StatusWhenOn.Size            8
+    StatusWhenOn.Style           []
+    StatusWhenOn.Visible         Yes
+    Top                          183
+    Visible                      Yes
+    Width                        28
+    OnChanged                    ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+WinButton
+    Name                         Winbutton6
+    Appearance.Alignment         Center
+    Appearance.Layout            Left
+    Appearance.PictureAlignment  Right
+    Appearance.SimpleLayout      No
+    Appearance.Spacing           3
+    AutoSizeToPicture            No
+    Bevel                        Yes
+    BevelColor                   clWhite
+    Caption                      set
+    Color                        'Office 2003 Classic'
+    Font.Color                   clWindowText
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    8
+    Font.Style                   []
+    Height                       14
+    Left                         212
+    Matrix                       -1
+    Momentary                    Yes
+    Picture                      (None)
+    StatusWhenOff.BGcolor        RED
+    StatusWhenOff.Caption        ''
+    StatusWhenOff.Glow           Yes
+    StatusWhenOff.Color          WHITE
+    StatusWhenOff.Effects        []
+    StatusWhenOff.Name           Tahoma
+    StatusWhenOff.Size           8
+    StatusWhenOff.Style          []
+    StatusWhenOff.Visible        Yes
+    StatusWhenOn.BGcolor         RED
+    StatusWhenOn.Caption         ''
+    StatusWhenOn.Glow            Yes
+    StatusWhenOn.Color           WHITE
+    StatusWhenOn.Effects         []
+    StatusWhenOn.Name            Tahoma
+    StatusWhenOn.Size            8
+    StatusWhenOn.Style           []
+    StatusWhenOn.Visible         Yes
+    Top                          199
+    Visible                      Yes
+    Width                        28
+    OnChanged                    ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+Led
+    Name                         Led2
+    Caption                      Extr1
+    Color                        'Office 2003 Classic'
+    Font.Color                   0x010101
+    Font.Effects                 []
+    Font.Name                    '4D Font3 (8x12)'
+    Font.Size                    6
+    Font.Style                   [Bold]
+    Glyphs                       (None)
+    Height                       12
+    Layout                       Left
+    LedType                      Rounded
+    Left                         236
+    Palette.High                 RED
+    Palette.Low                  LIME
+    Spacing                      5
+    Top                          64
+    Visible                      Yes
+    Width                        72
+    OnChanged                    ''
+end
+Led
+    Name                         Led3
+    Caption                      ' Bed'
+    Color                        'Office 2003 Classic'
+    Font.Color                   0x010101
+    Font.Effects                 []
+    Font.Name                    '4D Font3 (8x12)'
+    Font.Size                    6
+    Font.Style                   [Bold]
+    Glyphs                       (None)
+    Height                       14
+    Layout                       Left
+    LedType                      Rounded
+    Left                         243
+    Palette.High                 RED
+    Palette.Low                  LIME
+    Spacing                      -2
+    Top                          124
+    Visible                      Yes
+    Width                        44
+    OnChanged                    ''
+end
+Led
+    Name                         Led1
+    Caption                      Extr0
+    Color                        'Office 2003 Classic'
+    Font.Color                   0x010101
+    Font.Effects                 []
+    Font.Name                    '4D Font3 (8x12)'
+    Font.Size                    6
+    Font.Style                   [Bold]
+    Glyphs                       (None)
+    Height                       12
+    Layout                       Left
+    LedType                      Rounded
+    Left                         236
+    Palette.High                 RED
+    Palette.Low                  LIME
+    Spacing                      5
+    Top                          4
+    Visible                      Yes
+    Width                        72
+    OnChanged                    ''
+end
+Label
+    Name                         Label1
+    4DGLFont.Font                FONT1
+    4DGLFont.Bold                No
+    4DGLFont.Italic              No
+    4DGLFont.Inverse             No
+    4DGLFont.Underline           No
+    4DGLFont.MagWidth            1
+    4DGLFont.MagHeight           1
+    4DGLFont.Opaque              Yes
+    BGcolor                      'Office 2003 Classic'
+    Caption                      200
+    FGcolor                      0x010101
+    Left                         175
+    Top                          188
+end
+Label
+    Name                         Label5
+    4DGLFont.Font                FONT1
+    4DGLFont.Bold                No
+    4DGLFont.Italic              No
+    4DGLFont.Inverse             No
+    4DGLFont.Underline           No
+    4DGLFont.MagWidth            1
+    4DGLFont.MagHeight           1
+    4DGLFont.Opaque              Yes
+    BGcolor                      'Office 2003 Classic'
+    Caption                      200
+    FGcolor                      0x010101
+    Left                         175
+    Top                          203
+end
+Label
+    Name                         Label9
+    4DGLFont.Font                FONT1
+    4DGLFont.Bold                No
+    4DGLFont.Italic              No
+    4DGLFont.Inverse             No
+    4DGLFont.Underline           No
+    4DGLFont.MagWidth            1
+    4DGLFont.MagHeight           1
+    4DGLFont.Opaque              Yes
+    BGcolor                      BLACK
+    Caption                      ''
+    FGcolor                      WHITE
+    Left                         204
+    Top                          188
+end
+Label
+    Name                         Label26
+    4DGLFont.Font                FONT1
+    4DGLFont.Bold                No
+    4DGLFont.Italic              No
+    4DGLFont.Inverse             No
+    4DGLFont.Underline           No
+    4DGLFont.MagWidth            1
+    4DGLFont.MagHeight           1
+    4DGLFont.Opaque              Yes
+    BGcolor                      BLACK
+    Caption                      C
+    FGcolor                      WHITE
+    Left                         202
+    Top                          188
+end
+Label
+    Name                         Label27
+    4DGLFont.Font                FONT1
+    4DGLFont.Bold                No
+    4DGLFont.Italic              No
+    4DGLFont.Inverse             No
+    4DGLFont.Underline           No
+    4DGLFont.MagWidth            1
+    4DGLFont.MagHeight           1
+    4DGLFont.Opaque              Yes
+    BGcolor                      BLACK
+    Caption                      C
+    FGcolor                      WHITE
+    Left                         202
+    Top                          204
+end
+Form
+    Name                         Form2
+    Bgtype                       Color
+    Color                        BLACK
+    Image                        (None)
+    Source.Height                0
+    Source.Left                  0
+    Source.Top                   0
+    Source.Width                 0
+    OnActivate                   ''
+    OnCreate                     ''
+    OnRepeat                     ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+Form
+    Name                         Form3
+    Bgtype                       Color
+    Color                        BLACK
+    Image                        (None)
+    Source.Height                0
+    Source.Left                  0
+    Source.Top                   0
+    Source.Width                 0
+    OnActivate                   ''
+    OnCreate                     ''
+    OnRepeat                     ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end

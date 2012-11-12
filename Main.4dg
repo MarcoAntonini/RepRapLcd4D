@@ -1,0 +1,99 @@
+#platform "uLCD-32PT_GFX2"
+#inherit "4DGL_16bitColours.fnc"
+#inherit "GfxInterface.4dg"
+#inherit "SerialManager.4dg"
+#inherit "TouchManager.4dg"
+#inherit "GfxInterfaceConst.inc"
+#inherit "Constant.inc"
+
+
+func initSD()
+    gfx_Set(SCREEN_MODE,LANDSCAPE);
+    var disk;
+    setFontInfo(0,0);
+    putstr("init...\n");
+    putstr("mounting...\n");
+    if (!(disk:=file_Mount()))
+        //sys_SetTimerEvent(TIMER5, myfunc);
+        //sys_SetTimer(TIMER5,200);
+        //SystemReset();
+        while(!(disk :=file_Mount()))
+            putstr("Error: Drive not found");
+        wend
+    endif
+    hndl := file_LoadImageControl("GFXINT~1.dat", "GFXINT~1.gci", 1);
+    gfx_TransparentColour(0x0020);
+    gfx_Transparency(ON);
+endfunc
+
+func main()
+
+    initSD();
+    initVars();
+    drawGfxInterface();
+    SerialInit();
+    touch_Set(TOUCH_ENABLE);
+
+repeat
+
+    //--------------------------------------------------
+    // scan for Touch
+    //--------------------------------------------------
+
+    var touchState;
+    var touchX,touchY;
+
+    touchState := touch_Get(TOUCH_STATUS);
+    touchX := touch_Get(TOUCH_GETX);
+    touchY := touch_Get(TOUCH_GETY);
+
+    if(touchState == TOUCH_PRESSED)
+        TouchEvent(touchX,touchY);
+    else if(touchState == TOUCH_RELEASED)
+    endif
+
+    //--------------------------------------------------
+    // scan for Serial Data
+    //--------------------------------------------------
+     SerialEvent();
+
+forever
+
+
+endfunc
+
+//=======================================================
+
+func initVars()
+    WINDOW:=W_MAIN;
+    //Init Global Vars
+    _ttH0:=0; //Temp Target HotEnd0
+    to(ttH0); print("000");
+    _ttH1:=0; //Temp Target HotEnd1
+    to(ttH1); print("000");
+    _ttB:=0;  //Temp Target Bed
+    to(ttB); print("000");
+    to(tH0); print("000");  //Temp HotEnd0
+    to(tH1); print("000");  //Temp HotEnd1
+    to(tB); print("000");   //Temp Bed
+    to(zPos); print("+000.00");
+    to(timePrint); print("00h00m");
+    to(sdPerc); print("000");
+    to(ex_setmm); print("010");     // Extrude mm of filament
+    to(ex_setmm_min); print("200"); // Extruder mm/min
+    to(ex_setTemp); print("205"); //Button Set Ext. Temp
+    to(bed_setTemp); print("055"); //Buttpn Set Bed Temp
+    to(msg); print(""); //Max 46 char
+endfunc
+
+func sound(var type)
+     snd_Volume(127);
+     if(type==STARTUP)
+        file_PlayWAV("startup.wav");
+     else if(type==ALERT)
+        file_PlayWAV("alert.wav");
+     else if(type==FINISH)
+        file_PlayWAV("finish.wav"
+    endif
+endfunc
+

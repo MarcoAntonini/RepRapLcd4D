@@ -1,0 +1,128 @@
+#platform "uLCD-32PT_GFX2"
+#inherit "Constant.inc"
+//#inherit "GfxInterfaceConst.inc"
+#inherit "GfxInterface.4dg"
+
+var cmd_buff[BUFF_LEN];
+var buff_index :=0;
+var combuf[BUFF_LEN];
+
+//Function
+func SerialInit()
+     com_Init(combuf, 50, 0 );
+     com_SetBaud(COM0, 11520);
+endfunc
+
+func SerialEvent()
+     var char;
+     char:=serin();
+     if(char >= 0 )  // is valid char
+        cmd_buff[buff_index]:=char;
+        if(cmd_buff[buff_index] == '\n')
+            cmd_buff[buff_index]:='\0';
+            parseCmd(cmd_buff,buff_index);
+            buff_index:=0;
+        else
+            buff_index++;
+        endif
+        if(buff_index >= BUFF_LEN)
+            buff_index:=BUFF_LEN-1;
+        endif
+     endif
+endfunc
+
+func parseCmd(var *buffer,var n)
+     var i;
+     var cmd_id[3],cmd_val[BUFF_LEN],index_val;
+     var parsing_val:=FALSE;
+     var cmd_val_buff[BUFF_LEN];
+     var p_cmd_val;
+     for( i:=0; i<n; i++)
+        if(parsing_val==TRUE) //Cmd Val
+            cmd_val[i-index_val-1]:=buffer[i];
+        else if(buffer[i]==':')
+            parsing_val:=TRUE;
+            index_val:=i;
+        else //Cmd Id
+            cmd_id[i]:=buffer[i];
+        endif
+     next
+   // buff2str(cmd_id,index_val,cmd_id_buff);
+   // p_cmd_id := str_Ptr(cmd_id_buff);
+    buff2str(cmd_val,n-index_val-1,cmd_val_buff);
+    p_cmd_val := str_Ptr(cmd_val_buff);
+
+    if( cmd_id[0] == MESSAGE_ID )
+        updateMessage(p_cmd_val);
+        to(msg); printBuffer(p_cmd_val);
+    else if( cmd_id[0] == HOTEND_ID )
+        if(cmd_id[1]=='0')
+            if(WINDOW==W_MAIN) updateHotEnd0(p_cmd_val);
+            to(tH0); printBuffer(p_cmd_val);
+        else if(cmd_id[1]=='1')
+            if(WINDOW==W_MAIN) updateHotEnd1(p_cmd_val);
+            to(tH1); printBuffer(p_cmd_val);
+        endif
+    else if( cmd_id[0] == TARGETT_ID )
+        if(cmd_id[1]=='0')
+            if(WINDOW==W_MAIN)
+                updateTHotEnd0(p_cmd_val);
+                updateHotEnd0(str_Ptr(tH0));
+            endif
+            to(ttH0); printBuffer(p_cmd_val);
+        else if(cmd_id[1]=='1')
+            if(WINDOW==W_MAIN)
+                updateTHotEnd1(p_cmd_val);
+                updateHotEnd1(str_Ptr(tH1));
+            endif
+            to(ttH1); printBuffer(p_cmd_val);
+        else if(cmd_id[1]=='B')
+            if(WINDOW==W_MAIN)
+                updateTBed(p_cmd_val);
+                updateBed(str_Ptr(tB));
+            endif
+            to(ttB); printBuffer(p_cmd_val);
+        endif
+    else if( cmd_id[0] == BED_ID )
+         if(WINDOW==W_MAIN) updateBed(p_cmd_val);
+         to(tB); printBuffer(p_cmd_val);
+    else if( cmd_id[0] == TIME_ID )
+         updateTime(p_cmd_val);
+         to(timePrint); printBuffer(p_cmd_val);
+    else if( cmd_id[0] == ZPOS_ID )
+         updateZpos(p_cmd_val);
+         to(zPos); printBuffer(p_cmd_val);
+    else if( cmd_id[0] == SDPERCENT_ID )
+        updateSDPerc(p_cmd_val);
+        to(sdPerc); printBuffer(p_cmd_val);
+    endif
+
+
+endfunc
+
+func SerialPrintBuffer(var *buffer)
+    to(COM0); str_Printf(&buffer, "%s");
+endfunc
+
+func SerialPrintlnBuffer(var *buffer)
+    to(COM0); str_Printf(&buffer, "%s\n");
+endfunc
+
+func SerialPrintNumber(var numb)
+    to(COM0); putnum(DEC,numb);
+endfunc
+
+func SerialPrintlnNumber(var numb)
+    to(COM0); putnum(DEC,numb);
+    to(COM0); putstr("\n");
+endfunc
+
+func buff2str(var *buffer,var buffer_count,var *buff_out)
+        var i:=0;
+        for(i:=0; i<buffer_count; i++)
+            if(i==0) to(buff_out);
+            if(i>0) to(APPEND);
+            print([CHR]buffer[i]);
+        next
+endfunc
+

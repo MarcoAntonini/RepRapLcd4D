@@ -1,0 +1,272 @@
+#platform "uLCD-32PT_GFX2"
+
+#platform "uLCD-32PT_GFX2"
+#inherit "4DGL_16bitColours.fnc"
+
+// This programs is used to calibrate the touch screen.
+// Touchscreen calibration is provided as it is sometimes necessary to
+// re-calibrate the touch screen for various reasons:-
+//  1] Initial calibration after manufacture to offset for manufacturing differences.
+//  2] Aging - touch screen paramaters may change due to drift and/or component aging.
+//  3] Parallax issues for different viewing angles or orientation.
+//  4] User preferences, depending on how you hold you scribe etc.
+
+// Usually, after initial calibration the touch screen values will rethe same for long periods of time.
+// It is easiest to just run the program as a RAM download as calibration is not often required.
+// Just download the program to RAM from the workshop and follow the on-screen prompts. It is necessary
+// to press firmly and accurately for approx 1 second on the sample points as sampling/averaging process can take place.
+
+// Don't load this program to FLASH from the Workshop else it will be stuck as the main program and loop.
+// If preferred, it could be saved to FAT16 as an executable and may be called upon as required from a menu of some kind.
+
+// This program can also be simplified / beautified for individual requirements.
+
+    var X1, Y1;
+    var avgX,avgX2, avgY, avgY2, n, k, state, count;
+    var x1,y1,x2,y2, Xspan, Yspan, Xload, Yload;
+
+//==============================================
+// take the average of 256 samples
+//==============================================
+func scanTouch()
+    for(k:=0;k<16;k++)
+        for(n:=0;n<16;n++)
+            avgX+=peekW(TOUCH_RAW_X)>>2;
+            avgY+=peekW(TOUCH_RAW_Y)>>2;
+        next
+        avgX2+=avgX/16;
+        avgY2+=avgY/16;
+        avgX:=0;
+        avgY:=0;
+    next
+    X1 := avgX2/16;
+    Y1 := avgY2/16;
+    avgX2:=0;
+    avgY2:=0;
+    avgX:=0;
+    avgY:=0;
+endfunc
+
+
+
+
+//==============================================
+// Draw first calibration point, wait for
+// a stable sample.
+//==============================================
+func getDot1()
+    var Xsample,Ysample;
+
+    gfx_MoveTo(70,284);
+    print("                ");              // clear dot 2 text if present
+
+    gfx_Hline(32,24-12,24+12,WHITE);
+    gfx_Vline(24,32-12,32+12,WHITE);
+    gfx_CircleFilled(24,32,3,WHITE);
+    gfx_Circle(24,32,12,WHITE);
+
+    repeat
+        gfx_MoveTo(40,28);
+        if(peekW(SYSTEM_TIMER_LO) & 512)
+            print("<<< Touch Centre");
+        else
+            print("                ");
+        endif
+    until (touch_Get(TOUCH_STATUS) == TOUCH_PRESSED);
+
+    gfx_MoveTo(40,28);
+    print("<<< Sampling....");
+
+    repeat
+        scanTouch();
+        repeat                                          // wait for stable reading
+            Xsample := X1;
+            Ysample := Y1;
+            scanTouch();
+        until(X1==Xsample && Y1 ==Ysample);
+    until(X1 > 0x40 && Y1 >= 0x40);
+
+    gfx_MoveTo(40,28);
+    print("OK              \n");
+
+    while(touch_Get(TOUCH_STATUS) != TOUCH_RELEASED);   // wait for touch release
+endfunc
+
+//==============================================
+// Draw second calibration point, wait for
+// a stable sample.
+//==============================================
+func getDot2()
+    var Xsample,Ysample;
+    gfx_Hline(320-32,240-24-12,240-24+12,WHITE);
+    gfx_Vline(240-24,320-32-12,320-32+12,WHITE);
+    gfx_CircleFilled(240-24,320-32,3,WHITE);
+    gfx_Circle(240-24,320-32,12,WHITE);
+
+
+    repeat
+        gfx_MoveTo(70,284);
+        if(peekW(SYSTEM_TIMER_LO) & 512)
+            print("Touch Centre >>>");
+        else
+            print("                ");
+        endif
+        //scanTouch();
+    until (touch_Get(TOUCH_STATUS) == TOUCH_PRESSED);
+
+    gfx_MoveTo(70,284);
+    print("    Sampling >>>");
+
+    repeat
+        scanTouch();
+        repeat                                          // wait for stable reading
+            Xsample := X1;
+            Ysample := Y1;
+            scanTouch();
+        until(X1==Xsample && Y1 ==Ysample);
+    until(X1 > 0x200 && Y1 >= 0x200);
+
+    gfx_MoveTo(70,284);
+    print("              OK");
+
+    while(touch_Get(TOUCH_STATUS) != TOUCH_RELEASED);   // wait for touch release
+endfunc
+
+func main()
+
+    //gfx_Set(SCREEN_MODE,LANDSCAPE);
+repeat
+    gfx_Cls();
+redo:
+    txt_FGcolour(LIME);
+    touch_Set(TOUCH_ENABLE);                                     // enable the touch screen
+
+    // display the current internal calibration values
+    txt_MoveCursor(6,4);
+    print("Current Values");
+    print("\nTOUCH_XMINCAL=",[HEX] peekW(TOUCH_XMINCAL));
+    print("\nTOUCH_YMINCAL=",[HEX] peekW(TOUCH_YMINCAL));
+    print("\nTOUCH_XMAXCAL=",[HEX] peekW(TOUCH_XMAXCAL));
+    print("\nTOUCH_YMAXCAL=",[HEX] peekW(TOUCH_YMAXCAL));
+
+
+    // SAMPLE TLC
+    getDot1();
+    x1 := X1;
+    y1 := Y1;
+
+    pause(200);
+
+    // SAMPLE BRC
+    getDot2();
+    x2 := X1;
+    y2 := Y1;
+
+
+    // work out the ratiometric span
+    Xload := (1024 - x2) / 60;
+    Yload := (1024 - y2) / 80;
+    Xspan := x2-x1;
+    Yspan := y2-y1;
+    x1 -= Xspan/10;
+    x2 += Xspan/10;
+    y1 -= Yspan/10;
+    y2 += Yspan/10;
+    x1 -= Xload;
+    y1 -= Yload;
+    x2 += Xload;
+    y2 += Yload;
+
+    // poke the values
+    pokeW(TOUCH_XMINCAL, x1);
+    pokeW(TOUCH_YMINCAL, y1);
+    pokeW(TOUCH_XMAXCAL, x2);
+    pokeW(TOUCH_YMAXCAL, y2);
+
+    // display new values
+    txt_MoveCursor(15,4);
+    print("New Values");
+    print("\nTOUCH_XMINCAL=",[HEX] peekW(TOUCH_XMINCAL));
+    print("\nTOUCH_YMINCAL=",[HEX] peekW(TOUCH_YMINCAL));
+    print("\nTOUCH_XMAXCAL=",[HEX] peekW(TOUCH_XMAXCAL));
+    print("\nTOUCH_YMAXCAL=",[HEX] peekW(TOUCH_YMAXCAL));
+
+    // save the touch settings back to non-volatile storage
+    if(sys_StoreTouchCalibration())                             // returns true if the values were acceptable and were stored successfully
+        txt_FGcolour(YELLOW);
+        print("\nACCEPTED     ");
+    else
+        txt_FGcolour(RED);
+        print("\nFAILED - REDO");                                // nup, failed, do it again
+        goto redo;
+    endif
+
+
+    // ok success, do simple drawing function
+    // so you can test the alignmemn. Best way
+    // is to draw over the top of the tartgets.
+    draw();
+
+    // finished drawing
+    gfx_Cls();
+    txt_FGcolour(YELLOW);
+    print("\nCalibration complete.");
+    print("\nTouch to exit...");
+    while(touch_Get(TOUCH_STATUS) !=  TOUCH_PRESSED);           // we'll wait for a touch
+
+forever
+
+endfunc
+
+func draw()
+
+    var firstx, firsty, x, y, state;
+    txt_FGcolour(CYAN);
+    gfx_MoveTo(100,30);
+    print("NOW DRAW");
+    print("TO TEST....");
+
+    while(touch_Get(TOUCH_STATUS) !=  TOUCH_PRESSED);           // we'll wait for a touch
+    gfx_CircleFilled(120,160,5,RED);
+    gfx_Circle(120,160,6,YELLOW);
+
+    firstx := touch_Get(TOUCH_GETX);                            // so we can get the first point
+    firsty := touch_Get(TOUCH_GETY);
+
+    txt_FGcolour(RED);
+
+    while(1)
+
+        gfx_MoveTo(35,154);
+        if(peekW(SYSTEM_TIMER_LO) & 512)                // the flashing exit button
+            print("Exit >>>");
+        else
+            print("        ");
+        endif
+
+        state := touch_Get(TOUCH_STATUS);                           // look for any touch activity
+        x := touch_Get(TOUCH_GETX);                                 // grab the x
+        y := touch_Get(TOUCH_GETY);                                 // and the y coordinates of the touch
+        if(state == TOUCH_PRESSED)                                  // if there's a press
+            if(x > 116 && x < 124 && y > 156 && y <  164) break;    // exit button
+            firstx := x;
+            firsty := y;
+          endif
+
+
+        if(state == TOUCH_MOVING)                                   // if there's movement
+            //gfx_PutPixel(x, y, LIGHTGREEN);                       // we'll could draw a pixel
+            gfx_Line(firstx, firsty, x, y, LIGHTGREEN);             // but lines are much better
+            firstx := x;
+            firsty := y;
+        endif
+    wend
+
+endfunc
+
+/*
+
+
+*/
+
+

@@ -1,0 +1,12 @@
+#platform "uLCD-32PT_GFX2"
+#inherit "4DGL_16bitColours.fnc"
+
+
+
+
+func main()
+
+
+    repeat
+    forever
+endfunc

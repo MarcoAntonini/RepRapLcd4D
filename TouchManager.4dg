@@ -48,6 +48,22 @@ func TouchEvent(var x,var y)
         else if(touched==iWinbutton6) //Bed Set
             SerialPrintBuffer("M140 S");
             SerialPrintlnNumber(str2w(str_Ptr(bed_setTemp)));
+        else //ALL Button Set NUMBER
+            for(i:=0; i<sizeof(BUTTON_SET_NUMBER); i++)
+                 SerialPrintlnBuffer("OK");
+                if(checkRegion( @ BUTTON_SET_NUMBER[i]))
+                    initTrackbar(i);
+                    updateTrackbar(i,x);
+                    break;
+                endif
+            next
+        endif
+
+    else if(WINDOW==W_EXTMM || WINDOW==W_EXTMM_MIN || WINDOW==W_EXTTEMP || WINDOW==W_BEDTEMP) //Window Button Set Number
+        if(touched==iTrackbar1)
+        else
+            remove_currentTrackpad();
+            WINDOW:=W_MAIN; //Return to Windows Main
         endif
     else if(WINDOW==W_SDCARD) //Window SDCard Touch event
     endif

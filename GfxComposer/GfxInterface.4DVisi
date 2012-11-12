@@ -1150,6 +1150,70 @@ Label
     Left                         202
     Top                          204
 end
+Trackbar
+    Name                         Trackbar1
+    BorderWidth                  10
+    Color                        clBtnFace
+    Frequency                    10
+    GutterBevel.BorderColor      clBtnFace
+    GutterBevel.BorderWidth      0
+    GutterBevel.InnerColor       BLACK
+    GutterBevel.InnerHighlight   clBtnHighlight
+    GutterBevel.InnerOutline     None
+    GutterBevel.InnerShadow      clBtnShadow
+    GutterBevel.InnerSpace       1
+    GutterBevel.InnerStyle       Lowered
+    GutterBevel.Innerwidth       2
+    GutterBevel.OuterColor       clBtnFace
+    GutterBevel.OuterHighlight   clBtnHighlight
+    GutterBevel.OuterOutline     Outer
+    GutterBevel.OuterShadow      clBtnShadow
+    GutterBevel.OuterSpace       0
+    GutterBevel.OuterStyle       Raised
+    GutterBevel.Outerwidth       1
+    GutterBevel.Visible          Yes
+    GutterColor                  BLACK
+    GutterWidth                  9
+    Height                       26
+    Left                         60
+    Maxvalue                     100
+    Minvalue                     0
+    Orientation                  Horizontal
+    ScaleOffset                  5
+    TickColor                    BLACK
+    TickMarks                    Both
+    Top                          144
+    Visible                      Yes
+    Width                        142
+    OnChanged                    ''
+    OnChanging                   ''
+end
+Panel
+    Name                         Panel13
+    Color                        'Office 2003 (Blue)'
+    Height                       36
+    Left                         52
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Raised
+    Top                          140
+    Width                        158
+end
+Triangle
+    Name                         Triangle1
+    Color                        'Office 2003 (Blue)'
+    Filled                       Yes
+    Outlined                     No
+    OutlineColor                 'Office 2010 (Blue)'
+    Pattern                      Solid
+    X1                           183
+    X2                           172
+    X3                           194
+    Y1                           183
+    Y2                           172
+    Y3                           172
+end
 Form
     Name                         Form2
     Bgtype                       Color

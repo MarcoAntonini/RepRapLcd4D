@@ -5,11 +5,11 @@
 
 var cmd_buff[BUFF_LEN];
 var buff_index :=0;
-var combuf[BUFF_LEN];
+var __COMBUFF[BUFF_LEN];
 
 //Function
 func SerialInit()
-     com_Init(combuf, 50, 0 );
+     com_Init(__COMBUFF, 50, 0 );
      com_SetBaud(COM0, 11520);
 endfunc
 
@@ -57,34 +57,34 @@ func parseCmd(var *buffer,var n)
         to(msg); printBuffer(p_cmd_val);
     else if( cmd_id[0] == HOTEND_ID )
         if(cmd_id[1]=='0')
-            if(WINDOW==W_MAIN) updateHotEnd0(p_cmd_val);
+            if(WINDOW!=W_SDCARD) updateHotEnd0(p_cmd_val);
             to(tH0); printBuffer(p_cmd_val);
         else if(cmd_id[1]=='1')
-            if(WINDOW==W_MAIN) updateHotEnd1(p_cmd_val);
+            if(WINDOW!=W_SDCARD) updateHotEnd1(p_cmd_val);
             to(tH1); printBuffer(p_cmd_val);
         endif
     else if( cmd_id[0] == TARGETT_ID )
         if(cmd_id[1]=='0')
-            if(WINDOW==W_MAIN)
+            if(WINDOW!=W_SDCARD)
                 updateTHotEnd0(p_cmd_val);
                 updateHotEnd0(str_Ptr(tH0));
             endif
             to(ttH0); printBuffer(p_cmd_val);
         else if(cmd_id[1]=='1')
-            if(WINDOW==W_MAIN)
+            if(WINDOW!=W_SDCARD)
                 updateTHotEnd1(p_cmd_val);
                 updateHotEnd1(str_Ptr(tH1));
             endif
             to(ttH1); printBuffer(p_cmd_val);
         else if(cmd_id[1]=='B')
-            if(WINDOW==W_MAIN)
+            if(WINDOW!=W_SDCARD)
                 updateTBed(p_cmd_val);
                 updateBed(str_Ptr(tB));
             endif
             to(ttB); printBuffer(p_cmd_val);
         endif
     else if( cmd_id[0] == BED_ID )
-         if(WINDOW==W_MAIN) updateBed(p_cmd_val);
+         if(WINDOW!=W_SDCARD) updateBed(p_cmd_val);
          to(tB); printBuffer(p_cmd_val);
     else if( cmd_id[0] == TIME_ID )
          updateTime(p_cmd_val);
@@ -97,6 +97,10 @@ func parseCmd(var *buffer,var n)
         to(sdPerc); printBuffer(p_cmd_val);
     endif
 
+endfunc
+
+func parseSDFile(var *buffer,var n)
+    var file_count;
 
 endfunc
 

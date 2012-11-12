@@ -24,6 +24,7 @@ func initSD()
     hndl := file_LoadImageControl("GFXINT~1.dat", "GFXINT~1.gci", 1);
     gfx_TransparentColour(0x0020);
     gfx_Transparency(ON);
+    gfx_Cls();
 endfunc
 
 func main()
@@ -58,7 +59,6 @@ repeat
      SerialEvent();
 
 forever
-
 
 endfunc
 

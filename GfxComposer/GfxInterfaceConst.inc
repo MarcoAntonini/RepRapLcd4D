@@ -1,4 +1,4 @@
-// File generated 11/11/2012 20:12:09
+// File generated 12/11/2012 18:13:20
 // Warning! This is a generated file, any manual changes will be
 // lost during the next generation.
 
@@ -19,6 +19,7 @@
     iLed2           // offset 0x10B000
     iLed3           // offset 0x10BE00
     iLed1           // offset 0x10C800
+    iTrackbar1      // offset 0x10D600
 #END
 
 var disk, hndl ;

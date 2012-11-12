@@ -15,6 +15,7 @@
     iLed2           // offset 0x10B000
     iLed3           // offset 0x10BE00
     iLed1           // offset 0x10C800
+    iTrackbar1      // offset 0x10D600
 #END
 
 var disk, hndl ;
@@ -120,9 +121,24 @@ byte Z_HOMING_ACT "G28 Z0\0"
 #END
 
 /***********************************************************************************
-*   Touch Region Axis Move
+*   Touch Region Button Set
 ************************************************************************************/
 
+#CONST
+
+EXTMM_ACT 0
+EXTMM_MIN_ACT 1
+EXTTEMP_ACT 2
+BEDTEMP_ACT 3
+
+#END
+
 #DATA
+word BUTTON_SET_NUMBER BUTTON_EXTMM,BUTTON_EXTMM_MIN,BUTTON_EXTTEMP,BUTTON_BEDTEMP
+
+word BUTTON_EXTMM 60, 184, 87, 198
+word BUTTON_EXTMM_MIN 60, 199, 87, 213
+word BUTTON_EXTTEMP 172, 184, 199, 198
+word BUTTON_BEDTEMP 172, 199, 199, 213
 
 #END

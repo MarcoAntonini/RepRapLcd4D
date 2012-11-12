@@ -12,9 +12,14 @@ func drawGfxInterface()
 endfunc
 
 func MainGfxInterface()
+    drawAxisMove();
+    drawStatusBar();
+    drawTempIndicator();
+    drawButtonControl();
+endfunc
 
-    gfx_Cls();
-    //Draw Interface
+
+func drawAxisMove()
     img_Show(hndl,iImage1); //X-Y pos Image
     img_Show(hndl,iImage2); //Z pos Image
     img_Show(hndl,iImage3); //SD card Image
@@ -22,49 +27,9 @@ func MainGfxInterface()
     gfx_Panel(PANEL_RAISED, 1, 178, 230, 3, 0xD699);
     gfx_Panel(PANEL_RAISED, 0, 1, 3, 178, 0xD699);
     gfx_Panel(PANEL_RAISED, 227, 1, 3, 178, 0xD699);
+endfunc
 
-    //draw Extruder0
-    gfx_Panel(PANEL_RAISED, 230, 0, 90, 61, 0xD699) ; //Panel Container
-    setFontLabel(268,44);
-    putstr("/");
-    updateHotEnd0(str_Ptr(tH0));
-    updateTHotEnd0(str_Ptr(ttH0));
-
-    //draw Extruder1
-    gfx_Panel(PANEL_RAISED, 230, 60, 90, 61, 0xD699) ; //Panel Container
-    setFontLabel(268,104);
-    putstr("/");
-    updateHotEnd1(str_Ptr(tH1));
-    updateTHotEnd1(str_Ptr(ttH1));
-
-    //draw Bed
-    gfx_Panel(PANEL_RAISED, 230, 120, 90, 61, 0xD699) ; //Panel Container
-    setFontLabel(268,164);
-    putstr("/");
-    updateBed(str_Ptr(tB));
-    updateTBed(str_Ptr(ttB));
-
-    gfx_Panel(PANEL_RAISED, 0, 226, 320, 3, 0xD699); // Info Bar
-
-    //draw Time Info
-    setFontInfo(4,232);
-    printBuffer("Time:");
-    updateTime(str_Ptr(timePrint));
-
-    //draw Z pos Info
-    setFontInfo(113,232);
-    printBuffer("Z:");
-    setFontInfo(188,232);
-    printBuffer("cm");
-    updateZpos(str_Ptr(zPos));
-
-    //draw SDPerc
-    setFontInfo(216,232);
-    printBuffer("SD:");
-    setFontInfo(272,232);
-    printBuffer("%");
-    updateSDPerc(str_Ptr(sdPerc));
-
+func drawButtonControl()
     //draw Extruder/Reverse Section
     initButtonExtrude();
     updateButtonExtrude(FALSE);
@@ -104,7 +69,51 @@ func MainGfxInterface()
 
     initButtonBedSet();
     updateButtonBedSet(FALSE);
+endfunc
 
+func drawTempIndicator()
+    //draw Extruder0
+    gfx_Panel(PANEL_RAISED, 230, 0, 90, 61, 0xD699) ; //Panel Container
+    setFontLabel(268,44);
+    putstr("/");
+    updateHotEnd0(str_Ptr(tH0));
+    updateTHotEnd0(str_Ptr(ttH0));
+
+    //draw Extruder1
+    gfx_Panel(PANEL_RAISED, 230, 60, 90, 61, 0xD699) ; //Panel Container
+    setFontLabel(268,104);
+    putstr("/");
+    updateHotEnd1(str_Ptr(tH1));
+    updateTHotEnd1(str_Ptr(ttH1));
+
+    //draw Bed
+    gfx_Panel(PANEL_RAISED, 230, 120, 90, 61, 0xD699) ; //Panel Container
+    setFontLabel(268,164);
+    putstr("/");
+    updateBed(str_Ptr(tB));
+    updateTBed(str_Ptr(ttB));
+endfunc
+
+func drawStatusBar()
+    gfx_Panel(PANEL_RAISED, 0, 226, 320, 3, 0xD699); // Info Bar
+    //draw Time Info
+    setFontInfo(4,232);
+    printBuffer("Time:");
+    updateTime(str_Ptr(timePrint));
+
+    //draw Z pos Info
+    setFontInfo(113,232);
+    printBuffer("Z:");
+    setFontInfo(188,232);
+    printBuffer("cm");
+    updateZpos(str_Ptr(zPos));
+
+    //draw SDPerc
+    setFontInfo(216,232);
+    printBuffer("SD:");
+    setFontInfo(272,232);
+    printBuffer("%");
+    updateSDPerc(str_Ptr(sdPerc));
 endfunc
 
 func setFontLabel(var x,var y)
@@ -364,6 +373,65 @@ func updateBedSetTemp(var *value)
     txt_BGcolour(0xD699) ;
     gfx_MoveTo(175, 203) ;
     printBuffer(value);
+endfunc
+
+
+func remove_currentTrackpad()
+    if(WINDOW == EXTMM_ACT)
+        gfx_TriangleFilled(71, 183, 60, 172,  82, 172, BLACK);
+    else if(WINDOW == EXTMM_MIN_ACT)
+        gfx_TriangleFilled(71, 198, 60, 172,  82, 172, BLACK);
+    else if(WINDOW == EXTTEMP_ACT)
+        gfx_TriangleFilled(183, 183, 172, 172,  194, 172, BLACK);
+    else if(WINDOW == BEDTEMP_ACT)
+        gfx_TriangleFilled(187, 199, 176, 172,  198, 172, BLACK);
+    endif
+    drawAxisMove();
+    drawButtonControl();
+endfunc
+
+func initTrackbar(var type)
+
+    gfx_Panel(PANEL_RAISED, 52, 140, 158, 36, 0xD699); //TrackPad Container
+    if(type == EXTMM_ACT)
+        gfx_TriangleFilled(71, 183, 60, 172,  82, 172, 0x8D9C);
+        WINDOW := W_EXTMM;
+    else if(type == EXTMM_MIN_ACT)
+        gfx_TriangleFilled(71, 198, 60, 172,  82, 172, 0x8D9C);
+        WINDOW := W_EXTMM_MIN;
+    else if(type == EXTTEMP_ACT)
+        gfx_TriangleFilled(183, 183, 172, 172,  194, 172, 0x8D9C);
+        WINDOW := W_EXTTEMP;
+    else if(type == BEDTEMP_ACT)
+        gfx_TriangleFilled(187, 199, 176, 172,  198, 172, 0x8D9C);
+        WINDOW := W_BEDTEMP;
+    endif
+    img_Show(hndl,iTrackbar1);
+    img_SetWord(hndl, iTrackbar1, IMAGE_FLAGS, (img_GetWord(hndl, iTrackbar1, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+endfunc
+
+func updateTrackbar(var type,var x)
+    var posn;
+    var _x;
+    if(type == EXTMM_ACT)
+
+    else if(type == EXTMM_MIN_ACT)
+
+    else if(type == EXTTEMP_ACT)
+
+    else if(type == BEDTEMP_ACT)
+
+    endif
+    posn := type - 74 ;  // x - left - borderwidth
+    if (posn < 0)
+        posn := 0 ;
+    else if (posn > 114) // width - 2*borderwidth - 8
+        posn := 100 ;    // maxvalue-minvalue
+    else
+        posn := 100 * posn / 114 ; // (max-min) * posn / (width-2*borderwidth-8)
+    endif
+    img_SetWord(hndl, iTrackbar1, IMAGE_INDEX, posn);
+    img_Show(hndl, iTrackbar1);
 endfunc
 
 

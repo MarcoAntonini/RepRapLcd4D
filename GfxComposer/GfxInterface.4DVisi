@@ -5,7 +5,7 @@ Depends
 end
 Options
     Visualizer
-    Speed                        9600
+    Speed                        -1
     Checksum                     No
     ResponseSize                 2
     Multidrop                    No
@@ -574,7 +574,7 @@ Panel
 end
 Image
     Name                         Image3
-    Height                       12
+    Height                       11
     Image                        sd.jpg
     Left                         288
     Source.Height                20
@@ -582,8 +582,8 @@ Image
     Source.Top                   0
     Source.Width                 30
     Visible                      Yes
-    Top                          231
-    Width                        23
+    Top                          232
+    Width                        21
     OnTouchMoving                ''
     OnTouchPressed               ''
     OnTouchReleased              ''
@@ -918,7 +918,7 @@ WinButton
     AutoSizeToPicture            No
     Bevel                        Yes
     BevelColor                   clWhite
-    Caption                      set
+    Caption                      'set Extr'
     Color                        'Office 2003 Classic'
     Font.Color                   clWindowText
     Font.Effects                 []
@@ -950,7 +950,7 @@ WinButton
     StatusWhenOn.Visible         Yes
     Top                          183
     Visible                      Yes
-    Width                        28
+    Width                        50
     OnChanged                    ''
     OnTouchMoving                ''
     OnTouchPressed               ''
@@ -966,7 +966,7 @@ WinButton
     AutoSizeToPicture            No
     Bevel                        Yes
     BevelColor                   clWhite
-    Caption                      set
+    Caption                      'set Bed'
     Color                        'Office 2003 Classic'
     Font.Color                   clWindowText
     Font.Effects                 []
@@ -998,7 +998,7 @@ WinButton
     StatusWhenOn.Visible         Yes
     Top                          199
     Visible                      Yes
-    Width                        28
+    Width                        50
     OnChanged                    ''
     OnTouchMoving                ''
     OnTouchPressed               ''
@@ -1192,13 +1192,13 @@ Panel
     Name                         Panel13
     Color                        'Office 2003 (Blue)'
     Height                       36
-    Left                         52
+    Left                         28
     Outlined                     No
     OutlineColor                 WHITE
     Pattern                      Fine
     State                        Raised
     Top                          140
-    Width                        158
+    Width                        184
 end
 Triangle
     Name                         Triangle1
@@ -1214,8 +1214,286 @@ Triangle
     Y2                           172
     Y3                           172
 end
+WinButton
+    Name                         Winbutton9
+    Appearance.Alignment         Center
+    Appearance.Layout            Left
+    Appearance.PictureAlignment  Right
+    Appearance.SimpleLayout      No
+    Appearance.Spacing           3
+    AutoSizeToPicture            No
+    Bevel                        Yes
+    BevelColor                   clWhite
+    Caption                      'switch Extr'
+    Color                        'Office 2003 Classic'
+    Font.Color                   clWindowText
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    8
+    Font.Style                   []
+    Height                       34
+    Left                         264
+    Matrix                       -1
+    Momentary                    Yes
+    Picture                      (None)
+    StatusWhenOff.BGcolor        'Office 2003 (Blue)'
+    StatusWhenOff.Caption        0
+    StatusWhenOff.Glow           No
+    StatusWhenOff.Color          WHITE
+    StatusWhenOff.Effects        []
+    StatusWhenOff.Name           Tahoma
+    StatusWhenOff.Size           8
+    StatusWhenOff.Style          []
+    StatusWhenOff.Visible        Yes
+    StatusWhenOn.BGcolor         'Office 2003 (Blue)'
+    StatusWhenOn.Caption         1
+    StatusWhenOn.Glow            No
+    StatusWhenOn.Color           WHITE
+    StatusWhenOn.Effects         []
+    StatusWhenOn.Name            Tahoma
+    StatusWhenOn.Size            8
+    StatusWhenOn.Style           []
+    StatusWhenOn.Visible         Yes
+    Top                          182
+    Visible                      Yes
+    Width                        50
+    OnChanged                    ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
 Form
     Name                         Form2
+    Bgtype                       Color
+    Color                        'Office 2003 (Blue)'
+    Image                        (None)
+    Source.Height                0
+    Source.Left                  0
+    Source.Top                   0
+    Source.Width                 0
+    OnActivate                   ''
+    OnCreate                     ''
+    OnRepeat                     ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+WinButton
+    Name                         Winbutton7
+    Appearance.Alignment         Center
+    Appearance.Layout            Left
+    Appearance.PictureAlignment  Right
+    Appearance.SimpleLayout      No
+    Appearance.Spacing           3
+    AutoSizeToPicture            No
+    Bevel                        Yes
+    BevelColor                   clWhite
+    Caption                      +
+    Color                        'Office 2003 Classic'
+    Font.Color                   clWindowText
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    8
+    Font.Style                   []
+    Height                       15
+    Left                         30
+    Matrix                       -1
+    Momentary                    Yes
+    Picture                      (None)
+    StatusWhenOff.BGcolor        RED
+    StatusWhenOff.Caption        ''
+    StatusWhenOff.Glow           Yes
+    StatusWhenOff.Color          WHITE
+    StatusWhenOff.Effects        []
+    StatusWhenOff.Name           Tahoma
+    StatusWhenOff.Size           8
+    StatusWhenOff.Style          []
+    StatusWhenOff.Visible        Yes
+    StatusWhenOn.BGcolor         RED
+    StatusWhenOn.Caption         ''
+    StatusWhenOn.Glow            Yes
+    StatusWhenOn.Color           WHITE
+    StatusWhenOn.Effects         []
+    StatusWhenOn.Name            Tahoma
+    StatusWhenOn.Size            8
+    StatusWhenOn.Style           []
+    StatusWhenOn.Visible         Yes
+    Top                          142
+    Visible                      Yes
+    Width                        25
+    OnChanged                    ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+WinButton
+    Name                         Winbutton8
+    Appearance.Alignment         Center
+    Appearance.Layout            Left
+    Appearance.PictureAlignment  Right
+    Appearance.SimpleLayout      No
+    Appearance.Spacing           3
+    AutoSizeToPicture            No
+    Bevel                        Yes
+    BevelColor                   clWhite
+    Caption                      -
+    Color                        'Office 2003 Classic'
+    Font.Color                   clWindowText
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    8
+    Font.Style                   []
+    Height                       15
+    Left                         30
+    Matrix                       -1
+    Momentary                    Yes
+    Picture                      (None)
+    StatusWhenOff.BGcolor        RED
+    StatusWhenOff.Caption        ''
+    StatusWhenOff.Glow           Yes
+    StatusWhenOff.Color          WHITE
+    StatusWhenOff.Effects        []
+    StatusWhenOff.Name           Tahoma
+    StatusWhenOff.Size           8
+    StatusWhenOff.Style          []
+    StatusWhenOff.Visible        Yes
+    StatusWhenOn.BGcolor         RED
+    StatusWhenOn.Caption         ''
+    StatusWhenOn.Glow            Yes
+    StatusWhenOn.Color           WHITE
+    StatusWhenOn.Effects         []
+    StatusWhenOn.Name            Tahoma
+    StatusWhenOn.Size            8
+    StatusWhenOn.Style           []
+    StatusWhenOn.Visible         Yes
+    Top                          158
+    Visible                      Yes
+    Width                        25
+    OnChanged                    ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+Form
+    Name                         Form3
+    Bgtype                       Color
+    Color                        BLACK
+    Image                        (None)
+    Source.Height                0
+    Source.Left                  0
+    Source.Top                   0
+    Source.Width                 0
+    OnActivate                   ''
+    OnCreate                     ''
+    OnRepeat                     ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+WinButton
+    Name                         Winbutton10
+    Appearance.Alignment         Center
+    Appearance.Layout            Left
+    Appearance.PictureAlignment  Right
+    Appearance.SimpleLayout      No
+    Appearance.Spacing           3
+    AutoSizeToPicture            No
+    Bevel                        Yes
+    BevelColor                   clWhite
+    Caption                      'switch Extr'
+    Color                        'Office 2003 Classic'
+    Font.Color                   clWindowText
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    8
+    Font.Style                   []
+    Height                       34
+    Left                         264
+    Matrix                       -1
+    Momentary                    Yes
+    Picture                      (None)
+    StatusWhenOff.BGcolor        'Office 2003 (Blue)'
+    StatusWhenOff.Caption        1
+    StatusWhenOff.Glow           No
+    StatusWhenOff.Color          WHITE
+    StatusWhenOff.Effects        []
+    StatusWhenOff.Name           Tahoma
+    StatusWhenOff.Size           8
+    StatusWhenOff.Style          []
+    StatusWhenOff.Visible        Yes
+    StatusWhenOn.BGcolor         'Office 2003 (Blue)'
+    StatusWhenOn.Caption         1
+    StatusWhenOn.Glow            No
+    StatusWhenOn.Color           WHITE
+    StatusWhenOn.Effects         []
+    StatusWhenOn.Name            Tahoma
+    StatusWhenOn.Size            8
+    StatusWhenOn.Style           []
+    StatusWhenOn.Visible         Yes
+    Top                          182
+    Visible                      Yes
+    Width                        50
+    OnChanged                    ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+Form
+    Name                         Form4
+    Bgtype                       Color
+    Color                        BLACK
+    Image                        (None)
+    Source.Height                0
+    Source.Left                  0
+    Source.Top                   0
+    Source.Width                 0
+    OnActivate                   ''
+    OnCreate                     ''
+    OnRepeat                     ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+Panel
+    Name                         Panel14
+    Color                        'Office 2010 (Blue)'
+    Height                       215
+    Left                         0
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Raised
+    Top                          0
+    Width                        320
+end
+Triangle
+    Name                         Triangle2
+    Color                        'Office 2010 (Blue)'
+    Filled                       Yes
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Solid
+    X1                           299
+    X2                           288
+    X3                           310
+    Y1                           228
+    Y2                           212
+    Y3                           212
+end
+Panel
+    Name                         Panel15
+    Color                        'Office 2003 Classic'
+    Height                       207
+    Left                         4
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Raised
+    Top                          4
+    Width                        312
+end
+Form
+    Name                         Form5
     Bgtype                       Color
     Color                        BLACK
     Image                        (None)
@@ -1231,7 +1509,7 @@ Form
     OnTouchReleased              ''
 end
 Form
-    Name                         Form3
+    Name                         Form6
     Bgtype                       Color
     Color                        BLACK
     Image                        (None)

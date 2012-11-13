@@ -8,7 +8,3 @@ func main()
 
 endfunc
 
-
- // set to enable touch, only need to do this once
-
-

@@ -121,6 +121,10 @@ func SerialPrintlnNumber(var numb)
     to(COM0); putstr("\n");
 endfunc
 
+func printBuffer(var *buffer)
+    str_Printf (&buffer, "%s");
+endfunc
+
 func buff2str(var *buffer,var buffer_count,var *buff_out)
         var i:=0;
         for(i:=0; i<buffer_count; i++)

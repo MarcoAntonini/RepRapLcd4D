@@ -1,3 +1,4 @@
+#inherit "4DGL_16bitColours.fnc"
 #CONST
 
 FALSE 0
@@ -8,6 +9,11 @@ MESSAGE_DIM 46
 STARTUP 0
 ALERT 1
 FINISH 2
+
+COLOURSEL_INDICATOR 0x8D9C
+COLOURSEL BLUE
+COLOUR_TRACKPAD 0x8D9C
+//COLOUR_TRACKPAD 0xD699
 
 GAUGE_TTEMP 85
 GAUGE_MAX_TEMP 250
@@ -21,10 +27,10 @@ TIME_ID 't'
 ZPOS_ID 'Z'
 SDPERCENT_ID 'S'
 
-TRACKPAD_MAX_EXMM 300
-TRACKPAD_MAX_EXMM_MIN 999
+TRACKPAD_MAX_EXTMM 300
+TRACKPAD_MAX_EXTMM_MIN 300 // map function does not work with >300
 TRACKPAD_MAX_EXTTEMP 250
-TRACPAD_MAX_BEDTEMP 110
+TRACKPAD_MAX_BEDTEMP 120
 
 // Windows ID !!!Order is important!!
 W_MAIN 4
@@ -34,10 +40,10 @@ W_EXTMM_MIN 1
 W_EXTTEMP 2
 W_BEDTEMP 3
 
-
 #END
 
 //Global Vars
+var EN_TOUCH_MOVING;
 var WINDOW;
 var _ttH0; //Temp Target HotEnd0
 var ttH0[4];
@@ -57,6 +63,8 @@ var ex_setmm_min[4]; // Extruder mm/min
 var ex_setTemp[4]; //Button Set Ext. Temp
 var bed_setTemp[4]; //Buttpn Set Bed Temp
 var msg[MESSAGE_DIM]; //Max 46 char
+
+var current_extruder;
 
 
 

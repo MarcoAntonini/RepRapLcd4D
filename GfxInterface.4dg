@@ -1,13 +1,13 @@
 #platform "uLCD-32PT_GFX2"
+#inherit "4DGL_16bitColours.fnc"
 #inherit "GfxInterfaceConst.inc"
 #inherit "Constant.inc"
-#inherit "4DGL_16bitColours.fnc"
-
 
 func drawGfxInterface()
     if(WINDOW==W_MAIN)
         MainGfxInterface();
     else if(WINDOW==W_SDCARD)
+         drawSDScreen();
     endif
 endfunc
 
@@ -29,6 +29,7 @@ func drawAxisMove()
     gfx_Panel(PANEL_RAISED, 227, 1, 3, 178, 0xD699);
 endfunc
 
+
 func drawButtonControl()
     //draw Extruder/Reverse Section
     initButtonExtrude();
@@ -42,9 +43,9 @@ func drawButtonControl()
     printBuffer("mm/min");
 
     gfx_Panel(PANEL_RAISED, 60, 184, 27, 14, 0xD699); // panel Ex mm
-    updateExmm(str_Ptr(ex_setmm));
+    updateExmm(str_Ptr(ex_setmm),BLACK);
     gfx_Panel(PANEL_RAISED, 60, 199, 27, 14, 0xD699); // pnael Ex mm/min
-    updateExmm_min(str_Ptr(ex_setmm_min));
+    updateExmm_min(str_Ptr(ex_setmm_min),BLACK);
 
     //draw Button Temp Extruder Set
     initButtonExOff();
@@ -61,14 +62,16 @@ func drawButtonControl()
     setFontMessage(202, 204);
     printBuffer("C");
 
-    updateExSetTemp(str_Ptr(ex_setTemp));
-    updateBedSetTemp(str_Ptr(bed_setTemp));
+    updateExSetTemp(str_Ptr(ex_setTemp),BLACK);
+    updateBedSetTemp(str_Ptr(bed_setTemp),BLACK);
 
     initButtonExSet();
     updateButtonExSet(FALSE);
 
     initButtonBedSet();
     updateButtonBedSet(FALSE);
+
+    updateButtonSwitchEx();
 endfunc
 
 func drawTempIndicator()
@@ -343,41 +346,41 @@ func updateButtonBedSet(var state)
     img_Show(hndl,iWinbutton6) ;
 endfunc
 
-func updateExmm(var *value)
-   // ex_setmm:=str2w(value);
-    txt_FGcolour(0x0000);
+func updateExmm(var *value,var colour)
+    txt_Set(FONT_ID,FONT1);
+    txt_FGcolour(colour);
     txt_BGcolour(0xD699);
     gfx_MoveTo(63, 188);
     printBuffer(value);
 endfunc
 
-func updateExmm_min(var *value)
-    //ex_setmm_min:=str2w(value);
-    txt_FGcolour(0x0000);
+func updateExmm_min(var *value,var colour)
+    txt_Set(FONT_ID,FONT1);
+    txt_FGcolour(colour);
     txt_BGcolour(0xD699);
     gfx_MoveTo(63, 202);
     printBuffer(value);
 endfunc
 
-func updateExSetTemp(var *value)
-    //ex_setTemp:=str2w(value);
-    txt_FGcolour(0x0000);
+func updateExSetTemp(var *value,var colour)
+    txt_Set(FONT_ID,FONT1);
+    txt_FGcolour(colour);
     txt_BGcolour(0xD699);
     gfx_MoveTo(175, 188);
     printBuffer(value);
 endfunc
 
-func updateBedSetTemp(var *value)
-   // bed_setTemp:=str2w(value);
-    txt_FGcolour(0x0000) ;
-    txt_BGcolour(0xD699) ;
-    gfx_MoveTo(175, 203) ;
+func updateBedSetTemp(var *value,var colour)
+    txt_Set(FONT_ID,FONT1);
+    txt_FGcolour(colour);
+    txt_BGcolour(0xD699);
+    gfx_MoveTo(175, 203);
     printBuffer(value);
 endfunc
 
 
 func remove_currentTrackpad()
-    if(WINDOW == EXTMM_ACT)
+   if(WINDOW == EXTMM_ACT)
         gfx_TriangleFilled(71, 183, 60, 172,  82, 172, BLACK);
     else if(WINDOW == EXTMM_MIN_ACT)
         gfx_TriangleFilled(71, 198, 60, 172,  82, 172, BLACK);
@@ -386,55 +389,180 @@ func remove_currentTrackpad()
     else if(WINDOW == BEDTEMP_ACT)
         gfx_TriangleFilled(187, 199, 176, 172,  198, 172, BLACK);
     endif
+
     drawAxisMove();
     drawButtonControl();
 endfunc
 
 func initTrackbar(var type)
-
-    gfx_Panel(PANEL_RAISED, 52, 140, 158, 36, 0xD699); //TrackPad Container
+     gfx_Panel(PANEL_RAISED, 26, 140, 184, 36, COLOUR_TRACKPAD); //TrackPad Container
     if(type == EXTMM_ACT)
-        gfx_TriangleFilled(71, 183, 60, 172,  82, 172, 0x8D9C);
+        gfx_TriangleFilled(71, 183, 60, 172,  82, 172, COLOURSEL_INDICATOR);
         WINDOW := W_EXTMM;
     else if(type == EXTMM_MIN_ACT)
-        gfx_TriangleFilled(71, 198, 60, 172,  82, 172, 0x8D9C);
+        gfx_TriangleFilled(71, 198, 60, 172,  82, 172, COLOURSEL_INDICATOR);
         WINDOW := W_EXTMM_MIN;
     else if(type == EXTTEMP_ACT)
-        gfx_TriangleFilled(183, 183, 172, 172,  194, 172, 0x8D9C);
+        gfx_TriangleFilled(183, 183, 172, 172,  194, 172, COLOURSEL_INDICATOR);
         WINDOW := W_EXTTEMP;
     else if(type == BEDTEMP_ACT)
-        gfx_TriangleFilled(187, 199, 176, 172,  198, 172, 0x8D9C);
+        gfx_TriangleFilled(187, 199, 176, 172,  198, 172, COLOURSEL_INDICATOR);
         WINDOW := W_BEDTEMP;
     endif
     img_Show(hndl,iTrackbar1);
     img_SetWord(hndl, iTrackbar1, IMAGE_FLAGS, (img_GetWord(hndl, iTrackbar1, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
 endfunc
 
-func updateTrackbar(var type,var x)
-    var posn;
-    var _x;
+func updateTrackbarStatus(var type)
+    var max_value;
+    var value;
     if(type == EXTMM_ACT)
-
+        max_value:=TRACKPAD_MAX_EXTMM;
+        value:=str2w(str_Ptr(ex_setmm));
+        updateExmm(str_Ptr(ex_setmm),COLOURSEL); //also update the color selection
     else if(type == EXTMM_MIN_ACT)
-
+        max_value:=TRACKPAD_MAX_EXTMM_MIN;
+        value:=str2w(str_Ptr(ex_setmm_min));
+        updateExmm_min(str_Ptr(ex_setmm_min),COLOURSEL); //also update the color selection
     else if(type == EXTTEMP_ACT)
-
+         max_value:=TRACKPAD_MAX_EXTTEMP;
+         value:=str2w(str_Ptr(ex_setTemp));
+         updateExSetTemp(str_Ptr(ex_setTemp),COLOURSEL); //also update the color selection
     else if(type == BEDTEMP_ACT)
-
+         max_value:=TRACKPAD_MAX_BEDTEMP;
+         value:=str2w(str_Ptr(bed_setTemp));
+         updateBedSetTemp(str_Ptr(bed_setTemp),COLOURSEL); //also update the color selection
     endif
-    posn := type - 74 ;  // x - left - borderwidth
+    img_SetWord(hndl, iTrackbar1, IMAGE_INDEX,map(value,0,max_value,0,100));
+    img_Show(hndl, iTrackbar1);
+
+endfunc
+
+func updateTrackbarEvent(var type,var x) // x coord.
+    var max_value;
+    var value,posn;
+    posn := x - 74 ;                        // x - left - borderwidth
     if (posn < 0)
         posn := 0 ;
-    else if (posn > 114) // width - 2*borderwidth - 8
-        posn := 100 ;    // maxvalue-minvalue
+    else if (posn > 114)                    // width - 2*borderwidth - 8
+        posn := 100 ;                       // maxvalue-minvalue
     else
-        posn := 100 * posn / 114 ; // (max-min) * posn / (width-2*borderwidth-8)
+        posn := 100 * posn / 114 ;    // (max-min) * posn / (width-2*borderwidth-8)
     endif
-    img_SetWord(hndl, iTrackbar1, IMAGE_INDEX, posn);
+    if(type == EXTMM_ACT)
+        max_value:=TRACKPAD_MAX_EXTMM;
+        value:=map(posn,0,100,0,max_value);
+        to(ex_setmm); putnum(DEC,value);
+        updateExmm("   ",COLOURSEL);
+        updateExmm(str_Ptr(ex_setmm),COLOURSEL);
+    else if(type == EXTMM_MIN_ACT)
+        max_value:=TRACKPAD_MAX_EXTMM_MIN;
+        value:=map(posn,0,100,0,max_value);
+        SerialPrintlnNumber(value);
+        to(ex_setmm_min); putnum(DEC,value);
+        updateExmm_min("   ",COLOURSEL);
+        updateExmm_min(str_Ptr(ex_setmm_min),COLOURSEL);
+    else if(type == EXTTEMP_ACT)
+         max_value:=TRACKPAD_MAX_EXTTEMP;
+         value:=map(posn,0,100,0,max_value);
+         to(ex_setTemp); putnum(DEC,value);
+         updateExSetTemp("   ",COLOURSEL);
+         updateExSetTemp(str_Ptr(ex_setTemp),COLOURSEL);
+    else if(type == BEDTEMP_ACT)
+         max_value:=TRACKPAD_MAX_BEDTEMP;
+         value:=map(posn,0,100,0,max_value);
+         to(bed_setTemp); putnum(DEC,value);
+         updateBedSetTemp("   ",COLOURSEL);
+         updateBedSetTemp(str_Ptr(bed_setTemp),COLOURSEL);
+    endif
+    img_SetWord(hndl, iTrackbar1, IMAGE_INDEX,posn);
     img_Show(hndl, iTrackbar1);
+
+endfunc
+
+func initButtonFine()
+    img_SetWord(hndl, iWinbutton7, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton7, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    img_Show(hndl, iWinbutton7);
+    img_SetWord(hndl, iWinbutton8, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton8, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    img_Show(hndl, iWinbutton8);
+endfunc
+
+func updateButtonFine(var state)
+    img_SetWord(hndl, iWinbutton7, IMAGE_INDEX, state);
+    img_Show(hndl,iWinbutton7);
+    img_SetWord(hndl, iWinbutton8, IMAGE_INDEX, state);
+    img_Show(hndl,iWinbutton8);
+endfunc
+
+func ButtonFinePlusAction()
+   var value;
+   if(WINDOW == EXTMM_ACT)
+        value:=str2w(str_Ptr(ex_setmm));
+        value++;
+        to(ex_setmm); putnum(DEC,value);
+    else if(WINDOW == EXTMM_MIN_ACT)
+        value:=str2w(str_Ptr(ex_setmm_min));
+        value++;
+        to(ex_setmm_min); putnum(DEC,value);
+    else if(WINDOW == EXTTEMP_ACT)
+        value:=str2w(str_Ptr(ex_setTemp));
+        value++;
+        to(ex_setTemp); putnum(DEC,value);
+    else if(WINDOW == BEDTEMP_ACT)
+        value:=str2w(str_Ptr(bed_setTemp));
+        value++;
+        to(bed_setTemp); putnum(DEC,value);
+    endif
+    updateTrackbarStatus(WINDOW);
+
+endfunc
+
+func ButtonFineMinusAction()
+   var value;
+   if(WINDOW == EXTMM_ACT)
+        value:=str2w(str_Ptr(ex_setmm));
+        value--;
+        to(ex_setmm); putnum(DEC,value);
+    else if(WINDOW == EXTMM_MIN_ACT)
+        value:=str2w(str_Ptr(ex_setmm_min));
+        value--;
+        to(ex_setmm_min); putnum(DEC,value);
+    else if(WINDOW == EXTTEMP_ACT)
+        value:=str2w(str_Ptr(ex_setTemp));
+        value--;
+        to(ex_setTemp); putnum(DEC,value);
+    else if(WINDOW == BEDTEMP_ACT)
+        value:=str2w(str_Ptr(bed_setTemp));
+        value--;
+        to(bed_setTemp); putnum(DEC,value);
+    endif
+    updateTrackbarStatus(WINDOW);
+
+endfunc
+
+func updateButtonSwitchEx()
+    current_extruder:=!current_extruder;
+    if(current_extruder==0)
+        img_SetWord(hndl, iWinbutton9, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton9, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+        img_Show(hndl, iWinbutton9);
+        img_SetWord(hndl, iWinbutton9, IMAGE_INDEX,current_extruder);
+        img_Show(hndl,iWinbutton9);
+    else
+        img_SetWord(hndl, iWinbutton10, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton10, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+        img_Show(hndl, iWinbutton10);
+        img_SetWord(hndl, iWinbutton10, IMAGE_INDEX,current_extruder);
+        img_Show(hndl,iWinbutton10);
+    endif
+endfunc
+
+func drawSDScreen()
+    gfx_Panel(PANEL_RAISED, 0, 0, 320, 215, COLOURSEL_INDICATOR);
+    gfx_TriangleFilled(299, 228, 288, 212,  310, 212, COLOURSEL_INDICATOR);
+    gfx_Panel(PANEL_RAISED, 4, 4, 312, 207, 0xD699);
 endfunc
 
 
-func printBuffer(var *buffer)
-    str_Printf (&buffer, "%s");
+func map(var x, var in_min,var in_max,var out_min,var out_max)
+     return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 endfunc
+

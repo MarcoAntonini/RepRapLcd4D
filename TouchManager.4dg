@@ -25,13 +25,17 @@ func TouchEvent(var x,var y)
                 endif
             next
         else if(touched==iImage3) //SD Card
-            //WINDOW:=W_SDCARD;
-        else if(touched==iWinbutton1) //Extruder Button
+            WINDOW:=W_SDCARD;
+            drawSDScreen();
+        else if(touched==iWinbutton1) //Extrude Button
+            //updateButtonExtrude(TRUE);
             SerialPrintBuffer("G91\nG1 E");
             SerialPrintNumber(str2w(str_Ptr(ex_setmm)));
             SerialPrintBuffer(" F");
             SerialPrintlnNumber(str2w(str_Ptr(ex_setmm_min)));
             SerialPrintlnBuffer("G90");
+            //updateButtonExtrude(FALSE);
+            pause(50);
         else if(touched==iWinbutton2) //Reverse Button
             SerialPrintBuffer("G91\nG1 E-");
             SerialPrintNumber(str2w(str_Ptr(ex_setmm)));
@@ -48,12 +52,15 @@ func TouchEvent(var x,var y)
         else if(touched==iWinbutton6) //Bed Set
             SerialPrintBuffer("M140 S");
             SerialPrintlnNumber(str2w(str_Ptr(bed_setTemp)));
-        else //ALL Button Set NUMBER
+        else if(touched==iWinbutton9 || touched==iWinbutton10) //Switch Extruder
+            updateButtonSwitchEx();
+        else //ALL "Button Set NUMBER"
             for(i:=0; i<sizeof(BUTTON_SET_NUMBER); i++)
-                 SerialPrintlnBuffer("OK");
                 if(checkRegion( @ BUTTON_SET_NUMBER[i]))
                     initTrackbar(i);
-                    updateTrackbar(i,x);
+                    updateTrackbarStatus(i);
+                    initButtonFine();
+                    updateButtonFine(FALSE);
                     break;
                 endif
             next
@@ -61,12 +68,32 @@ func TouchEvent(var x,var y)
 
     else if(WINDOW==W_EXTMM || WINDOW==W_EXTMM_MIN || WINDOW==W_EXTTEMP || WINDOW==W_BEDTEMP) //Window Button Set Number
         if(touched==iTrackbar1)
-        else
+             updateTrackbarEvent(WINDOW,x);
+             EN_TOUCH_MOVING:=TRUE;
+             //pause(50);
+        else if(touched==iWinbutton7) //Fine Plus
+            ButtonFinePlusAction();
+            pause(70);
+        else if(touched==iWinbutton8) //Fine Minus
+            ButtonFineMinusAction();
+            pause(70);
+        else if(!checkRegion( @ TRACKPAD_CONTAINER))
             remove_currentTrackpad();
+            EN_TOUCH_MOVING:=FALSE;
             WINDOW:=W_MAIN; //Return to Windows Main
         endif
     else if(WINDOW==W_SDCARD) //Window SDCard Touch event
+        if(checkRegion( @ WIN_SDCARD_CONTAINER))
+        else
+            WINDOW:=W_MAIN;
+            gfx_RectangleFilled(0, 167, 319, 229,BLACK);
+            drawGfxInterface();
+        endif
     endif
+endfunc
+
+func TouchReleasedEvent(var x,var y)
+
 endfunc
 
 func checkRegion(var p1x,var p1y ,var p2x,var p2y)

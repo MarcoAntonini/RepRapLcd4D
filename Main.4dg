@@ -1,4 +1,23 @@
 #platform "uLCD-32PT_GFX2"
+/*
+ ReprapLcd4D Firmware for RepRap 3D Printer.
+
+ Copyright (C) 2012 Marco Antonini
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #inherit "4DGL_16bitColours.fnc"
 #inherit "GfxInterface.4dg"
 #inherit "SerialManager.4dg"
@@ -6,19 +25,21 @@
 #inherit "GfxInterfaceConst.inc"
 #inherit "Constant.inc"
 
-
 func initSD()
     gfx_Set(SCREEN_MODE,LANDSCAPE);
+    var err:=TRUE;
     var disk;
     setFontInfo(0,0);
     putstr("init...\n");
     putstr("mounting...\n");
+    putstr("Error: Drive not found!\n");
+    putstr("Remounting...\n");
     if (!(disk:=file_Mount()))
         //sys_SetTimerEvent(TIMER5, myfunc);
         //sys_SetTimer(TIMER5,200);
         //SystemReset();
         while(!(disk :=file_Mount()))
-            putstr("Error: Drive not found");
+
         wend
     endif
     hndl := file_LoadImageControl("GFXINT~1.dat", "GFXINT~1.gci", 1);
@@ -26,6 +47,7 @@ func initSD()
     gfx_Transparency(ON);
     gfx_Cls();
 endfunc
+
 
 func main()
 
@@ -50,7 +72,10 @@ repeat
 
     if(touchState == TOUCH_PRESSED)
         TouchEvent(touchX,touchY);
+    else if(touchState == TOUCH_MOVING && EN_TOUCH_MOVING && WINDOW != W_MAIN && WINDOW != W_SDCARD )
+        TouchEvent(touchX,touchY);
     else if(touchState == TOUCH_RELEASED)
+        TouchReleasedEvent(touchX,touchY);
     endif
 
     //--------------------------------------------------
@@ -65,7 +90,9 @@ endfunc
 //=======================================================
 
 func initVars()
+    EN_TOUCH_MOVING:=FALSE;
     WINDOW:=W_MAIN;
+    current_extruder:=1;
     //Init Global Vars
     _ttH0:=0; //Temp Target HotEnd0
     to(ttH0); print("000");
@@ -79,10 +106,10 @@ func initVars()
     to(zPos); print("+000.00");
     to(timePrint); print("00h00m");
     to(sdPerc); print("000");
-    to(ex_setmm); print("010");     // Extrude mm of filament
+    to(ex_setmm); print("10");     // Extrude mm of filament
     to(ex_setmm_min); print("200"); // Extruder mm/min
     to(ex_setTemp); print("205"); //Button Set Ext. Temp
-    to(bed_setTemp); print("055"); //Buttpn Set Bed Temp
+    to(bed_setTemp); print("55"); //Buttpn Set Bed Temp
     to(msg); print(""); //Max 46 char
 endfunc
 

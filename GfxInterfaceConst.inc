@@ -11,11 +11,15 @@
     iWinbutton3     // offset 0x109000
     iWinbutton4     // offset 0x109800
     iWinbutton5     // offset 0x10A000
-    iWinbutton6     // offset 0x10A800
-    iLed2           // offset 0x10B000
-    iLed3           // offset 0x10BE00
-    iLed1           // offset 0x10C800
-    iTrackbar1      // offset 0x10D600
+    iWinbutton6     // offset 0x10AC00
+    iLed2           // offset 0x10B800
+    iLed3           // offset 0x10C600
+    iLed1           // offset 0x10D000
+    iTrackbar1      // offset 0x10DE00
+    iWinbutton9     // offset 0x1C4000
+    iWinbutton7     // offset 0x1C5C00
+    iWinbutton8     // offset 0x1C6200
+    iWinbutton10    // offset 0x1C6800
 #END
 
 var disk, hndl ;
@@ -140,5 +144,8 @@ word BUTTON_EXTMM 60, 184, 87, 198
 word BUTTON_EXTMM_MIN 60, 199, 87, 213
 word BUTTON_EXTTEMP 172, 184, 199, 198
 word BUTTON_BEDTEMP 172, 199, 199, 213
+
+word TRACKPAD_CONTAINER 28, 140, 212, 176
+word WIN_SDCARD_CONTAINER 0, 0, 320, 215
 
 #END

@@ -1,6 +1,3 @@
-#platform "uLCD-32PT_GFX2"
-#inherit "4DGL_16bitColours.fnc"
-#inherit "GfxInterfaceConst.inc"
 #inherit "Constant.inc"
 
 func drawGfxInterface()
@@ -16,6 +13,7 @@ func MainGfxInterface()
     drawStatusBar();
     drawTempIndicator();
     drawButtonControl();
+    updateMessage(str_Ptr(msg),"","");
 endfunc
 
 
@@ -71,7 +69,7 @@ func drawButtonControl()
     initButtonBedSet();
     updateButtonBedSet(FALSE);
 
-    updateButtonSwitchEx();
+    updateButtonSwitchEx(UPDATE);
 endfunc
 
 func drawTempIndicator()
@@ -147,100 +145,121 @@ func setFontMessage(var x,var y)
     gfx_MoveTo(x,y);
 endfunc
 
-func updateMessage(var *msg)
+func updateMessage(var *_msg0,var *_msg1,var *_msg2)
     var offset;
+    var len;
+    len:=(str_Length(_msg0)*7) + (str_Length(_msg1)*7) + (str_Length(_msg2)*7);
     gfx_RectangleFilled(0, 216, 319, 224,BLACK); //Clear old Message
-    offset:= ((MESSAGE_DIM*7) - (str_Length(msg)*7))/2; //Offset for Center String
+    offset:= ((MESSAGE_DIM*7) - len)/2; //Offset for Center String
     setFontMessage(offset, 217);
-    printBuffer(msg);
+    printBuffer(_msg0);
+    printBuffer(_msg1);
+    printBuffer(_msg2);
+    //sys_SetTimerEvent(TIMER0, returnToMain);
 endfunc
 
-func updateHotEnd0(var *msg)
+func updateBlankMessage()
+    updateMessage("","","");
+    if(WINDOW==W_SDCARD)
+         gfx_TriangleFilled(299, 228, 288, 212,  310, 212, 0x8D9C);
+    else if(WINDOW==W_PRINTING_OPTION)
+         gfx_TriangleFilled(299, 228, 288, 212,  310, 212, 0x8D9C);
+    endif
+endfunc
+
+func setTimerMessage(var time)
+    sys_SetTimerEvent(TIMER0, updateBlankMessage);
+    sys_SetTimer(TIMER0,time);
+endfunc
+
+
+func updateHotEnd0(var *_msg)
     var val;
-    val := str2w(msg);
+    val := str2w(_msg);
     if(val > _ttH0 && _ttH0 != 0)
         setFontLabelAlert(240,44);
     else
         setFontLabel(240,44);
     endif
-    printBuffer(msg);
-    //str_Printf(msg,"%u");
+    printBuffer(_msg);
     img_SetWord(hndl, iGauge1, IMAGE_INDEX, tempGauge(val,_ttH0));
     img_Show(hndl,iGauge1);
 endfunc
 
-func updateHotEnd1(var *msg)
+func updateHotEnd1(var *_msg)
     var val;
-    val := str2w(msg);
+    val := str2w(_msg);
     if(val > _ttH1 && _ttH1 != 0)
          setFontLabelAlert(240,104);
     else
         setFontLabel(240,104);
     endif
-    printBuffer(msg);
+    printBuffer(_msg);
     img_SetWord(hndl, iGauge2, IMAGE_INDEX, tempGauge(val,_ttH1));
     img_Show(hndl,iGauge2) ;
 endfunc
 
-func updateTHotEnd0(var *msg)
-    _ttH0:=str2w(msg);
+func updateTHotEnd0(var *_msg)
+    _ttH0:=str2w(_msg);
     if(_ttH0 == 0 )
         updateLedEx0(OFF);
     else
         updateLedEx0(ON);
     endif
     setFontLabel(280,44);
-    printBuffer(msg);
+    printBuffer(_msg);
 endfunc
 
-func updateTHotEnd1(var *msg)
-    _ttH1:=str2w(msg);
+func updateTHotEnd1(var *_msg)
+    _ttH1:=str2w(_msg);
     if(_ttH1 == 0 )
         updateLedEx1(OFF);
     else
         updateLedEx1(ON);
     endif
     setFontLabel(280,104);
-    printBuffer(msg);
+    printBuffer(_msg);
 endfunc
 
-func updateBed(var *msg)
+func updateBed(var *_msg )
     var val;
-    val := str2w(msg);
+    val := str2w(_msg);
+
     if(val > _ttB && _ttB != 0)
-         setFontLabelAlert(240,164);
+        setFontLabelAlert(240,164);
     else
         setFontLabel(240,164);
     endif
-    printBuffer(msg);
-    img_SetWord(hndl, iGauge3, IMAGE_INDEX, tempGauge(str2w(msg),_ttB));
+    printBuffer(_msg);
+    img_SetWord(hndl, iGauge3, IMAGE_INDEX, tempGauge(str2w(_msg),_ttB));
     img_Show(hndl,iGauge3);
 endfunc
 
-func updateTBed(var *msg)
-    _ttB:=str2w(msg);
+func updateTBed(var *_msg)
+    _ttB:=str2w(_msg);
     if(_ttB == 0 )
         updateLedBed(OFF);
     else
         updateLedBed(ON);
     endif
+
     setFontLabel(280,164);
-    printBuffer(msg);
+    printBuffer(_msg);
 endfunc
 
-func updateTime(var *msg)
+func updateTime(var *_msg)
     setFontInfo(49,232);
-    printBuffer(msg);
+    printBuffer(_msg);
 endfunc
 
-func updateSDPerc(var *msg)
+func updateSDPerc(var *_msg)
     setFontInfo(242,232);
-    printBuffer(msg);
+    printBuffer(_msg);
 endfunc
 
-func updateZpos(var *msg)
+func updateZpos(var *_msg)
     setFontInfo(129,232);
-    printBuffer(msg);
+    printBuffer(_msg);
 endfunc
 
 func tempGauge(var current_val,var target)
@@ -458,7 +477,7 @@ func updateTrackbarEvent(var type,var x) // x coord.
     else if(type == EXTMM_MIN_ACT)
         max_value:=TRACKPAD_MAX_EXTMM_MIN;
         value:=map(posn,0,100,0,max_value);
-        SerialPrintlnNumber(value);
+        //SerialPrintlnNumber(value);
         to(ex_setmm_min); putnum(DEC,value);
         updateExmm_min("   ",COLOURSEL);
         updateExmm_min(str_Ptr(ex_setmm_min),COLOURSEL);
@@ -540,8 +559,10 @@ func ButtonFineMinusAction()
 
 endfunc
 
-func updateButtonSwitchEx()
-    current_extruder:=!current_extruder;
+func updateButtonSwitchEx(var type)
+    if(type==EVENT)
+        current_extruder:=!current_extruder;
+    endif
     if(current_extruder==0)
         img_SetWord(hndl, iWinbutton9, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton9, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
         img_Show(hndl, iWinbutton9);
@@ -555,14 +576,160 @@ func updateButtonSwitchEx()
     endif
 endfunc
 
+
+func updateButtonFileList()
+    var i,j,count;
+    var STOP:=FALSE;
+    count:=0;
+
+    if(sd_current_page>sd_page_count)
+        sd_current_page:=0;
+    else if(sd_current_page<0)
+        sd_current_page:=sd_page_count;
+    endif
+    count:=(sd_current_page)*24;
+    updatePageFileIndex();
+    for(i:=0; i<8 && STOP==FALSE; i++) // Button files is 8x3 Matrix
+        for(j:=0; j<3 && STOP==FALSE; j++)
+            if(count<file_count)
+                     gfx_Button(1,BUTTON_FILES_X[j],BUTTON_FILES_Y[i],GRAY,WHITE,FONT1, 1, 1,files[count]);
+                     //drawSingleButtonFile(BUTTON_FILES_X[j],BUTTON_FILES_Y[i],count,files[count]);
+                count++;
+            else
+                STOP:=FALSE;
+            endif
+        next
+    next
+
+endfunc
+
+/*
+func drawSingleButtonFile(var x,var y,var index,var *_msg)
+    var str;
+    var i,len;
+    len:=str_Length(files[index]);
+    if(len>MAX_FILE_NAME)
+        for(i:=0; i<MAX_FILE_NAME-len; i++)
+            if(i==0)to(str);
+            if(i>0)to(APPEND);
+            print(" ");
+            if(i==(MAX_FILE_NAME-len-1))
+                to(APPEND);
+                str_Printf(&_msg,"%s");
+            endif
+        next
+    endif
+    gfx_Button(1,x,y,GRAY,WHITE,FONT1, 1, 1,str);
+
+endfunc
+*/
+
+func updatePageFileIndex()
+    gfx_RectangleFilled(34, 188, 280, 204, 0xD699) ;
+    txt_Set(FONT_ID,FONT1);
+    txt_FGcolour(BLACK) ;
+    txt_BGcolour(0xD699) ;
+    gfx_MoveTo(70, 193) ;
+    putstr("page ");
+    putnum(DEC,sd_current_page+1);
+    putstr(" of ");
+    putnum(DEC,sd_page_count+1);
+    putstr(" (");
+    putnum(DEC,file_count);
+    putstr(" files)");
+endfunc
+
 func drawSDScreen()
     gfx_Panel(PANEL_RAISED, 0, 0, 320, 215, COLOURSEL_INDICATOR);
     gfx_TriangleFilled(299, 228, 288, 212,  310, 212, COLOURSEL_INDICATOR);
     gfx_Panel(PANEL_RAISED, 4, 4, 312, 207, 0xD699);
+    updateButtonPagesLeft(OFF);
+    updateButtonPagesRight(OFF);
+    updatePageFileIndex();
 endfunc
 
+func updateButtonPagesLeft(var state)
+    //draw Button Left,Right
+    img_SetWord(hndl, iWinbutton13, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton13, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    img_Show(hndl, iWinbutton13);
+    img_SetWord(hndl, iWinbutton13, IMAGE_INDEX, state);
+    img_Show(hndl,iWinbutton13) ;
+endfunc
+
+func updateButtonPagesRight(var state)
+    img_SetWord(hndl, iWinbutton14, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton14, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    img_Show(hndl, iWinbutton14);
+    img_SetWord(hndl, iWinbutton14, IMAGE_INDEX, state);
+    img_Show(hndl,iWinbutton14);
+endfunc
+
+func drawWinPrintingOption()
+    gfx_Panel(PANEL_RAISED, 228, 130, 84, 86, 0x8D9C);
+    gfx_TriangleFilled(299, 228, 288, 212,  310, 212, 0x8D9C);
+    gfx_Panel(PANEL_RAISED, 232, 134, 76, 78, 0xD699);
+    updatePauseButton(OFF);
+    updateResumeButton(OFF);
+    updateOpenFileButton(OFF);
+endfunc
+
+func updatePauseButton(var state)
+    img_SetWord(hndl, iWinbutton16, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton16, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    img_Show(hndl, iWinbutton16);
+    img_SetWord(hndl, iWinbutton16, IMAGE_INDEX,state);
+    img_Show(hndl,iWinbutton16);
+endfunc
+
+func updateResumeButton(var state)
+    img_SetWord(hndl, iWinbutton15, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton15, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    img_Show(hndl, iWinbutton15);
+    img_SetWord(hndl, iWinbutton15, IMAGE_INDEX,state);
+    img_Show(hndl,iWinbutton15);
+endfunc
+
+func updateOpenFileButton(var state)
+    img_SetWord(hndl, iWinbutton17, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton17, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    img_Show(hndl, iWinbutton17);
+    img_SetWord(hndl, iWinbutton17, IMAGE_INDEX,state);
+    img_Show(hndl,iWinbutton17);
+endfunc
 
 func map(var x, var in_min,var in_max,var out_min,var out_max)
      return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+endfunc
+
+func WinPrintConfirm(var index,var *_msg)
+    var offset:=0;
+    offset:= ((MAX_FILE_NAME*7) - ((str_Length(files[index])+1)*7))/2; //Offset for Center String
+    gfx_Panel(PANEL_RAISED, 88, 68, 132, 69, 0x8D9C);
+    gfx_Panel(PANEL_RAISED, 91, 72, 126, 61, 0xD699) ;
+    img_SetWord(hndl, iWinbutton11, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton11, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    img_Show(hndl, iWinbutton11);
+    img_SetWord(hndl, iWinbutton11, IMAGE_INDEX,OFF);
+    img_Show(hndl,iWinbutton11) ;
+    img_SetWord(hndl, iWinbutton12, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton12, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    img_SetWord(hndl, iWinbutton12, IMAGE_INDEX,OFF);
+    img_Show(hndl,iWinbutton12) ;
+    txt_FGcolour(BLACK);
+    txt_BGcolour(0xD699);
+    gfx_MoveTo(116, 76);
+    putstr("Print file");
+    txt_BGcolour(0xD699);
+    gfx_MoveTo(106+offset, 88);
+    str_Printf(&_msg,"%s ?");
+endfunc
+
+func switchWinSDtoMain()
+    if(FILE_START==TRUE)
+        mem_Free(filenames); // Free!!! :)
+        FILE_START:=FALSE;
+        SD_READING:=FALSE;
+    endif
+    sd_page_count:=0;
+    file_count:=0;
+    sd_current_page:=0;
+    file_count:=0;
+    WINDOW:=W_MAIN;
+    gfx_RectangleFilled(0, 167, 319, 229,BLACK);
+    drawGfxInterface();
 endfunc
 

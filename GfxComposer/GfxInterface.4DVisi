@@ -7,13 +7,13 @@ Options
     Visualizer
     Speed                        -1
     Checksum                     No
-    ResponseSize                 2
+    ResponseSize                 0
     Multidrop                    No
-    Destination                  2
+    Destination                  0
     SndBuf                       0
 end
 Form
-    Name                         Form1
+    Name                         Main
     Bgtype                       Color
     Color                        BLACK
     Image                        (None)
@@ -574,16 +574,16 @@ Panel
 end
 Image
     Name                         Image3
-    Height                       11
+    Height                       10
     Image                        sd.jpg
-    Left                         288
+    Left                         292
     Source.Height                20
     Source.Left                  0
     Source.Top                   0
     Source.Width                 30
     Visible                      Yes
-    Top                          232
-    Width                        21
+    Top                          230
+    Width                        15
     OnTouchMoving                ''
     OnTouchPressed               ''
     OnTouchReleased              ''
@@ -1263,7 +1263,7 @@ WinButton
     OnTouchReleased              ''
 end
 Form
-    Name                         Form2
+    Name                         ButtonFine
     Bgtype                       Color
     Color                        'Office 2003 (Blue)'
     Image                        (None)
@@ -1375,7 +1375,7 @@ WinButton
     OnTouchReleased              ''
 end
 Form
-    Name                         Form3
+    Name                         ButtonSwitchEx
     Bgtype                       Color
     Color                        BLACK
     Image                        (None)
@@ -1439,7 +1439,7 @@ WinButton
     OnTouchReleased              ''
 end
 Form
-    Name                         Form4
+    Name                         SDCard
     Bgtype                       Color
     Color                        BLACK
     Image                        (None)
@@ -1492,8 +1492,958 @@ Panel
     Top                          4
     Width                        312
 end
+Button
+    Name                         Button4
+    ButtonColor                  GRAY
+    Caption                      fileeeee.GGG
+    Color                        BLACK
+    Font                         FONT1
+    Index                        0
+    Left                         10
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Released
+    SelTextBG                    LIME
+    SelTextColor                 BLUE
+    TextHeight                   1
+    TextWidth                    1
+    Top                          32
+    Value                        50
+end
+Button
+    Name                         Button5
+    ButtonColor                  GRAY
+    Caption                      fileeeee.GGG
+    Color                        BLACK
+    Font                         FONT1
+    Index                        0
+    Left                         112
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Released
+    SelTextBG                    LIME
+    SelTextColor                 BLUE
+    TextHeight                   1
+    TextWidth                    1
+    Top                          32
+    Value                        50
+end
+Button
+    Name                         Button6
+    ButtonColor                  GRAY
+    Caption                      fileeeee.GGG
+    Color                        BLACK
+    Font                         FONT1
+    Index                        0
+    Left                         214
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Released
+    SelTextBG                    LIME
+    SelTextColor                 BLUE
+    TextHeight                   1
+    TextWidth                    1
+    Top                          32
+    Value                        50
+end
+Button
+    Name                         Button7
+    ButtonColor                  GRAY
+    Caption                      fileeeee.GGG
+    Color                        BLACK
+    Font                         FONT1
+    Index                        0
+    Left                         10
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Released
+    SelTextBG                    LIME
+    SelTextColor                 BLUE
+    TextHeight                   1
+    TextWidth                    1
+    Top                          54
+    Value                        50
+end
+Button
+    Name                         Button8
+    ButtonColor                  GRAY
+    Caption                      fileeeee.GGG
+    Color                        BLACK
+    Font                         FONT1
+    Index                        0
+    Left                         112
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Released
+    SelTextBG                    LIME
+    SelTextColor                 BLUE
+    TextHeight                   1
+    TextWidth                    1
+    Top                          54
+    Value                        50
+end
+Button
+    Name                         Button9
+    ButtonColor                  GRAY
+    Caption                      fileeeee.GGG
+    Color                        BLACK
+    Font                         FONT1
+    Index                        0
+    Left                         214
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Released
+    SelTextBG                    LIME
+    SelTextColor                 BLUE
+    TextHeight                   1
+    TextWidth                    1
+    Top                          54
+    Value                        50
+end
+Button
+    Name                         Button10
+    ButtonColor                  GRAY
+    Caption                      fileeeee.GGG
+    Color                        BLACK
+    Font                         FONT1
+    Index                        0
+    Left                         10
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Released
+    SelTextBG                    LIME
+    SelTextColor                 BLUE
+    TextHeight                   1
+    TextWidth                    1
+    Top                          76
+    Value                        50
+end
+Button
+    Name                         Button11
+    ButtonColor                  GRAY
+    Caption                      fileeeee.GGG
+    Color                        BLACK
+    Font                         FONT1
+    Index                        0
+    Left                         112
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Released
+    SelTextBG                    LIME
+    SelTextColor                 BLUE
+    TextHeight                   1
+    TextWidth                    1
+    Top                          76
+    Value                        50
+end
+Button
+    Name                         Button12
+    ButtonColor                  GRAY
+    Caption                      fileeeee.GGG
+    Color                        BLACK
+    Font                         FONT1
+    Index                        0
+    Left                         214
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Released
+    SelTextBG                    LIME
+    SelTextColor                 BLUE
+    TextHeight                   1
+    TextWidth                    1
+    Top                          76
+    Value                        50
+end
+Button
+    Name                         Button14
+    ButtonColor                  GRAY
+    Caption                      fileeeee.GGG
+    Color                        BLACK
+    Font                         FONT1
+    Index                        0
+    Left                         112
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Released
+    SelTextBG                    LIME
+    SelTextColor                 BLUE
+    TextHeight                   1
+    TextWidth                    1
+    Top                          98
+    Value                        50
+end
+Button
+    Name                         Button13
+    ButtonColor                  GRAY
+    Caption                      fileeeee.GGG
+    Color                        BLACK
+    Font                         FONT1
+    Index                        0
+    Left                         10
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Released
+    SelTextBG                    LIME
+    SelTextColor                 BLUE
+    TextHeight                   1
+    TextWidth                    1
+    Top                          98
+    Value                        50
+end
+Button
+    Name                         Button15
+    ButtonColor                  GRAY
+    Caption                      fileeeee.GGG
+    Color                        BLACK
+    Font                         FONT1
+    Index                        0
+    Left                         10
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Released
+    SelTextBG                    LIME
+    SelTextColor                 BLUE
+    TextHeight                   1
+    TextWidth                    1
+    Top                          120
+    Value                        50
+end
+Button
+    Name                         Button16
+    ButtonColor                  GRAY
+    Caption                      fileeeee.GGG
+    Color                        BLACK
+    Font                         FONT1
+    Index                        0
+    Left                         10
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Released
+    SelTextBG                    LIME
+    SelTextColor                 BLUE
+    TextHeight                   1
+    TextWidth                    1
+    Top                          142
+    Value                        50
+end
+Button
+    Name                         Button17
+    ButtonColor                  GRAY
+    Caption                      fileeeee.GGG
+    Color                        BLACK
+    Font                         FONT1
+    Index                        0
+    Left                         10
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Released
+    SelTextBG                    LIME
+    SelTextColor                 BLUE
+    TextHeight                   1
+    TextWidth                    1
+    Top                          164
+    Value                        50
+end
+Button
+    Name                         Button19
+    ButtonColor                  GRAY
+    Caption                      fileeeee.GGG
+    Color                        BLACK
+    Font                         FONT1
+    Index                        0
+    Left                         112
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Released
+    SelTextBG                    LIME
+    SelTextColor                 BLUE
+    TextHeight                   1
+    TextWidth                    1
+    Top                          120
+    Value                        50
+end
+Button
+    Name                         Button20
+    ButtonColor                  GRAY
+    Caption                      fileeeee.GGG
+    Color                        BLACK
+    Font                         FONT1
+    Index                        0
+    Left                         112
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Released
+    SelTextBG                    LIME
+    SelTextColor                 BLUE
+    TextHeight                   1
+    TextWidth                    1
+    Top                          142
+    Value                        50
+end
+Button
+    Name                         Button21
+    ButtonColor                  GRAY
+    Caption                      fileeeee.GGG
+    Color                        BLACK
+    Font                         FONT1
+    Index                        0
+    Left                         112
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Released
+    SelTextBG                    LIME
+    SelTextColor                 BLUE
+    TextHeight                   1
+    TextWidth                    1
+    Top                          164
+    Value                        50
+end
+Button
+    Name                         Button23
+    ButtonColor                  GRAY
+    Caption                      fileeeee.GGG
+    Color                        BLACK
+    Font                         FONT1
+    Index                        0
+    Left                         214
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Released
+    SelTextBG                    LIME
+    SelTextColor                 BLUE
+    TextHeight                   1
+    TextWidth                    1
+    Top                          98
+    Value                        50
+end
+Button
+    Name                         Button24
+    ButtonColor                  GRAY
+    Caption                      fileeeee.GGG
+    Color                        BLACK
+    Font                         FONT1
+    Index                        0
+    Left                         214
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Released
+    SelTextBG                    LIME
+    SelTextColor                 BLUE
+    TextHeight                   1
+    TextWidth                    1
+    Top                          120
+    Value                        50
+end
+Button
+    Name                         Button25
+    ButtonColor                  GRAY
+    Caption                      fileeeee.GGG
+    Color                        BLACK
+    Font                         FONT1
+    Index                        0
+    Left                         214
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Released
+    SelTextBG                    LIME
+    SelTextColor                 BLUE
+    TextHeight                   1
+    TextWidth                    1
+    Top                          142
+    Value                        50
+end
+Button
+    Name                         Button26
+    ButtonColor                  GRAY
+    Caption                      fileeeee.GGG
+    Color                        BLACK
+    Font                         FONT1
+    Index                        0
+    Left                         214
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Released
+    SelTextBG                    LIME
+    SelTextColor                 BLUE
+    TextHeight                   1
+    TextWidth                    1
+    Top                          164
+    Value                        50
+end
+Button
+    Name                         Button1
+    ButtonColor                  GRAY
+    Caption                      fileeeee.GGG
+    Color                        BLACK
+    Font                         FONT1
+    Index                        0
+    Left                         10
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Released
+    SelTextBG                    LIME
+    SelTextColor                 BLUE
+    TextHeight                   1
+    TextWidth                    1
+    Top                          10
+    Value                        50
+end
+Button
+    Name                         Button2
+    ButtonColor                  GRAY
+    Caption                      fileeeee.GGG
+    Color                        BLACK
+    Font                         FONT1
+    Index                        0
+    Left                         112
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Released
+    SelTextBG                    LIME
+    SelTextColor                 BLUE
+    TextHeight                   1
+    TextWidth                    1
+    Top                          10
+    Value                        50
+end
+Button
+    Name                         Button3
+    ButtonColor                  GRAY
+    Caption                      fileeeee.GGG
+    Color                        BLACK
+    Font                         FONT1
+    Index                        0
+    Left                         214
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Released
+    SelTextBG                    LIME
+    SelTextColor                 BLUE
+    TextHeight                   1
+    TextWidth                    1
+    Top                          10
+    Value                        50
+end
+Label
+    Name                         Label28
+    4DGLFont.Font                FONT1
+    4DGLFont.Bold                No
+    4DGLFont.Italic              No
+    4DGLFont.Inverse             No
+    4DGLFont.Underline           No
+    4DGLFont.MagWidth            1
+    4DGLFont.MagHeight           1
+    4DGLFont.Opaque              Yes
+    BGcolor                      'Office 2003 Classic'
+    Caption                      'page 200 of 300 (1000files)'
+    FGcolor                      BLACK
+    Left                         70
+    Top                          193
+end
 Form
-    Name                         Form5
+    Name                         ButtonSDCardPage
+    Bgtype                       Color
+    Color                        'Office 2003 Classic'
+    Image                        (None)
+    Source.Height                0
+    Source.Left                  0
+    Source.Top                   0
+    Source.Width                 0
+    OnActivate                   ''
+    OnCreate                     ''
+    OnRepeat                     ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+WinButton
+    Name                         Winbutton13
+    Appearance.Alignment         Center
+    Appearance.Layout            Left
+    Appearance.PictureAlignment  Right
+    Appearance.SimpleLayout      No
+    Appearance.Spacing           3
+    AutoSizeToPicture            No
+    Bevel                        Yes
+    BevelColor                   clWhite
+    Caption                      <
+    Color                        'Office 2003 Classic'
+    Font.Color                   clWindowText
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    8
+    Font.Style                   []
+    Height                       17
+    Left                         8
+    Matrix                       -1
+    Momentary                    Yes
+    Picture                      (None)
+    StatusWhenOff.BGcolor        RED
+    StatusWhenOff.Caption        ''
+    StatusWhenOff.Glow           Yes
+    StatusWhenOff.Color          WHITE
+    StatusWhenOff.Effects        []
+    StatusWhenOff.Name           Tahoma
+    StatusWhenOff.Size           8
+    StatusWhenOff.Style          []
+    StatusWhenOff.Visible        Yes
+    StatusWhenOn.BGcolor         RED
+    StatusWhenOn.Caption         ''
+    StatusWhenOn.Glow            Yes
+    StatusWhenOn.Color           WHITE
+    StatusWhenOn.Effects         []
+    StatusWhenOn.Name            Tahoma
+    StatusWhenOn.Size            8
+    StatusWhenOn.Style           []
+    StatusWhenOn.Visible         Yes
+    Top                          188
+    Visible                      Yes
+    Width                        27
+    OnChanged                    ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+WinButton
+    Name                         Winbutton14
+    Appearance.Alignment         Center
+    Appearance.Layout            Left
+    Appearance.PictureAlignment  Right
+    Appearance.SimpleLayout      No
+    Appearance.Spacing           3
+    AutoSizeToPicture            No
+    Bevel                        Yes
+    BevelColor                   clWhite
+    Caption                      >
+    Color                        'Office 2003 Classic'
+    Font.Color                   clWindowText
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    8
+    Font.Style                   []
+    Height                       17
+    Left                         284
+    Matrix                       -1
+    Momentary                    Yes
+    Picture                      (None)
+    StatusWhenOff.BGcolor        RED
+    StatusWhenOff.Caption        ''
+    StatusWhenOff.Glow           Yes
+    StatusWhenOff.Color          WHITE
+    StatusWhenOff.Effects        []
+    StatusWhenOff.Name           Tahoma
+    StatusWhenOff.Size           8
+    StatusWhenOff.Style          []
+    StatusWhenOff.Visible        Yes
+    StatusWhenOn.BGcolor         RED
+    StatusWhenOn.Caption         ''
+    StatusWhenOn.Glow            Yes
+    StatusWhenOn.Color           WHITE
+    StatusWhenOn.Effects         []
+    StatusWhenOn.Name            Tahoma
+    StatusWhenOn.Size            8
+    StatusWhenOn.Style           []
+    StatusWhenOn.Visible         Yes
+    Top                          188
+    Visible                      Yes
+    Width                        27
+    OnChanged                    ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+Form
+    Name                         PrintConfirm
+    Bgtype                       Color
+    Color                        'Office 2003 Classic'
+    Image                        (None)
+    Source.Height                0
+    Source.Left                  0
+    Source.Top                   0
+    Source.Width                 0
+    OnActivate                   ''
+    OnCreate                     ''
+    OnRepeat                     ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+Panel
+    Name                         Panel16
+    Color                        'Office 2003 (Blue)'
+    Height                       69
+    Left                         88
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Raised
+    Top                          68
+    Width                        132
+end
+Panel
+    Name                         Panel17
+    Color                        'Office 2003 Classic'
+    Height                       61
+    Left                         91
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Raised
+    Top                          72
+    Width                        126
+end
+WinButton
+    Name                         Winbutton11
+    Appearance.Alignment         Center
+    Appearance.Layout            Left
+    Appearance.PictureAlignment  Right
+    Appearance.SimpleLayout      No
+    Appearance.Spacing           3
+    AutoSizeToPicture            No
+    Bevel                        Yes
+    BevelColor                   clWhite
+    Caption                      yes
+    Color                        'Office 2003 Classic'
+    Font.Color                   clWindowText
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    8
+    Font.Style                   []
+    Height                       24
+    Left                         104
+    Matrix                       -1
+    Momentary                    Yes
+    Picture                      (None)
+    StatusWhenOff.BGcolor        RED
+    StatusWhenOff.Caption        ''
+    StatusWhenOff.Glow           Yes
+    StatusWhenOff.Color          WHITE
+    StatusWhenOff.Effects        []
+    StatusWhenOff.Name           Tahoma
+    StatusWhenOff.Size           8
+    StatusWhenOff.Style          []
+    StatusWhenOff.Visible        Yes
+    StatusWhenOn.BGcolor         RED
+    StatusWhenOn.Caption         ''
+    StatusWhenOn.Glow            Yes
+    StatusWhenOn.Color           WHITE
+    StatusWhenOn.Effects         []
+    StatusWhenOn.Name            Tahoma
+    StatusWhenOn.Size            8
+    StatusWhenOn.Style           []
+    StatusWhenOn.Visible         Yes
+    Top                          104
+    Visible                      Yes
+    Width                        36
+    OnChanged                    ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+WinButton
+    Name                         Winbutton12
+    Appearance.Alignment         Center
+    Appearance.Layout            Left
+    Appearance.PictureAlignment  Right
+    Appearance.SimpleLayout      No
+    Appearance.Spacing           3
+    AutoSizeToPicture            No
+    Bevel                        Yes
+    BevelColor                   clWhite
+    Caption                      no
+    Color                        'Office 2003 Classic'
+    Font.Color                   clWindowText
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    8
+    Font.Style                   []
+    Height                       24
+    Left                         168
+    Matrix                       -1
+    Momentary                    Yes
+    Picture                      (None)
+    StatusWhenOff.BGcolor        RED
+    StatusWhenOff.Caption        ''
+    StatusWhenOff.Glow           Yes
+    StatusWhenOff.Color          WHITE
+    StatusWhenOff.Effects        []
+    StatusWhenOff.Name           Tahoma
+    StatusWhenOff.Size           8
+    StatusWhenOff.Style          []
+    StatusWhenOff.Visible        Yes
+    StatusWhenOn.BGcolor         RED
+    StatusWhenOn.Caption         ''
+    StatusWhenOn.Glow            Yes
+    StatusWhenOn.Color           WHITE
+    StatusWhenOn.Effects         []
+    StatusWhenOn.Name            Tahoma
+    StatusWhenOn.Size            8
+    StatusWhenOn.Style           []
+    StatusWhenOn.Visible         Yes
+    Top                          104
+    Visible                      Yes
+    Width                        36
+    OnChanged                    ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+Label
+    Name                         Label30
+    4DGLFont.Font                FONT1
+    4DGLFont.Bold                No
+    4DGLFont.Italic              No
+    4DGLFont.Inverse             No
+    4DGLFont.Underline           No
+    4DGLFont.MagWidth            1
+    4DGLFont.MagHeight           1
+    4DGLFont.Opaque              Yes
+    BGcolor                      'Office 2003 Classic'
+    Caption                      'Print file'
+    FGcolor                      BLACK
+    Left                         116
+    Top                          76
+end
+Label
+    Name                         Label29
+    4DGLFont.Font                FONT1
+    4DGLFont.Bold                No
+    4DGLFont.Italic              No
+    4DGLFont.Inverse             No
+    4DGLFont.Underline           No
+    4DGLFont.MagWidth            1
+    4DGLFont.MagHeight           1
+    4DGLFont.Opaque              Yes
+    BGcolor                      BLACK
+    Caption                      aaaaaaaaaaaaaa
+    FGcolor                      WHITE
+    Left                         106
+    Top                          88
+end
+Form
+    Name                         PrintingOption
+    Bgtype                       Color
+    Color                        'Office 2003 Classic'
+    Image                        (None)
+    Source.Height                0
+    Source.Left                  0
+    Source.Top                   0
+    Source.Width                 0
+    OnActivate                   ''
+    OnCreate                     ''
+    OnRepeat                     ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+Triangle
+    Name                         Triangle3
+    Color                        'Office 2003 (Blue)'
+    Filled                       Yes
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Solid
+    X1                           299
+    X2                           288
+    X3                           310
+    Y1                           228
+    Y2                           212
+    Y3                           212
+end
+Panel
+    Name                         Panel18
+    Color                        'Office 2003 (Blue)'
+    Height                       86
+    Left                         228
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Raised
+    Top                          130
+    Width                        84
+end
+WinButton
+    Name                         Winbutton15
+    Appearance.Alignment         Center
+    Appearance.Layout            Left
+    Appearance.PictureAlignment  Right
+    Appearance.SimpleLayout      No
+    Appearance.Spacing           3
+    AutoSizeToPicture            No
+    Bevel                        Yes
+    BevelColor                   clWhite
+    Caption                      Resume
+    Color                        'Office 2003 Classic'
+    Font.Color                   clWindowText
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    8
+    Font.Style                   []
+    Height                       19
+    Left                         240
+    Matrix                       -1
+    Momentary                    Yes
+    Picture                      (None)
+    StatusWhenOff.BGcolor        RED
+    StatusWhenOff.Caption        ''
+    StatusWhenOff.Glow           Yes
+    StatusWhenOff.Color          WHITE
+    StatusWhenOff.Effects        []
+    StatusWhenOff.Name           Tahoma
+    StatusWhenOff.Size           8
+    StatusWhenOff.Style          []
+    StatusWhenOff.Visible        Yes
+    StatusWhenOn.BGcolor         RED
+    StatusWhenOn.Caption         ''
+    StatusWhenOn.Glow            Yes
+    StatusWhenOn.Color           WHITE
+    StatusWhenOn.Effects         []
+    StatusWhenOn.Name            Tahoma
+    StatusWhenOn.Size            8
+    StatusWhenOn.Style           []
+    StatusWhenOn.Visible         Yes
+    Top                          162
+    Visible                      Yes
+    Width                        58
+    OnChanged                    ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+WinButton
+    Name                         Winbutton16
+    Appearance.Alignment         Center
+    Appearance.Layout            Left
+    Appearance.PictureAlignment  Right
+    Appearance.SimpleLayout      No
+    Appearance.Spacing           3
+    AutoSizeToPicture            No
+    Bevel                        Yes
+    BevelColor                   clWhite
+    Caption                      Pause
+    Color                        'Office 2003 Classic'
+    Font.Color                   clWindowText
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    8
+    Font.Style                   []
+    Height                       19
+    Left                         240
+    Matrix                       -1
+    Momentary                    Yes
+    Picture                      (None)
+    StatusWhenOff.BGcolor        RED
+    StatusWhenOff.Caption        ''
+    StatusWhenOff.Glow           Yes
+    StatusWhenOff.Color          WHITE
+    StatusWhenOff.Effects        []
+    StatusWhenOff.Name           Tahoma
+    StatusWhenOff.Size           8
+    StatusWhenOff.Style          []
+    StatusWhenOff.Visible        Yes
+    StatusWhenOn.BGcolor         RED
+    StatusWhenOn.Caption         ''
+    StatusWhenOn.Glow            Yes
+    StatusWhenOn.Color           WHITE
+    StatusWhenOn.Effects         []
+    StatusWhenOn.Name            Tahoma
+    StatusWhenOn.Size            8
+    StatusWhenOn.Style           []
+    StatusWhenOn.Visible         Yes
+    Top                          138
+    Visible                      Yes
+    Width                        58
+    OnChanged                    ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+WinButton
+    Name                         Winbutton17
+    Appearance.Alignment         Center
+    Appearance.Layout            Left
+    Appearance.PictureAlignment  Right
+    Appearance.SimpleLayout      No
+    Appearance.Spacing           3
+    AutoSizeToPicture            No
+    Bevel                        Yes
+    BevelColor                   clWhite
+    Caption                      'open file'
+    Color                        'Office 2003 Classic'
+    Font.Color                   clWindowText
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    8
+    Font.Style                   []
+    Height                       21
+    Left                         240
+    Matrix                       -1
+    Momentary                    Yes
+    Picture                      (None)
+    StatusWhenOff.BGcolor        RED
+    StatusWhenOff.Caption        ''
+    StatusWhenOff.Glow           Yes
+    StatusWhenOff.Color          WHITE
+    StatusWhenOff.Effects        []
+    StatusWhenOff.Name           Tahoma
+    StatusWhenOff.Size           8
+    StatusWhenOff.Style          []
+    StatusWhenOff.Visible        Yes
+    StatusWhenOn.BGcolor         RED
+    StatusWhenOn.Caption         ''
+    StatusWhenOn.Glow            Yes
+    StatusWhenOn.Color           WHITE
+    StatusWhenOn.Effects         []
+    StatusWhenOn.Name            Tahoma
+    StatusWhenOn.Size            8
+    StatusWhenOn.Style           []
+    StatusWhenOn.Visible         Yes
+    Top                          186
+    Visible                      Yes
+    Width                        58
+    OnChanged                    ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+Panel
+    Name                         Panel19
+    Color                        'Office 2003 Classic'
+    Height                       78
+    Left                         232
+    Outlined                     No
+    OutlineColor                 WHITE
+    Pattern                      Fine
+    State                        Raised
+    Top                          134
+    Width                        76
+end
+Form
+    Name                         Form1
     Bgtype                       Color
     Color                        BLACK
     Image                        (None)
@@ -1509,7 +2459,7 @@ Form
     OnTouchReleased              ''
 end
 Form
-    Name                         Form6
+    Name                         Form2
     Bgtype                       Color
     Color                        BLACK
     Image                        (None)

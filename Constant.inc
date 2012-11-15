@@ -1,10 +1,11 @@
-#inherit "4DGL_16bitColours.fnc"
 #CONST
 
 FALSE 0
 TRUE 1
 BUFF_LEN 50
+COMBUFF_LEN 50
 MESSAGE_DIM 46
+
 
 STARTUP 0
 ALERT 1
@@ -18,6 +19,15 @@ COLOUR_TRACKPAD 0x8D9C
 GAUGE_TTEMP 85
 GAUGE_MAX_TEMP 250
 
+MAX_FILE 100
+MAX_FILE_NAME 13
+
+UPDATE 0
+EVENT 1
+
+SET_TIMER 0
+REMOVE_TIMER 1
+
 //ID Serial Protocol
 MESSAGE_ID 'M'
 HOTEND_ID 'H'  //H0,H1
@@ -26,6 +36,8 @@ BED_ID 'B'
 TIME_ID 't'
 ZPOS_ID 'Z'
 SDPERCENT_ID 'S'
+SOUND_ID 's'
+DEBUG_SHOW_MEM_ID 'D'
 
 TRACKPAD_MAX_EXTMM 300
 TRACKPAD_MAX_EXTMM_MIN 300 // map function does not work with >300
@@ -39,6 +51,8 @@ W_EXTMM 0
 W_EXTMM_MIN 1
 W_EXTTEMP 2
 W_BEDTEMP 3
+W_PRINT_CONFIRM 6
+W_PRINTING_OPTION 7
 
 #END
 
@@ -66,8 +80,15 @@ var msg[MESSAGE_DIM]; //Max 46 char
 
 var current_extruder;
 
+var sd_current_page:=0;
+var sd_page_count:=0;
 
-
+var filenames;
+var file_count;
+var files[MAX_FILE];
+var p_filenames;
+var FILE_START:=FALSE;
+var SD_READING:=FALSE;
 
 
 

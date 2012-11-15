@@ -3,7 +3,7 @@
 "Gauge1" 4600 0001 E8 14
 "Gauge2" 5600 0006 E8 50
 "Gauge3" 6600 000B E8 8C
-"Image3" 7600 0010 120 E8
+"Image3" 7600 0010 124 E6
 "Winbutton1" 7800 0010 04 B7
 "Winbutton2" 8400 0010 04 C7
 "Winbutton3" 9000 0010 8C B7
@@ -18,3 +18,10 @@
 "Winbutton7" 5C00 001C 1E 8E
 "Winbutton8" 6200 001C 1E 9E
 "Winbutton10" 6800 001C 108 B6
+"Winbutton13" 8400 001C 08 BC
+"Winbutton14" 8C00 001C 11C BC
+"Winbutton11" 9400 001C 68 68
+"Winbutton12" A200 001C A8 68
+"Winbutton15" B000 001C F0 A2
+"Winbutton16" C200 001C F0 8A
+"Winbutton17" D400 001C F0 BA

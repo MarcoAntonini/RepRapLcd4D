@@ -1,4 +1,4 @@
-// File generated 13/11/2012 13:47:07
+// File generated 15/11/2012 17:54:07
 // Warning! This is a generated file, any manual changes will be
 // lost during the next generation.
 
@@ -24,6 +24,13 @@
     iWinbutton7     // offset 0x1C5C00
     iWinbutton8     // offset 0x1C6200
     iWinbutton10    // offset 0x1C6800
+    iWinbutton13    // offset 0x1C8400
+    iWinbutton14    // offset 0x1C8C00
+    iWinbutton11    // offset 0x1C9400
+    iWinbutton12    // offset 0x1CA200
+    iWinbutton15    // offset 0x1CB000
+    iWinbutton16    // offset 0x1CC200
+    iWinbutton17    // offset 0x1CD400
 #END
 
 var disk, hndl ;

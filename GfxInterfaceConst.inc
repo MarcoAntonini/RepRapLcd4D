@@ -20,6 +20,13 @@
     iWinbutton7     // offset 0x1C5C00
     iWinbutton8     // offset 0x1C6200
     iWinbutton10    // offset 0x1C6800
+    iWinbutton13    // offset 0x1C8400
+    iWinbutton14    // offset 0x1C8C00
+    iWinbutton11    // offset 0x1C9400
+    iWinbutton12    // offset 0x1CA200
+    iWinbutton15    // offset 0x1CB000
+    iWinbutton16    // offset 0x1CC200
+    iWinbutton17    // offset 0x1CD400
 #END
 
 var disk, hndl ;
@@ -28,7 +35,12 @@ var disk, hndl ;
 /***********************************************************************************
 *   Touch Region Axis Move
 ************************************************************************************/
+#CONST
+    HOMING_ACTION_INDEX 22
+#END
+
 #DATA
+
 
 word AXIS_MOVE_TOUCH_REGION  X_PLUS_FAST,X_PLUS_NORMAL,X_PLUS_SLOW,X_PLUS_VSLOW,
                              X_MINUS_FAST,X_MINUS_NORMAL,X_MINUS_SLOW,X_MINUS_VSLOW,
@@ -149,3 +161,30 @@ word TRACKPAD_CONTAINER 28, 140, 212, 176
 word WIN_SDCARD_CONTAINER 0, 0, 320, 215
 
 #END
+
+
+/***********************************************************************************
+*   Button SDCard File List
+************************************************************************************/
+
+#DATA
+
+word PRINTING_OPTION_TOUCH_REGION 228, 132, 310, 214
+
+word BUTTON_FILES_Y 10,32,54,76,98,120,142,164
+word BUTTON_FILES_X 10,112,214
+
+#END
+
+#CONST
+
+BUTTON_FILE_WIDTH 98
+BUTTON_FILE_HEIGHT 17
+
+#END
+
+#DATA
+
+
+#END
+

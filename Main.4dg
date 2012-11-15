@@ -19,29 +19,33 @@
  */
 
 #inherit "4DGL_16bitColours.fnc"
-#inherit "GfxInterface.4dg"
-#inherit "SerialManager.4dg"
-#inherit "TouchManager.4dg"
+#inherit "GfxInterface.fnc"
+#inherit "SerialManager.fnc"
+#inherit "TouchManager.fnc"
 #inherit "GfxInterfaceConst.inc"
 #inherit "Constant.inc"
 
 func initSD()
     gfx_Set(SCREEN_MODE,LANDSCAPE);
-    var err:=TRUE;
+    var err:=0;
     var disk;
     setFontInfo(0,0);
-    putstr("init...\n");
-    putstr("mounting...\n");
-    putstr("Error: Drive not found!\n");
-    putstr("Remounting...\n");
+    putstr("init..\n");
+    putstr("mounting..\n");
     if (!(disk:=file_Mount()))
-        //sys_SetTimerEvent(TIMER5, myfunc);
-        //sys_SetTimer(TIMER5,200);
-        //SystemReset();
+        txt_FGcolour(RED);
+        putstr("Error: Drive not found!\n");
+        putstr("Try Remounting...\n");
         while(!(disk :=file_Mount()))
-
+            err++;
+            if(err>30)
+                putstr("Rebooting..\n");
+                pause(1000);
+                SystemReset();
+            endif
         wend
     endif
+    putstr("Starting Interface..\n");
     hndl := file_LoadImageControl("GFXINT~1.dat", "GFXINT~1.gci", 1);
     gfx_TransparentColour(0x0020);
     gfx_Transparency(ON);
@@ -74,14 +78,15 @@ repeat
         TouchEvent(touchX,touchY);
     else if(touchState == TOUCH_MOVING && EN_TOUCH_MOVING && WINDOW != W_MAIN && WINDOW != W_SDCARD )
         TouchEvent(touchX,touchY);
-    else if(touchState == TOUCH_RELEASED)
-        TouchReleasedEvent(touchX,touchY);
+    else if(touchState == TOUCH_RELEASED && WINDOW != W_SDCARD )
+        TouchReleasedEvent();
     endif
 
     //--------------------------------------------------
     // scan for Serial Data
     //--------------------------------------------------
      SerialEvent();
+     SerialErrorWatchDog();
 
 forever
 
@@ -92,7 +97,8 @@ endfunc
 func initVars()
     EN_TOUCH_MOVING:=FALSE;
     WINDOW:=W_MAIN;
-    current_extruder:=1;
+    //WINDOW:=W_SDCARD; //for DEBUG
+    current_extruder:=0;
     //Init Global Vars
     _ttH0:=0; //Temp Target HotEnd0
     to(ttH0); print("000");
@@ -113,14 +119,37 @@ func initVars()
     to(msg); print(""); //Max 46 char
 endfunc
 
-func sound(var type)
-     snd_Volume(127);
-     if(type==STARTUP)
-        file_PlayWAV("startup.wav");
-     else if(type==ALERT)
-        file_PlayWAV("alert.wav");
-     else if(type==FINISH)
-        file_PlayWAV("finish.wav"
+/*func returnToMainWatchDog(var type)
+    if(type==SET_TIMER)
+         sys_SetTimerEvent(TIMER0, returnToMain);
+         sys_SetTimer(TIMER0,2000);
+    else if(type==REMOVE_TIMER)
+         sys_SetTimer(TIMER0,0);
     endif
 endfunc
 
+func returnToMain()
+    WINDOW:=W_MAIN;
+    gfx_RectangleFilled(0, 167, 319, 229,BLACK);
+    drawGfxInterface();
+endfunc*/
+
+func sound(var type)
+     snd_Volume(127);
+     if(type==STARTUP)
+        if(file_Exists("startup.wav"))
+            file_PlayWAV("startup.wav");
+        endif
+     else if(type==ALERT)
+         if(file_Exists("alert.wav"))
+            file_PlayWAV("alert.wav");
+         endif
+     else if(type==FINISH)
+         if(file_Exists("finish.wav"))
+            file_PlayWAV("finish.wav");
+         endif
+    endif
+endfunc
+
+//sys_SetTimerEvent(TIMER5, myfunc);
+//sys_SetTimer(TIMER5,200);

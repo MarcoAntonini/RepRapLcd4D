@@ -3,8 +3,6 @@
 
 func main()
 
-    repeat
-    forever
-
 endfunc
+
 

@@ -1,4 +1,6 @@
-// object indexes into ImageControl
+/***********************************************************************************
+*  Object indexes into ImageControl
+************************************************************************************/
 #CONST
     iImage1         // offset 0x0
     iImage2         // offset 0x10C00
@@ -139,7 +141,6 @@ byte Z_HOMING_ACT "G28 Z0\0"
 /***********************************************************************************
 *   Touch Region Button Set
 ************************************************************************************/
-
 #CONST
 
 EXTMM_ACT 0
@@ -166,7 +167,6 @@ word WIN_SDCARD_CONTAINER 0, 0, 320, 215
 /***********************************************************************************
 *   Button SDCard File List
 ************************************************************************************/
-
 #DATA
 
 word PRINTING_OPTION_TOUCH_REGION 228, 132, 310, 214
@@ -183,8 +183,20 @@ BUTTON_FILE_HEIGHT 17
 
 #END
 
+/***********************************************************************************
+*   Messages
+************************************************************************************/
 #DATA
 
+word MSG_OP_NOT_PERMITTED "Operation not permitted while printing.\0"
+word MSG_SET_HEATER "set Heater target to \0"
+word MSG_SET_BED "set Bed target to \0"
+word MSG_HEATER_SHUTDOWN "Heater shutdown\0"
+word MSG_BED_SHUTDOWN "Bed shutdown\0"
+word MSG_CENT " C\0"
+word MSG_HOMING "Homing..\0"
+word MSG_MM_OF_FILAMENT "mm of filament..\0"
 
 #END
+
 

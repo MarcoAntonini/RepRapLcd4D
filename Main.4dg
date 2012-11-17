@@ -26,7 +26,7 @@
 #inherit "Constant.inc"
 
 func initSD()
-    gfx_Set(SCREEN_MODE,LANDSCAPE);
+    gfx_Set(SCREEN_MODE,LANDSCAPE_R);
     var err:=0;
     var disk;
     setFontInfo(0,0);
@@ -95,6 +95,9 @@ endfunc
 //=======================================================
 
 func initVars()
+    FILE_START:=FALSE;
+    SD_READING:=FALSE;
+    PRINTING:=FALSE;
     EN_TOUCH_MOVING:=FALSE;
     WINDOW:=W_MAIN;
     //WINDOW:=W_SDCARD; //for DEBUG
@@ -151,5 +154,3 @@ func sound(var type)
     endif
 endfunc
 
-//sys_SetTimerEvent(TIMER5, myfunc);
-//sys_SetTimer(TIMER5,200);

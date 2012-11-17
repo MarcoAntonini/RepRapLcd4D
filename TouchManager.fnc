@@ -13,59 +13,74 @@ func TouchEvent(var x,var y)
 
     if(WINDOW==W_MAIN)  //Window Main TouchEvent
         if(touched==iImage1 || touched==iImage2) //Axis Move
-            for(i:=0; i<sizeof(AXIS_MOVE_TOUCH_REGION); i++)
-                if( checkRegion( @ AXIS_MOVE_TOUCH_REGION[i] ) ) //Moves the axes depending on the region Touched
-                    SerialPrintlnBuffer(AXIS_MOVE_TOUCH_ACTION[i]);
-                    if(i==HOMING_ACTION_INDEX)
-                        updateMessage("Homing..","","");
-                        setTimerMessage(4500);
+            if(PRINTING==FALSE)
+                for(i:=0; i<sizeof(AXIS_MOVE_TOUCH_REGION); i++)
+                    if( checkRegion( @ AXIS_MOVE_TOUCH_REGION[i] ) ) //Moves the axes depending on the region Touched
+                        SerialPrintlnBuffer(AXIS_MOVE_TOUCH_ACTION[i]);
+                        if(i==HOMING_ACTION_INDEX)
+                            updateMessage(MSG_HOMING,"","");
+                            setTimerMessage(4500);
+                        endif
+                        pause(50);
+                        break;
                     endif
-                    pause(50);
-                    break;
-                endif
-            next
+                next
+            else
+                updateMessage( MSG_OP_NOT_PERMITTED,"","");
+                setTimerMessage(3000);
+            endif
         else if(touched==iImage3) //SD Card TouchEvent
             WINDOW:=W_PRINTING_OPTION;
             drawWinPrintingOption();
         else if(touched==iWinbutton1) //Extrude Button
-                updateButtonExtrude(ON);
-                SerialPrintBuffer("G91\nG1 E");
-                SerialPrintNumber(str2w(str_Ptr(ex_setmm)));
-                SerialPrintBuffer(" F");
-                SerialPrintlnNumber(str2w(str_Ptr(ex_setmm_min)));
-                SerialPrintlnBuffer("G90");
-                updateMessage("Extrude ",str_Ptr(ex_setmm),"mm of filament..");
-                setTimerMessage(3000);
+                if(PRINTING==FALSE)
+                    updateButtonExtrude(ON);
+                    SerialPrintBuffer("G91\nG1 E");
+                    SerialPrintNumber(str2w(str_Ptr(ex_setmm)));
+                    SerialPrintBuffer(" F");
+                    SerialPrintlnNumber(str2w(str_Ptr(ex_setmm_min)));
+                    SerialPrintlnBuffer("G90");
+                    updateMessage("Extrude ",str_Ptr(ex_setmm),MSG_MM_OF_FILAMENT);
+                    setTimerMessage(3000);
+                else
+                    updateMessage(MSG_OP_NOT_PERMITTED,"","");
+                    setTimerMessage(3000);
+                endif
         else if(touched==iWinbutton2) //Reverse Button
-                updateButtonReverse(ON);
-                SerialPrintBuffer("G91\nG1 E-");
-                SerialPrintNumber(str2w(str_Ptr(ex_setmm)));
-                SerialPrintBuffer(" F");
-                SerialPrintlnNumber(str2w(str_Ptr(ex_setmm_min)));
-                SerialPrintlnBuffer("G90");
-                updateMessage("Reverse ",str_Ptr(ex_setmm),"mm of filament..");
-                setTimerMessage(3000);
+                if(PRINTING==FALSE)
+                    updateButtonReverse(ON);
+                    SerialPrintBuffer("G91\nG1 E-");
+                    SerialPrintNumber(str2w(str_Ptr(ex_setmm)));
+                    SerialPrintBuffer(" F");
+                    SerialPrintlnNumber(str2w(str_Ptr(ex_setmm_min)));
+                    SerialPrintlnBuffer("G90");
+                    updateMessage("Reverse ",str_Ptr(ex_setmm),MSG_MM_OF_FILAMENT);
+                    setTimerMessage(3000);
+                else
+                    updateMessage(MSG_OP_NOT_PERMITTED,"","");
+                    setTimerMessage(3000);
+                endif
         else if(touched==iWinbutton3) //Extruder Off
             updateButtonExOff(ON);
             SerialPrintlnBuffer("M104 S0");
-            updateMessage("Heater shutdown","","");
+            updateMessage(MSG_HEATER_SHUTDOWN,"","");
             setTimerMessage(3000);
         else if(touched==iWinbutton4) //Bed Off
             updateButtonBedOff(ON);
             SerialPrintlnBuffer("M140 S0");
-            updateMessage("Bed shutdown","","");
+            updateMessage(MSG_BED_SHUTDOWN,"","");
             setTimerMessage(3000);
         else if(touched==iWinbutton5) //Extruder Set
             updateButtonExSet(ON);
             SerialPrintBuffer("M104 S");
             SerialPrintlnNumber(str2w(str_Ptr(ex_setTemp)));
-            updateMessage("set Heater target to ",str_Ptr(ex_setTemp)," C");
+            updateMessage(MSG_SET_HEATER,str_Ptr(ex_setTemp),MSG_CENT);
             setTimerMessage(3000);
         else if(touched==iWinbutton6) //Bed Set
             updateButtonBedSet(ON);
             SerialPrintBuffer("M140 S");
             SerialPrintlnNumber(str2w(str_Ptr(bed_setTemp)));
-            updateMessage("set Bed target to ",str_Ptr(bed_setTemp)," C");
+            updateMessage(MSG_SET_BED,str_Ptr(bed_setTemp),MSG_CENT);
             setTimerMessage(3000);
         else if(touched==iWinbutton9 || touched==iWinbutton10) //Switch Extruder
             updateButtonSwitchEx(EVENT);
@@ -138,6 +153,7 @@ func TouchEvent(var x,var y)
             updateMessage("Printing file ",files[file_selected],"");
             //setTimerMessage(3000);
             SerialPrintlnBuffer("M24");
+            PRINTING:=TRUE;
             //updateMessage(files[file_selected]);
             switchWinSDtoMain();
         else if(touched==iWinbutton12) //No Confirm
@@ -149,9 +165,11 @@ func TouchEvent(var x,var y)
         if(touched==iWinbutton15) //Resume Print Button
              updateResumeButton(ON);
              SerialPrintBuffer("M24\n");
+             PRINTING:=TRUE;
         else if(touched==iWinbutton16) //Pause Button
              updatePauseButton(ON);
              SerialPrintBuffer("M25\n");
+             PRINTING:=FALSE;
         else if(touched==iWinbutton17) //Open File Button
             updateOpenFileButton(ON);
             WINDOW:=W_SDCARD;

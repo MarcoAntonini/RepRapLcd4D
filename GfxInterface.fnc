@@ -149,7 +149,12 @@ func updateMessage(var *_msg0,var *_msg1,var *_msg2)
     var offset;
     var len;
     len:=(str_Length(_msg0)*7) + (str_Length(_msg1)*7) + (str_Length(_msg2)*7);
-    gfx_RectangleFilled(0, 216, 319, 224,BLACK); //Clear old Message
+    gfx_RectangleFilled(0, 214, 319, 224,BLACK); //Clear old Message
+    if(WINDOW==W_SDCARD)
+         gfx_TriangleFilled(299, 228, 288, 212,  310, 212, 0x8D9C);
+    else if(WINDOW==W_PRINTING_OPTION)
+         gfx_TriangleFilled(299, 228, 288, 212,  310, 212, 0x8D9C);
+    endif
     offset:= ((MESSAGE_DIM*7) - len)/2; //Offset for Center String
     setFontMessage(offset, 217);
     printBuffer(_msg0);
@@ -160,11 +165,6 @@ endfunc
 
 func updateBlankMessage()
     updateMessage("","","");
-    if(WINDOW==W_SDCARD)
-         gfx_TriangleFilled(299, 228, 288, 212,  310, 212, 0x8D9C);
-    else if(WINDOW==W_PRINTING_OPTION)
-         gfx_TriangleFilled(299, 228, 288, 212,  310, 212, 0x8D9C);
-    endif
 endfunc
 
 func setTimerMessage(var time)
@@ -182,7 +182,7 @@ func updateHotEnd0(var *_msg)
         setFontLabel(240,44);
     endif
     printBuffer(_msg);
-    img_SetWord(hndl, iGauge1, IMAGE_INDEX, tempGauge(val,_ttH0));
+    img_SetWord(hndl, iGauge1, IMAGE_INDEX, tempGauge(val,_ttH0,GAUGE_MAX_TEMP_H));
     img_Show(hndl,iGauge1);
 endfunc
 
@@ -195,7 +195,7 @@ func updateHotEnd1(var *_msg)
         setFontLabel(240,104);
     endif
     printBuffer(_msg);
-    img_SetWord(hndl, iGauge2, IMAGE_INDEX, tempGauge(val,_ttH1));
+    img_SetWord(hndl, iGauge2, IMAGE_INDEX, tempGauge(val,_ttH1,GAUGE_MAX_TEMP_H));
     img_Show(hndl,iGauge2) ;
 endfunc
 
@@ -231,7 +231,7 @@ func updateBed(var *_msg )
         setFontLabel(240,164);
     endif
     printBuffer(_msg);
-    img_SetWord(hndl, iGauge3, IMAGE_INDEX, tempGauge(str2w(_msg),_ttB));
+    img_SetWord(hndl, iGauge3, IMAGE_INDEX, tempGauge(str2w(_msg),_ttB,GAUGE_MAX_TEMP_B));
     img_Show(hndl,iGauge3);
 endfunc
 
@@ -255,6 +255,9 @@ endfunc
 func updateSDPerc(var *_msg)
     setFontInfo(242,232);
     printBuffer(_msg);
+    if(str2w(_msg)==100)
+        PRINTING:=FALSE;
+    endif
 endfunc
 
 func updateZpos(var *_msg)
@@ -262,13 +265,13 @@ func updateZpos(var *_msg)
     printBuffer(_msg);
 endfunc
 
-func tempGauge(var current_val,var target)
+func tempGauge(var current_val,var target,var max_temp)
     // val : target = x : GAUGE_TTEMP
     var ret;
     if(target!=0)
         ret := (current_val*GAUGE_TTEMP)/target;
     else
-        ret := (current_val*GAUGE_TTEMP)/GAUGE_MAX_TEMP;
+        ret := (current_val*GAUGE_TTEMP)/max_temp;
     endif
     if(ret>100)
         ret:=100;
@@ -640,6 +643,7 @@ func updatePageFileIndex()
 endfunc
 
 func drawSDScreen()
+     gfx_RectangleFilled(200, 200, 318, 221,BLACK);
     gfx_Panel(PANEL_RAISED, 0, 0, 320, 215, COLOURSEL_INDICATOR);
     gfx_TriangleFilled(299, 228, 288, 212,  310, 212, COLOURSEL_INDICATOR);
     gfx_Panel(PANEL_RAISED, 4, 4, 312, 207, 0xD699);

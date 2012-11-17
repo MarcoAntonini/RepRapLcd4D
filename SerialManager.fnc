@@ -120,7 +120,7 @@ func parseSDFile(var *buffer,var n)
         file_count:=MAX_FILE;
         return;
     endif
-    if(str_Match(&p,"Begin file list") && FILE_START==FALSE)
+    if(str_Match(&p,"Begin file list") && FILE_START==FALSE) //FILESTART: avoid it a double malloc
         FILE_START:=TRUE;
         file_count:=0;
         sd_current_page:=0;
@@ -142,7 +142,7 @@ func parseSDFile(var *buffer,var n)
             updateButtonFileList();
         endif
 
-    else if(FILE_START)
+    else if(FILE_START) //FILESTART semaphore
          if(str_Find(&p,".G") || str_Find(&p,".g")) //if is GCODE file
             files[file_count]:=p_filenames;
             file_count++;

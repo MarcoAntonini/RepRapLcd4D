@@ -1,4 +1,5 @@
 #platform "uLCD-32PT_GFX2"
+#inherit "4DGL_16bitColours.fnc"
 // This programs is used to calibrate the touch screen.
 // Touchscreen calibration is provided as it is sometimes necessary to
 // re-calibrate the touch screen for various reasons:-
@@ -53,8 +54,8 @@ endfunc
 func getDot1()
     var Xsample,Ysample;
 
-    gfx_MoveTo(70,284);
-    print("                ");              // clear dot 2 text if present
+   // gfx_MoveTo(70,284);
+   // print("                ");              // clear dot 2 text if present
 
     gfx_Hline(32,24-12,24+12,WHITE);
     gfx_Vline(24,32-12,32+12,WHITE);
@@ -62,16 +63,22 @@ func getDot1()
     gfx_Circle(24,32,12,WHITE);
 
     repeat
-        gfx_MoveTo(40,28);
+        gfx_MoveTo(50,210);
         if(peekW(SYSTEM_TIMER_LO) & 512)
+             gfx_Set(SCREEN_MODE,LANDSCAPE);
             print("<<< Touch Centre");
+            gfx_Set(SCREEN_MODE,PORTRAIT);
         else
+             gfx_Set(SCREEN_MODE,LANDSCAPE);
             print("                ");
+            gfx_Set(SCREEN_MODE,PORTRAIT);
         endif
     until (touch_Get(TOUCH_STATUS) == TOUCH_PRESSED);
 
-    gfx_MoveTo(40,28);
+    gfx_MoveTo(50,210);
+    gfx_Set(SCREEN_MODE,LANDSCAPE);
     print("<<< Sampling....");
+    gfx_Set(SCREEN_MODE,PORTRAIT);
 
     repeat
         scanTouch();
@@ -82,8 +89,10 @@ func getDot1()
         until(X1==Xsample && Y1 ==Ysample);
     until(X1 > 0x40 && Y1 >= 0x40);
 
-    gfx_MoveTo(40,28);
+    gfx_MoveTo(50,210);
+    gfx_Set(SCREEN_MODE,LANDSCAPE);
     print("OK              \n");
+    gfx_Set(SCREEN_MODE,PORTRAIT);
 
     while(touch_Get(TOUCH_STATUS) != TOUCH_RELEASED);   // wait for touch release
 endfunc
@@ -101,17 +110,24 @@ func getDot2()
 
 
     repeat
-        gfx_MoveTo(70,284);
+        gfx_MoveTo(140,17);
         if(peekW(SYSTEM_TIMER_LO) & 512)
+            gfx_Set(SCREEN_MODE,LANDSCAPE);
             print("Touch Centre >>>");
+            gfx_Set(SCREEN_MODE,PORTRAIT);
         else
+             gfx_Set(SCREEN_MODE,LANDSCAPE);
             print("                ");
+            gfx_Set(SCREEN_MODE,PORTRAIT);
         endif
         //scanTouch();
     until (touch_Get(TOUCH_STATUS) == TOUCH_PRESSED);
+    gfx_Set(SCREEN_MODE,LANDSCAPE);
+    gfx_MoveTo(140,17);
 
-    gfx_MoveTo(70,284);
+
     print("    Sampling >>>");
+    gfx_Set(SCREEN_MODE,PORTRAIT);
 
     repeat
         scanTouch();
@@ -122,15 +138,18 @@ func getDot2()
         until(X1==Xsample && Y1 ==Ysample);
     until(X1 > 0x200 && Y1 >= 0x200);
 
-    gfx_MoveTo(70,284);
+    gfx_MoveTo(140,17);
+    gfx_Set(SCREEN_MODE,LANDSCAPE);
     print("              OK");
+    gfx_Set(SCREEN_MODE,PORTRAIT);
 
     while(touch_Get(TOUCH_STATUS) != TOUCH_RELEASED);   // wait for touch release
 endfunc
 
 func main()
 
-    //gfx_Set(SCREEN_MODE,LANDSCAPE);
+
+
 repeat
     gfx_Cls();
 redo:
@@ -138,12 +157,14 @@ redo:
     touch_Set(TOUCH_ENABLE);                                     // enable the touch screen
 
     // display the current internal calibration values
-    txt_MoveCursor(6,4);
+    gfx_Set(SCREEN_MODE,LANDSCAPE);
+    txt_MoveCursor(5,1);
     print("Current Values");
     print("\nTOUCH_XMINCAL=",[HEX] peekW(TOUCH_XMINCAL));
     print("\nTOUCH_YMINCAL=",[HEX] peekW(TOUCH_YMINCAL));
     print("\nTOUCH_XMAXCAL=",[HEX] peekW(TOUCH_XMAXCAL));
     print("\nTOUCH_YMAXCAL=",[HEX] peekW(TOUCH_YMAXCAL));
+    gfx_Set(SCREEN_MODE,PORTRAIT);
 
 
     // SAMPLE TLC
@@ -179,8 +200,9 @@ redo:
     pokeW(TOUCH_XMAXCAL, x2);
     pokeW(TOUCH_YMAXCAL, y2);
 
+     gfx_Set(SCREEN_MODE,LANDSCAPE);
     // display new values
-    txt_MoveCursor(15,4);
+    txt_MoveCursor(10,1);
     print("New Values");
     print("\nTOUCH_XMINCAL=",[HEX] peekW(TOUCH_XMINCAL));
     print("\nTOUCH_YMINCAL=",[HEX] peekW(TOUCH_YMINCAL));
@@ -196,7 +218,7 @@ redo:
         print("\nFAILED - REDO");                                // nup, failed, do it again
         goto redo;
     endif
-
+    gfx_Set(SCREEN_MODE,PORTRAIT);
 
     // ok success, do simple drawing function
     // so you can test the alignmemn. Best way
@@ -206,9 +228,13 @@ redo:
     // finished drawing
     gfx_Cls();
     txt_FGcolour(YELLOW);
+
+    gfx_Set(SCREEN_MODE,LANDSCAPE);
     print("\nCalibration complete.");
     print("\nTouch to exit...");
+    gfx_Set(SCREEN_MODE,PORTRAIT);
     while(touch_Get(TOUCH_STATUS) !=  TOUCH_PRESSED);           // we'll wait for a touch
+    SystemReset();
 
 forever
 
@@ -218,9 +244,11 @@ func draw()
 
     var firstx, firsty, x, y, state;
     txt_FGcolour(CYAN);
-    gfx_MoveTo(100,30);
-    print("NOW DRAW");
+    gfx_Set(SCREEN_MODE,LANDSCAPE);
+    gfx_MoveTo(2,2);
+    print("NOW DRAW ");
     print("TO TEST....");
+    gfx_Set(SCREEN_MODE,PORTRAIT);
 
     while(touch_Get(TOUCH_STATUS) !=  TOUCH_PRESSED);           // we'll wait for a touch
     gfx_CircleFilled(120,160,5,RED);
@@ -233,11 +261,15 @@ func draw()
 
     while(1)
 
-        gfx_MoveTo(35,154);
+        gfx_MoveTo(173,115);
         if(peekW(SYSTEM_TIMER_LO) & 512)                // the flashing exit button
-            print("Exit >>>");
+            gfx_Set(SCREEN_MODE,LANDSCAPE);
+            print("<<< Exit");
+            gfx_Set(SCREEN_MODE,PORTRAIT);
         else
+             gfx_Set(SCREEN_MODE,LANDSCAPE);
             print("        ");
+            gfx_Set(SCREEN_MODE,PORTRAIT);
         endif
 
         state := touch_Get(TOUCH_STATUS);                           // look for any touch activity
@@ -259,10 +291,5 @@ func draw()
     wend
 
 endfunc
-
-/*
-
-
-*/
 
 

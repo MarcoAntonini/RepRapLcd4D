@@ -1,4 +1,21 @@
+/*
+ Rthis file is part of ReprapLcd4D Project
 
+ Copyright (C) 2012 Marco Antonini
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 var cmd_buff[BUFF_LEN];
 var buff_index :=0;
@@ -98,12 +115,12 @@ func parseCmd(var *buffer,var n)
          updateZpos(p_cmd_val);
          to(zPos); printBuffer(p_cmd_val);
     else if( cmd_id[0] == SDPERCENT_ID )
-        updateSDPerc(p_cmd_val);
-        to(sdPerc); printBuffer(p_cmd_val);
+         updateSDPerc(p_cmd_val);
+         to(sdPerc); printBuffer(p_cmd_val);
     else if( cmd_id[0] == SOUND_ID )
-        sound(FINISH);
+         sound(FINISH);
     else if(cmd_id[0] == DEBUG_SHOW_MEM_ID)
-        to(COM0); print("Memory available = ",mem_Heap(),"\n");
+         to(COM0); print("Memory available = ",mem_Heap(),"\n");
     endif
 
 endfunc

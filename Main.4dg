@@ -1,6 +1,8 @@
 #platform "uLCD-32PT_GFX2"
+#MODE RUNFLASH
 /*
- ReprapLcd4D Firmware for RepRap 3D Printer.
+ ReprapLcd4D LCD Firmware for RepRap 3D Printer.
+ designed for 4D Systems uLCD-32PT
 
  Copyright (C) 2012 Marco Antonini
 
@@ -25,8 +27,8 @@
 #inherit "GfxInterfaceConst.inc"
 #inherit "Constant.inc"
 
-func initSD()
-    gfx_Set(SCREEN_MODE,LANDSCAPE_R);
+func startupSD()
+    gfx_Set(SCREEN_MODE,LANDSCAPE);
     var err:=0;
     var disk;
     setFontInfo(0,0);
@@ -52,44 +54,75 @@ func initSD()
     gfx_Cls();
 endfunc
 
+func bootSplash()
+    img_Show(hndl,iImage4);
+    txt_FGcolour(WHITE);
+    txt_BGcolour(BLACK);
+    gfx_MoveTo(124, 180);
+    putstr("3D Printer");
+    txt_FGcolour(WHITE);
+    txt_BGcolour(BLACK);
+    gfx_MoveTo(100, 220);
+    putstr("LCD Interface v.");
+    putstr(VERSION);
+    gfx_MoveTo(84, 232);
+    putstr("marcomail.anto@gmail.com");
+endfunc
+
+var BLOCK:=TRUE;
+func BlockStartupEvent()
+    BLOCK:=FALSE;
+endfunc
+
+func HiddenTouchCalibration()
+    sys_SetTimerEvent(TIMER1,BlockStartupEvent);
+    sys_SetTimer(TIMER1,STARTUP_TIMEOUT);
+    while(touch_Get(TOUCH_STATUS)!=TOUCH_PRESSED && BLOCK)
+    wend
+    if(BLOCK==TRUE)
+         sys_SetTimer(TIMER1,0);
+        file_Exec("touchcal.4XE",0);
+    endif
+endfunc
 
 func main()
 
-    initSD();
+    touch_Set(TOUCH_ENABLE);
+    startupSD();
+    bootSplash();
+    HiddenTouchCalibration();
+    pause(STARTUP_TIMEOUT);
     initVars();
+    EnableAllTocuhButtonImage();
+    gfx_Cls();
     drawGfxInterface();
     SerialInit();
-    touch_Set(TOUCH_ENABLE);
+    repeat
+        //--------------------------------------------------
+        // scan for Touch
+        //--------------------------------------------------
 
-repeat
+        var touchState;
+        var touchX,touchY;
 
-    //--------------------------------------------------
-    // scan for Touch
-    //--------------------------------------------------
+        touchState := touch_Get(TOUCH_STATUS);
+        touchX := touch_Get(TOUCH_GETX);
+        touchY := touch_Get(TOUCH_GETY);
 
-    var touchState;
-    var touchX,touchY;
+        if(touchState == TOUCH_PRESSED)
+            TouchEvent(touchX,touchY);
+        else if(touchState == TOUCH_MOVING && EN_TOUCH_MOVING && WINDOW != W_MAIN && WINDOW != W_SDCARD )
+            TouchEvent(touchX,touchY);
+        else if(touchState == TOUCH_RELEASED && WINDOW != W_SDCARD )
+            TouchReleasedEvent();
+        endif
 
-    touchState := touch_Get(TOUCH_STATUS);
-    touchX := touch_Get(TOUCH_GETX);
-    touchY := touch_Get(TOUCH_GETY);
-
-    if(touchState == TOUCH_PRESSED)
-        TouchEvent(touchX,touchY);
-    else if(touchState == TOUCH_MOVING && EN_TOUCH_MOVING && WINDOW != W_MAIN && WINDOW != W_SDCARD )
-        TouchEvent(touchX,touchY);
-    else if(touchState == TOUCH_RELEASED && WINDOW != W_SDCARD )
-        TouchReleasedEvent();
-    endif
-
-    //--------------------------------------------------
-    // scan for Serial Data
-    //--------------------------------------------------
-     SerialEvent();
-     SerialErrorWatchDog();
-
-forever
-
+        //--------------------------------------------------
+        // scan for Serial Data
+        //--------------------------------------------------
+        SerialEvent();
+        SerialErrorWatchDog();
+    forever
 endfunc
 
 //=======================================================
@@ -120,28 +153,46 @@ func initVars()
     to(ex_setTemp); print("205"); //Button Set Ext. Temp
     to(bed_setTemp); print("55"); //Buttpn Set Bed Temp
     to(msg); print(""); //Max 46 char
+    //Z Calibration
+    z_cal_sign:=1;
+    z_cal_int:=0;
+    z_cal_dec1:=0;
+    z_cal_dec2:=0;
+    z_cal_dec3:=0;
+    /*
+    #IF EXISTS CONTRAST_TIMEOUT
+    CONTRAST_STATUS:=ON;
+    #ENDIF
+    */
 endfunc
 
-/*func returnToMainWatchDog(var type)
+/*
+#IF EXISTS CONTRAST_TIMEOUT
+func ContrastTimeout(var type)
     if(type==SET_TIMER)
-         sys_SetTimerEvent(TIMER0, returnToMain);
-         sys_SetTimer(TIMER0,2000);
+         sys_SetTimerEvent(TIMER1,ContrastTimeoutEvent);
+         sys_SetTimer(TIMER1,CONTRAST_TIMEOUT);
     else if(type==REMOVE_TIMER)
          sys_SetTimer(TIMER0,0);
+         gfx_Set(CONTRAST,ON);
+         CONTRAST_STATUS:=ON;
+    else if(type==GET_TIMER)
+         return sys_GetTimer(TIMER0);
     endif
 endfunc
 
-func returnToMain()
-    WINDOW:=W_MAIN;
-    gfx_RectangleFilled(0, 167, 319, 229,BLACK);
-    drawGfxInterface();
-endfunc*/
+func ContrastTimeoutEvent()
+     gfx_Set(CONTRAST,OFF);
+     CONTRAST_STATUS:=OFF;
+endfunc
+#ENDIF
+*/
 
 func sound(var type)
-     snd_Volume(127);
+     snd_Volume(80);
      if(type==STARTUP)
-        if(file_Exists("startup.wav"))
-            file_PlayWAV("startup.wav");
+        if(file_Exists("STARTUP.WAV"))
+            file_PlayWAV("STARTUP.WAV");
         endif
      else if(type==ALERT)
          if(file_Exists("alert.wav"))

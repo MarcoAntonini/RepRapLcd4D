@@ -1,3 +1,21 @@
+/*
+ this file is part of ReprapLcd4D Project
+
+ Copyright (C) 2012 Marco Antonini
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 #inherit "Constant.inc"
 
 func drawGfxInterface()
@@ -30,12 +48,12 @@ endfunc
 
 func drawButtonControl()
     //draw Extruder/Reverse Section
-    initButtonExtrude();
+    //initButtonExtrude();
     updateButtonExtrude(FALSE);
     setFontMessage(92, 188);
     printBuffer("mm");
 
-    initButtonReverse();
+    //initButtonReverse();
     updateButtonReverse(FALSE);
     setFontMessage(92,204);
     printBuffer("mm/min");
@@ -46,10 +64,8 @@ func drawButtonControl()
     updateExmm_min(str_Ptr(ex_setmm_min),BLACK);
 
     //draw Button Temp Extruder Set
-    initButtonExOff();
     updateButtonExOff(FALSE);
 
-    initButtonBedOff();
     updateButtonBedOff(FALSE);
 
     gfx_Panel(PANEL_RAISED, 172, 184, 27, 14, 0xD699); // panel Ex Temp
@@ -63,10 +79,8 @@ func drawButtonControl()
     updateExSetTemp(str_Ptr(ex_setTemp),BLACK);
     updateBedSetTemp(str_Ptr(bed_setTemp),BLACK);
 
-    initButtonExSet();
     updateButtonExSet(FALSE);
 
-    initButtonBedSet();
     updateButtonBedSet(FALSE);
 
     updateButtonSwitchEx(UPDATE);
@@ -106,7 +120,7 @@ func drawStatusBar()
     setFontInfo(113,232);
     printBuffer("Z:");
     setFontInfo(188,232);
-    printBuffer("cm");
+    printBuffer("mm");
     updateZpos(str_Ptr(zPos));
 
     //draw SDPerc
@@ -306,20 +320,9 @@ func str2w(var *buffer)
     return ret;
 endfunc
 
-
-func initButtonExtrude()
-    img_SetWord(hndl, iWinbutton1, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton1, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
-    img_Show(hndl, iWinbutton1);
-endfunc
-
 func updateButtonExtrude(var state)
     img_SetWord(hndl, iWinbutton1, IMAGE_INDEX, state);
     img_Show(hndl,iWinbutton1) ;
-endfunc
-
-func initButtonReverse()
-    img_SetWord(hndl, iWinbutton2, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton2, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
-    img_Show(hndl, iWinbutton2);
 endfunc
 
 func updateButtonReverse(var state)
@@ -327,19 +330,9 @@ func updateButtonReverse(var state)
     img_Show(hndl,iWinbutton2) ;
 endfunc
 
-func initButtonExOff()
-    img_SetWord(hndl, iWinbutton3, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton3, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
-    img_Show(hndl, iWinbutton3);
-endfunc
-
 func updateButtonExOff(var state)
    img_SetWord(hndl, iWinbutton3, IMAGE_INDEX, state);
    img_Show(hndl,iWinbutton3) ;
-endfunc
-
-func initButtonBedOff()
-    img_SetWord(hndl, iWinbutton4, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton4, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
-    img_Show(hndl, iWinbutton4);
 endfunc
 
 func updateButtonBedOff(var state)
@@ -347,20 +340,9 @@ func updateButtonBedOff(var state)
     img_Show(hndl,iWinbutton4) ;
 endfunc
 
-func initButtonExSet()
-    img_SetWord(hndl, iWinbutton5, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton5, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
-    img_Show(hndl, iWinbutton5);
-endfunc
-
 func updateButtonExSet(var state)
     img_SetWord(hndl, iWinbutton5, IMAGE_INDEX, state);
     img_Show(hndl,iWinbutton5) ;
-endfunc
-
-
-func initButtonBedSet()
-    img_SetWord(hndl, iWinbutton6, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton6, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
-    img_Show(hndl, iWinbutton6);
 endfunc
 
 func updateButtonBedSet(var state)
@@ -431,8 +413,6 @@ func initTrackbar(var type)
         gfx_TriangleFilled(187, 199, 176, 172,  198, 172, COLOURSEL_INDICATOR);
         WINDOW := W_BEDTEMP;
     endif
-    img_Show(hndl,iTrackbar1);
-    img_SetWord(hndl, iTrackbar1, IMAGE_FLAGS, (img_GetWord(hndl, iTrackbar1, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
 endfunc
 
 func updateTrackbarStatus(var type)
@@ -502,13 +482,6 @@ func updateTrackbarEvent(var type,var x) // x coord.
 
 endfunc
 
-func initButtonFine()
-    img_SetWord(hndl, iWinbutton7, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton7, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
-    img_Show(hndl, iWinbutton7);
-    img_SetWord(hndl, iWinbutton8, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton8, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
-    img_Show(hndl, iWinbutton8);
-endfunc
-
 func updateButtonFine(var state)
     img_SetWord(hndl, iWinbutton7, IMAGE_INDEX, state);
     img_Show(hndl,iWinbutton7);
@@ -567,13 +540,9 @@ func updateButtonSwitchEx(var type)
         current_extruder:=!current_extruder;
     endif
     if(current_extruder==0)
-        img_SetWord(hndl, iWinbutton9, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton9, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
-        img_Show(hndl, iWinbutton9);
         img_SetWord(hndl, iWinbutton9, IMAGE_INDEX,current_extruder);
         img_Show(hndl,iWinbutton9);
     else
-        img_SetWord(hndl, iWinbutton10, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton10, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
-        img_Show(hndl, iWinbutton10);
         img_SetWord(hndl, iWinbutton10, IMAGE_INDEX,current_extruder);
         img_Show(hndl,iWinbutton10);
     endif
@@ -653,16 +622,11 @@ func drawSDScreen()
 endfunc
 
 func updateButtonPagesLeft(var state)
-    //draw Button Left,Right
-    img_SetWord(hndl, iWinbutton13, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton13, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
-    img_Show(hndl, iWinbutton13);
     img_SetWord(hndl, iWinbutton13, IMAGE_INDEX, state);
     img_Show(hndl,iWinbutton13) ;
 endfunc
 
 func updateButtonPagesRight(var state)
-    img_SetWord(hndl, iWinbutton14, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton14, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
-    img_Show(hndl, iWinbutton14);
     img_SetWord(hndl, iWinbutton14, IMAGE_INDEX, state);
     img_Show(hndl,iWinbutton14);
 endfunc
@@ -677,22 +641,16 @@ func drawWinPrintingOption()
 endfunc
 
 func updatePauseButton(var state)
-    img_SetWord(hndl, iWinbutton16, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton16, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
-    img_Show(hndl, iWinbutton16);
     img_SetWord(hndl, iWinbutton16, IMAGE_INDEX,state);
     img_Show(hndl,iWinbutton16);
 endfunc
 
 func updateResumeButton(var state)
-    img_SetWord(hndl, iWinbutton15, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton15, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
-    img_Show(hndl, iWinbutton15);
     img_SetWord(hndl, iWinbutton15, IMAGE_INDEX,state);
     img_Show(hndl,iWinbutton15);
 endfunc
 
 func updateOpenFileButton(var state)
-    img_SetWord(hndl, iWinbutton17, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton17, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
-    img_Show(hndl, iWinbutton17);
     img_SetWord(hndl, iWinbutton17, IMAGE_INDEX,state);
     img_Show(hndl,iWinbutton17);
 endfunc
@@ -706,11 +664,8 @@ func WinPrintConfirm(var index,var *_msg)
     offset:= ((MAX_FILE_NAME*7) - ((str_Length(files[index])+1)*7))/2; //Offset for Center String
     gfx_Panel(PANEL_RAISED, 88, 68, 132, 69, 0x8D9C);
     gfx_Panel(PANEL_RAISED, 91, 72, 126, 61, 0xD699) ;
-    img_SetWord(hndl, iWinbutton11, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton11, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
-    img_Show(hndl, iWinbutton11);
     img_SetWord(hndl, iWinbutton11, IMAGE_INDEX,OFF);
     img_Show(hndl,iWinbutton11) ;
-    img_SetWord(hndl, iWinbutton12, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton12, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
     img_SetWord(hndl, iWinbutton12, IMAGE_INDEX,OFF);
     img_Show(hndl,iWinbutton12) ;
     txt_FGcolour(BLACK);
@@ -720,6 +675,163 @@ func WinPrintConfirm(var index,var *_msg)
     txt_BGcolour(0xD699);
     gfx_MoveTo(106+offset, 88);
     str_Printf(&_msg,"%s ?");
+endfunc
+
+func drawWinZCalibration()
+    var i;
+    gfx_Panel(PANEL_RAISED, 36, 50, 190, 153, 0x8D9C);
+    gfx_TriangleFilled(141, 223, 128, 200,  154, 200, 0x8D9C);
+    gfx_Panel(PANEL_RAISED, 39, 54, 183, 147, 0xD699);
+    for(i:=0; i<11; i++)
+         updateButtonZCal(i,OFF);
+    next
+    txt_Set(FONT_ID,FONT1);
+    txt_Height(2);
+    txt_Width(1);
+    txt_FGcolour(BLACK) ;
+    txt_BGcolour(0xD699) ;
+    gfx_MoveTo(137, 92) ;
+    putstr(",") ;
+    txt_Height(1);
+    txt_Width(1);
+endfunc
+
+func setFontZCal(var x , var y)
+    txt_Set(FONT_ID,FONT1);
+    txt_Height(2);
+    txt_Width(2);
+    txt_FGcolour(BLACK);
+    txt_BGcolour(SILVER);
+    gfx_MoveTo(x,y);
+endfunc
+
+func Font1x1()
+    txt_Height(1);
+    txt_Width(1);
+endfunc
+
+func updateButtonZCal(var type,var state)
+
+    //setOffset
+    if(type==Z_SET_OFFSET)
+        img_SetWord(hndl, iWinbutton21, IMAGE_INDEX, state);
+        img_Show(hndl,iWinbutton21) ;
+    //Zprobe
+    else if(type==Z_PROBE)
+        img_SetWord(hndl, iWinbutton18, IMAGE_INDEX, state);
+        img_Show(hndl,iWinbutton18) ;
+    //Sign
+    else if(type==Z_SIGN)
+        gfx_Panel(PANEL_RAISED, 82, 80, 22, 30, SILVER) ;
+        img_SetWord(hndl, iWinbutton30, IMAGE_INDEX, state);
+        img_Show(hndl,iWinbutton30) ;
+        setFontZCal(87,87);
+        if(z_cal_sign>0)
+            putstr("+");
+        else
+            putstr("-");
+        endif
+        Font1x1();
+    //Int+
+    else if(type==Z_INT_PLUS)
+        gfx_Panel(PANEL_RAISED, 110, 80, 22, 30, SILVER) ;
+        img_SetWord(hndl, iWinbutton19, IMAGE_INDEX, state);
+        img_Show(hndl,iWinbutton19) ;
+        setFontZCal(115,87);
+        putnum(DEC,z_cal_int);
+        Font1x1();
+    //Int-
+    else if(type==Z_INT_MINUS)
+        gfx_Panel(PANEL_RAISED, 110, 80, 22, 30, SILVER);
+        img_SetWord(hndl, iWinbutton26, IMAGE_INDEX, state);
+        img_Show(hndl,iWinbutton26) ;
+        setFontZCal(115,87);
+        putnum(DEC,z_cal_int);
+        Font1x1();
+    //Dec1+
+    else if(type==Z_DEC1_PLUS)
+        gfx_Panel(PANEL_RAISED, 146, 80, 22, 30, SILVER) ;
+        img_SetWord(hndl, iWinbutton20, IMAGE_INDEX, state);
+        img_Show(hndl,iWinbutton20) ;
+        setFontZCal(151,87);
+        putnum(DEC,z_cal_dec1);
+        Font1x1();
+    //Dec1-
+    else if(type==Z_DEC1_MINUS)
+        gfx_Panel(PANEL_RAISED, 146, 80, 22, 30, SILVER) ;
+        img_SetWord(hndl, iWinbutton27, IMAGE_INDEX, state);
+        img_Show(hndl,iWinbutton27) ;
+        setFontZCal(151,87);
+        putnum(DEC,z_cal_dec1);
+        Font1x1();
+    //Dec2+
+    else if(type==Z_DEC2_PLUS)
+        gfx_Panel(PANEL_RAISED, 170, 80, 22, 30, SILVER);
+        img_SetWord(hndl, iWinbutton22, IMAGE_INDEX, state);
+        img_Show(hndl,iWinbutton22) ;
+        setFontZCal(175,87);
+        putnum(DEC,z_cal_dec2);
+        Font1x1();
+    //Dec2-
+    else if(type==Z_DEC2_MINUS)
+        gfx_Panel(PANEL_RAISED, 170, 80, 22, 30, SILVER);
+        img_SetWord(hndl, iWinbutton28, IMAGE_INDEX, state);
+        img_Show(hndl,iWinbutton28) ;
+        setFontZCal(175,87);
+        putnum(DEC,z_cal_dec2);
+        Font1x1();
+    //Dec3+
+    else if(type==Z_DEC3_PLUS)
+        gfx_Panel(PANEL_RAISED, 194, 80, 22, 30, SILVER) ;
+        img_SetWord(hndl, iWinbutton23, IMAGE_INDEX, state);
+        img_Show(hndl,iWinbutton23) ;
+        setFontZCal(199,87);
+        putnum(DEC,z_cal_dec3);
+        Font1x1();
+    //Dec3-
+    else if(type==Z_DEC3_MINUS)
+        gfx_Panel(PANEL_RAISED, 194, 80, 22, 30, SILVER) ;
+        img_SetWord(hndl, iWinbutton29, IMAGE_INDEX, state);
+        img_Show(hndl,iWinbutton29) ;
+        setFontZCal(199,87);
+        putnum(DEC,z_cal_dec3);
+        Font1x1();
+    endif
+endfunc
+
+func EnableAllTocuhButtonImage()
+    img_SetWord(hndl, iWinbutton1, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton1, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    img_SetWord(hndl, iWinbutton2, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton2, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    img_SetWord(hndl, iWinbutton3, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton3, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    img_SetWord(hndl, iWinbutton4, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton4, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    img_SetWord(hndl, iWinbutton5, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton5, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    img_SetWord(hndl, iWinbutton6, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton6, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    img_SetWord(hndl, iTrackbar1, IMAGE_FLAGS, (img_GetWord(hndl, iTrackbar1, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    img_SetWord(hndl, iWinbutton7, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton7, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    img_SetWord(hndl, iWinbutton8, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton8, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    img_SetWord(hndl, iWinbutton9, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton9, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    img_SetWord(hndl, iWinbutton10, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton10, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    img_SetWord(hndl, iWinbutton13, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton13, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    img_SetWord(hndl, iWinbutton14, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton14, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    img_SetWord(hndl, iWinbutton16, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton16, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    img_SetWord(hndl, iWinbutton15, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton15, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    img_SetWord(hndl, iWinbutton17, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton17, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    img_SetWord(hndl, iWinbutton11, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton11, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    img_SetWord(hndl, iWinbutton12, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton12, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    /*
+    img_SetWord(hndl, iWinbutton30, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton30, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    img_SetWord(hndl, iWinbutton19, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton19, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    img_SetWord(hndl, iWinbutton26, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton26, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    img_SetWord(hndl, iWinbutton20, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton20, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    img_SetWord(hndl, iWinbutton27, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton27, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    img_SetWord(hndl, iWinbutton22, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton22, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    img_SetWord(hndl, iWinbutton28, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton28, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    img_SetWord(hndl, iWinbutton23, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton23, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    img_SetWord(hndl, iWinbutton29, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton29, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    img_SetWord(hndl, iWinbutton21, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton21, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    img_SetWord(hndl, iWinbutton18, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton18, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+    */
+
 endfunc
 
 func switchWinSDtoMain()

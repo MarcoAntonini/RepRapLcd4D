@@ -29,6 +29,18 @@
     iWinbutton15    // offset 0x1CB000
     iWinbutton16    // offset 0x1CC200
     iWinbutton17    // offset 0x1CD400
+    iWinbutton18    // offset 0x1CE800
+    iWinbutton19    // offset 0x1CFC00
+    iWinbutton20    // offset 0x1D0200
+    iWinbutton22    // offset 0x1D0800
+    iWinbutton23    // offset 0x1D0E00
+    iWinbutton26    // offset 0x1D1400
+    iWinbutton27    // offset 0x1D1A00
+    iWinbutton28    // offset 0x1D2000
+    iWinbutton29    // offset 0x1D2600
+    iWinbutton30    // offset 0x1D2C00
+    iWinbutton21    // offset 0x1D3400
+    iImage4         // offset 0x1D4800
 #END
 
 var disk, hndl ;
@@ -184,18 +196,43 @@ BUTTON_FILE_HEIGHT 17
 #END
 
 /***********************************************************************************
+*   Z Calibration
+************************************************************************************/
+#DATA
+
+word BUTTON_Z_CAL_TOUCH_REGION 104, 228, 203, 239
+word WIN_Z_CAL_TOUCH_REGION 36, 50, 226, 203
+
+
+word BUTTON_Z_PROBE_TOUCH_REGION 112, 170, 170, 184
+word BUTTON_Z_OFFSET_TOUCH_REGION 112, 144, 170, 158
+word BUTTON_Z_INT_PLUS_TOUCH_REGION 112, 61, 128, 74
+word BUTTON_Z_INT_MINUS_TOUCH_REGION  112, 115, 128, 128
+word BUTTON_Z_DEC1_PLUS_TOUCH_REGION 147, 61, 163, 74
+word BUTTON_Z_DEC1_MINUS_TOUCH_REGION  147, 115, 163, 128
+word BUTTON_Z_DEC2_PLUS_TOUCH_REGION 171, 61, 187, 74
+word BUTTON_Z_DEC2_MINUS_TOUCH_REGION 171, 115, 187, 128
+word BUTTON_Z_DEC3_PLUS_TOUCH_REGION 195, 61, 211, 74
+word BUTTON_Z_DEC3_MINUS_TOUCH_REGION  195, 115, 211, 128
+word BUTTON_Z_SIGN_TOUCH_REGION 44, 86, 77, 100
+
+
+#END
+
+/***********************************************************************************
 *   Messages
 ************************************************************************************/
 #DATA
 
-word MSG_OP_NOT_PERMITTED "Operation not permitted while printing.\0"
-word MSG_SET_HEATER "set Heater target to \0"
-word MSG_SET_BED "set Bed target to \0"
-word MSG_HEATER_SHUTDOWN "Heater shutdown\0"
-word MSG_BED_SHUTDOWN "Bed shutdown\0"
-word MSG_CENT " C\0"
-word MSG_HOMING "Homing..\0"
-word MSG_MM_OF_FILAMENT "mm of filament..\0"
+byte MSG_OP_NOT_PERMITTED "Operation not permitted while printing.\0"
+byte MSG_SET_HEATER "set Heater target to \0"
+byte MSG_SET_BED "set Bed target to \0"
+byte MSG_HEATER_SHUTDOWN "Heater shutdown\0"
+byte MSG_BED_SHUTDOWN "Bed shutdown\0"
+byte MSG_CENT " C\0"
+byte MSG_HOMING "Homing..\0"
+byte MSG_MM_OF_FILAMENT "mm of filament..\0"
+byte MSG_COLD_EXTR_PREVENT "Cold Extrusion Prevent!\0"
 
 #END
 

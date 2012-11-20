@@ -1,12 +1,37 @@
+/*
+ this file is part of ReprapLcd4D Project
+
+ Copyright (C) 2012 Marco Antonini
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #CONST
 
 /* Configuration Constant  */
+
+VERSION "0.2t" // "t" Testing..
+
+//CONTRAST_TIMEOUT 5000 //Screen Timeout, Comment out to disable
+STARTUP_TIMEOUT 3000
+
 BUFF_LEN 50 //Length of the buffer for the Serial Protocol
-COMBUFF_LEN 300  //Circular Serial Buffer
-                 //300 is best for 50 file
+COMBUFF_LEN 800  //Circular Serial Buffer
+                 //800 is best for 100 file
 MESSAGE_DIM 46   //Lenght of Message files
-MAX_FILE 50     //Max readinf file
-                //50 is best for RAM
+MAX_FILE 100     //Max reading file
+
 MAX_FILE_NAME 11
 
 COLOURSEL_INDICATOR 0x8D9C
@@ -37,8 +62,9 @@ ALERT 1
 FINISH 2
 
 //for Timeout
-//SET_TIMER 0
-//REMOVE_TIMER 1
+SET_TIMER 0
+REMOVE_TIMER 1
+GET_TIMER 2
 
 /*** Serial Protocol ID Constant  ***/
 MESSAGE_ID 'M'
@@ -62,9 +88,24 @@ W_EXTTEMP 2   //Extrude (temperature) Slider Window
 W_BEDTEMP 3   //Bed (temperature) Slider Window
 W_PRINT_CONFIRM 6 //Printer Confirm Window
 W_PRINTING_OPTION 7 //Printing Option Window
+W_Z_CALIBRATION 8 // Z Calibration Window
 
 #END
 
+#CONST
+
+Z_SET_OFFSET 0
+Z_PROBE 1
+Z_SIGN 2
+Z_INT_PLUS 3
+Z_INT_MINUS 4
+Z_DEC1_PLUS 5
+Z_DEC1_MINUS 6
+Z_DEC2_PLUS 7
+Z_DEC2_MINUS 8
+Z_DEC3_PLUS 9
+Z_DEC3_MINUS 10
+#END
 /*** Global Vars  ***/
 
 //Semaphore Vars
@@ -101,6 +142,13 @@ var filenames; //Pointer to the file list
 var file_count; //File Count
 var files[MAX_FILE]; //File name Pointers Array
 var p_filenames; //Pointer index
+
+//Z Calibration
+var z_cal_sign;
+var z_cal_int;
+var z_cal_dec1;
+var z_cal_dec2;
+var z_cal_dec3;
 
 
 

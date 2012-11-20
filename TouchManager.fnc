@@ -1,3 +1,21 @@
+/*
+ this file is part of ReprapLcd4D Project
+
+ Copyright (C) 2012 Marco Antonini
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 var __X;
 var __Y;
@@ -33,29 +51,39 @@ func TouchEvent(var x,var y)
             WINDOW:=W_PRINTING_OPTION;
             drawWinPrintingOption();
         else if(touched==iWinbutton1) //Extrude Button
-                if(PRINTING==FALSE)
-                    updateButtonExtrude(ON);
-                    SerialPrintBuffer("G91\nG1 E");
-                    SerialPrintNumber(str2w(str_Ptr(ex_setmm)));
-                    SerialPrintBuffer(" F");
-                    SerialPrintlnNumber(str2w(str_Ptr(ex_setmm_min)));
-                    SerialPrintlnBuffer("G90");
-                    updateMessage("Extrude ",str_Ptr(ex_setmm),MSG_MM_OF_FILAMENT);
-                    setTimerMessage(3000);
+                if(PRINTING==FALSE )
+                    if(_ttH0 !=0 && str2w(str_Ptr(tH0))>=_ttH0 )
+                        updateButtonExtrude(ON);
+                        SerialPrintBuffer("G91\nG1 E");
+                        SerialPrintNumber(str2w(str_Ptr(ex_setmm)));
+                        SerialPrintBuffer(" F");
+                        SerialPrintlnNumber(str2w(str_Ptr(ex_setmm_min)));
+                        SerialPrintlnBuffer("G90");
+                        updateMessage("Extrude ",str_Ptr(ex_setmm),MSG_MM_OF_FILAMENT);
+                        setTimerMessage(3000);
+                    else
+                         updateMessage(MSG_COLD_EXTR_PREVENT,"","");
+                         setTimerMessage(3000);
+                    endif
                 else
                     updateMessage(MSG_OP_NOT_PERMITTED,"","");
                     setTimerMessage(3000);
                 endif
         else if(touched==iWinbutton2) //Reverse Button
                 if(PRINTING==FALSE)
-                    updateButtonReverse(ON);
-                    SerialPrintBuffer("G91\nG1 E-");
-                    SerialPrintNumber(str2w(str_Ptr(ex_setmm)));
-                    SerialPrintBuffer(" F");
-                    SerialPrintlnNumber(str2w(str_Ptr(ex_setmm_min)));
-                    SerialPrintlnBuffer("G90");
-                    updateMessage("Reverse ",str_Ptr(ex_setmm),MSG_MM_OF_FILAMENT);
-                    setTimerMessage(3000);
+                     if(_ttH0 !=0 && str2w(str_Ptr(tH0))>=_ttH0 )
+                        updateButtonReverse(ON);
+                        SerialPrintBuffer("G91\nG1 E-");
+                        SerialPrintNumber(str2w(str_Ptr(ex_setmm)));
+                        SerialPrintBuffer(" F");
+                        SerialPrintlnNumber(str2w(str_Ptr(ex_setmm_min)));
+                        SerialPrintlnBuffer("G90");
+                        updateMessage("Reverse ",str_Ptr(ex_setmm),MSG_MM_OF_FILAMENT);
+                        setTimerMessage(3000);
+                    else
+                         updateMessage(MSG_COLD_EXTR_PREVENT,"","");
+                         setTimerMessage(3000);
+                    endif
                 else
                     updateMessage(MSG_OP_NOT_PERMITTED,"","");
                     setTimerMessage(3000);
@@ -84,12 +112,14 @@ func TouchEvent(var x,var y)
             setTimerMessage(3000);
         else if(touched==iWinbutton9 || touched==iWinbutton10) //Switch Extruder
             updateButtonSwitchEx(EVENT);
+        else if(checkRegion( @ BUTTON_Z_CAL_TOUCH_REGION))
+            WINDOW:=W_Z_CALIBRATION;
+            drawWinZCalibration();
         else  //ALL "Button Set NUMBER"
             for(i:=0; i<sizeof(BUTTON_SET_NUMBER); i++)
                 if(checkRegion( @ BUTTON_SET_NUMBER[i]))
                     initTrackbar(i);
                     updateTrackbarStatus(i);
-                    initButtonFine();
                     updateButtonFine(FALSE);
                     break;
                 endif
@@ -180,6 +210,68 @@ func TouchEvent(var x,var y)
             WINDOW:=W_MAIN;
             switchWinSDtoMain();
         endif
+    else if(WINDOW==W_Z_CALIBRATION)
+        if(checkRegion(@ BUTTON_Z_OFFSET_TOUCH_REGION)) //setOffset
+             updateButtonZCal(Z_SET_OFFSET,ON);
+             SerialPrintBuffer("M206 Z");
+             if(z_cal_sign>0)
+                SerialPrintBuffer("+");
+             else
+                SerialPrintBuffer("-");
+             endif
+             SerialPrintNumber(z_cal_int);
+             SerialPrintBuffer(".");
+             SerialPrintNumber(z_cal_dec1);
+             SerialPrintNumber(z_cal_dec2);
+             SerialPrintlnNumber(z_cal_dec3);
+
+        else if(checkRegion(@ BUTTON_Z_PROBE_TOUCH_REGION)) //Zprobe
+            updateButtonZCal(Z_PROBE,ON);
+            SerialPrintBuffer("M510\nG32\n");
+        else if(checkRegion(@BUTTON_Z_SIGN_TOUCH_REGION)) //Sign
+             if(z_cal_sign>0)
+                z_cal_sign:=-1;
+             else
+                z_cal_sign:=1;
+             endif
+             updateButtonZCal(Z_SIGN,ON);
+        else if(checkRegion( @ BUTTON_Z_INT_PLUS_TOUCH_REGION)) //Int+
+             z_cal_int++;
+             z_cal_int:=z_cal_numb_limit(z_cal_int);
+             updateButtonZCal(Z_INT_PLUS,ON);
+        else if(checkRegion( @ BUTTON_Z_INT_MINUS_TOUCH_REGION)) //Int-
+             z_cal_int--;
+             z_cal_int:=z_cal_numb_limit(z_cal_int);
+             updateButtonZCal(Z_INT_MINUS,ON);
+        else if(checkRegion( @ BUTTON_Z_DEC1_PLUS_TOUCH_REGION)) //Dec1+
+             z_cal_dec1++;
+             z_cal_dec1:=z_cal_numb_limit(z_cal_dec1);
+             updateButtonZCal(Z_DEC1_PLUS,ON);
+        else if(checkRegion( @ BUTTON_Z_DEC1_MINUS_TOUCH_REGION)) //Dec1-
+             z_cal_dec1--;
+             z_cal_dec1:=z_cal_numb_limit(z_cal_dec1);
+             updateButtonZCal(Z_DEC1_MINUS,ON);
+        else if(checkRegion( @ BUTTON_Z_DEC2_PLUS_TOUCH_REGION)) //Dec2+
+             z_cal_dec2++;
+             z_cal_dec2:=z_cal_numb_limit(z_cal_dec2);
+             updateButtonZCal(Z_DEC2_PLUS,ON);
+        else if(checkRegion( @ BUTTON_Z_DEC2_MINUS_TOUCH_REGION)) //Dec2-
+             z_cal_dec2--;
+             z_cal_dec2:=z_cal_numb_limit(z_cal_dec2);
+             updateButtonZCal(Z_DEC2_MINUS,ON);
+        else if(checkRegion( @ BUTTON_Z_DEC3_PLUS_TOUCH_REGION)) //Dec3+
+             z_cal_dec3++;
+             z_cal_dec3:=z_cal_numb_limit(z_cal_dec3);
+             updateButtonZCal(Z_DEC3_PLUS,ON);
+        else if(checkRegion( @ BUTTON_Z_DEC3_MINUS_TOUCH_REGION)) //Dec3-
+             z_cal_dec3--;
+             z_cal_dec3:=z_cal_numb_limit(z_cal_dec3);
+             updateButtonZCal(Z_DEC3_MINUS,ON);
+        else if(!checkRegion( @ WIN_Z_CAL_TOUCH_REGION))
+            WINDOW:=W_MAIN;
+            gfx_RectangleFilled(0, 176, 319, 224, BLACK);
+            drawGfxInterface();
+        endif
     endif
 endfunc
 
@@ -202,6 +294,29 @@ func TouchReleasedEvent()
             updatePauseButton(OFF);
         else if(touched==iWinbutton6 && WINDOW==W_PRINTING_OPTION) //Open File
             updateOpenFileButton(OFF);
+        else if(checkRegion(@ BUTTON_Z_OFFSET_TOUCH_REGION) && WINDOW==W_Z_CALIBRATION) //setOffset
+             updateButtonZCal(Z_SET_OFFSET,OFF);
+        else if(checkRegion(@ BUTTON_Z_PROBE_TOUCH_REGION) && WINDOW==W_Z_CALIBRATION) //Zprobe
+            updateButtonZCal(Z_PROBE,OFF);
+        else if(checkRegion( @ BUTTON_Z_SIGN_TOUCH_REGION) && WINDOW==W_Z_CALIBRATION) //Sign
+             updateButtonZCal(Z_SIGN,OFF);
+        else if(checkRegion( @ BUTTON_Z_INT_PLUS_TOUCH_REGION) && WINDOW==W_Z_CALIBRATION) //Int+
+             updateButtonZCal(Z_INT_PLUS,OFF);
+        else if(checkRegion( @ BUTTON_Z_INT_MINUS_TOUCH_REGION) && WINDOW==W_Z_CALIBRATION) //Int-
+             updateButtonZCal(Z_INT_MINUS,OFF);
+        else if(checkRegion( @ BUTTON_Z_DEC1_PLUS_TOUCH_REGION )&& WINDOW==W_Z_CALIBRATION) //Dec1+
+             updateButtonZCal(Z_DEC1_PLUS,OFF);
+        else if(checkRegion( @ BUTTON_Z_DEC1_MINUS_TOUCH_REGION)&& WINDOW==W_Z_CALIBRATION) //Dec1-
+             updateButtonZCal(Z_DEC1_MINUS,OFF);
+        else if(checkRegion( @ BUTTON_Z_DEC2_PLUS_TOUCH_REGION)&& WINDOW==W_Z_CALIBRATION) //Dec2+
+             updateButtonZCal(Z_DEC2_PLUS,OFF);
+        else if(checkRegion( @ BUTTON_Z_DEC2_MINUS_TOUCH_REGION)&& WINDOW==W_Z_CALIBRATION) //Dec2-
+             updateButtonZCal(Z_DEC2_MINUS,OFF);
+        else if(checkRegion( @ BUTTON_Z_DEC3_PLUS_TOUCH_REGION)&& WINDOW==W_Z_CALIBRATION) //Dec3+
+             updateButtonZCal(Z_DEC3_PLUS,OFF);
+        else if(checkRegion( @ BUTTON_Z_DEC3_MINUS_TOUCH_REGION)&& WINDOW==W_Z_CALIBRATION) //Dec3-
+             updateButtonZCal(Z_DEC3_MINUS,OFF);
+
 //        else if(touched==iWinbutton13) //Pages Left
 //             updateButtonPagesLeft(OFF);
 //        else if(touched==iWinbutton14) //Pages Right
@@ -213,6 +328,18 @@ func checkRegion(var p1x,var p1y ,var p2x,var p2y)
     var ret := FALSE;
     if( __X >= p1x && __X <= p2x && __Y >= p1y && __Y <= p2y)
         ret := TRUE;
+    endif
+    return ret;
+endfunc
+
+func z_cal_numb_limit(var type)
+    var ret:=0;
+    if(type>9)
+        ret:=0;
+    else if(type<0)
+        ret:=9;
+    else
+        ret:=type;
     endif
     return ret;
 endfunc

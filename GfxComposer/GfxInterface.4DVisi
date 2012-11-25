@@ -3288,3 +3288,40 @@ Image
     OnTouchPressed               ''
     OnTouchReleased              ''
 end
+Form
+    Name                         GcodeViewer
+    Bgtype                       Color
+    Color                        BLACK
+    Image                        (None)
+    Source.Height                0
+    Source.Left                  0
+    Source.Top                   0
+    Source.Width                 0
+    OnActivate                   ''
+    OnCreate                     ''
+    OnRepeat                     ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+Panel
+    Name                         Panel28
+    Color                        'Office 2003 Classic'
+    Height                       180
+    Left                         24
+    Outlined                     No
+    OutlineColor                 'Office 2003 Classic'
+    Pattern                      Fine
+    State                        Raised
+    Top                          0
+    Width                        180
+end
+Line
+    Name                         Line1
+    Color                        SPRINGGREEN
+    Pattern                      'Dash Dot'
+    X1                           92
+    X2                           234
+    Y1                           176
+    Y2                           221
+end

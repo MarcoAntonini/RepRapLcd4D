@@ -1,5 +1,5 @@
 /*
- Rthis file is part of ReprapLcd4D Project
+ this file is part of ReprapLcd4D Project
 
  Copyright (C) 2012 Marco Antonini
 
@@ -20,7 +20,6 @@
 var cmd_buff[BUFF_LEN];
 var buff_index :=0;
 var __COMBUFF[COMBUFF_LEN];
-
 
 
 //Function
@@ -189,7 +188,7 @@ endfunc
 
 func SerialPrintlnNumber(var numb)
     to(COM0); putnum(DEC,numb);
-    to(COM0); putstr("\n");
+    to(COM0); print("\n");
 endfunc
 
 func printBuffer(var *buffer)

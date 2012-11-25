@@ -19,26 +19,24 @@
 
 #CONST
 
-/* Configuration Constant  */
+/*** Configuration Constant  ***/
 
-VERSION "0.2t" // "t" Testing..
+//Debug Constant
+//DEBUG_NO_EXTR_PREVENT
+//DEBUG_NO_BOOTSPLASH
+
+VERSION "0.2dem" // "de" double extruder
+AUTHOR "marcomail.anto@gmail.com"
 
 //CONTRAST_TIMEOUT 5000 //Screen Timeout, Comment out to disable
 STARTUP_TIMEOUT 3000
 
-BUFF_LEN 50 //Length of the buffer for the Serial Protocol
-COMBUFF_LEN 800  //Circular Serial Buffer
-                 //800 is best for 100 file
-MESSAGE_DIM 46   //Lenght of Message files
-MAX_FILE 100     //Max reading file
+SOUND_VOLUME 60 //60 for low PWR
+SOUND_BED_NOTIFY //Notify Bed
+OBJECT_RELEASE_TEMP 40 //Temperature release of Object on the bed
+                       //which is used only as a notification sound
 
-MAX_FILE_NAME 11
-
-COLOURSEL_INDICATOR 0x8D9C
-COLOURSEL BLUE
-COLOUR_TRACKPAD 0x8D9C
-//COLOUR_TRACKPAD 0xD699
-
+//Gauge & Slider Temperature range
 GAUGE_TTEMP 85
 GAUGE_MAX_TEMP_H 250
 GAUGE_MAX_TEMP_B 120
@@ -47,6 +45,20 @@ TRACKPAD_MAX_EXTMM 300
 TRACKPAD_MAX_EXTMM_MIN 300 // map function does not work with >300
 TRACKPAD_MAX_EXTTEMP 250
 TRACKPAD_MAX_BEDTEMP 120
+
+//Mem Constant
+BUFF_LEN 50 //Length of the buffer for the Protocol
+COMBUFF_LEN 800  //Circular Serial Buffer
+                 //800 is best for 100 file
+MESSAGE_DIM 46   //Lenght of Message files, <(BUFF_LEN-3)
+MAX_FILE 100     //Max reading file
+
+MAX_FILE_NAME 12 //Max char in file name
+
+//Color Constant
+COLOURSEL_INDICATOR 0x8D9C
+COLOURSEL BLUE
+
 
 /*** Comparison Constant  ***/
 //Boolean
@@ -106,6 +118,7 @@ Z_DEC2_MINUS 8
 Z_DEC3_PLUS 9
 Z_DEC3_MINUS 10
 #END
+
 /*** Global Vars  ***/
 
 //Semaphore Vars
@@ -115,7 +128,7 @@ var FILE_START; //Parsing File from SD
 var SD_READING; //Reading file from SD
 var PRINTING; //Print status
 
-//Storing the current state Vars
+//Storing the current state
 var _ttH0; //Temp Target HotEnd0
 var ttH0[4];
 var _ttH1; //Temp Target HotEnd1
@@ -132,8 +145,8 @@ var ex_setmm[4];     //Extrude mm of filament
 var ex_setmm_min[4]; //Extruder mm/min
 var ex_setTemp[4]; //Set Ext. Temp
 var bed_setTemp[4]; //Set Bed Temp
-var msg[MESSAGE_DIM]; //Message string Max 46 char
-var current_extruder; //Current Extruder
+var msg[MESSAGE_DIM]; //Message string
+var extruder_selected; //Current Extruder
 var sd_current_page:=0; //Curretn SD file pages
 var sd_page_count:=0;   //Max SD file pages
 
@@ -143,7 +156,8 @@ var file_count; //File Count
 var files[MAX_FILE]; //File name Pointers Array
 var p_filenames; //Pointer index
 
-//Z Calibration
+//Z Calibration:
+//Z offset: sign int.dec1 dec2 dec3 (-0.230)
 var z_cal_sign;
 var z_cal_int;
 var z_cal_dec1;

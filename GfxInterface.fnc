@@ -48,12 +48,10 @@ endfunc
 
 func drawButtonControl()
     //draw Extruder/Reverse Section
-    //initButtonExtrude();
     updateButtonExtrude(FALSE);
     setFontMessage(92, 188);
     printBuffer("mm");
 
-    //initButtonReverse();
     updateButtonReverse(FALSE);
     setFontMessage(92,204);
     printBuffer("mm/min");
@@ -165,16 +163,15 @@ func updateMessage(var *_msg0,var *_msg1,var *_msg2)
     len:=(str_Length(_msg0)*7) + (str_Length(_msg1)*7) + (str_Length(_msg2)*7);
     gfx_RectangleFilled(0, 214, 319, 224,BLACK); //Clear old Message
     if(WINDOW==W_SDCARD)
-         gfx_TriangleFilled(299, 228, 288, 212,  310, 212, 0x8D9C);
+         gfx_TriangleFilled(299, 228, 288, 212,  310, 212, COLOURSEL_INDICATOR);
     else if(WINDOW==W_PRINTING_OPTION)
-         gfx_TriangleFilled(299, 228, 288, 212,  310, 212, 0x8D9C);
+         gfx_TriangleFilled(299, 228, 288, 212,  310, 212, COLOURSEL_INDICATOR);
     endif
     offset:= ((MESSAGE_DIM*7) - len)/2; //Offset for Center String
     setFontMessage(offset, 217);
     printBuffer(_msg0);
     printBuffer(_msg1);
     printBuffer(_msg2);
-    //sys_SetTimerEvent(TIMER0, returnToMain);
 endfunc
 
 func updateBlankMessage()
@@ -244,6 +241,10 @@ func updateBed(var *_msg )
     else
         setFontLabel(240,164);
     endif
+    #IF EXISTS SOUND_BED_NOTIFY
+    if(val == _ttB && _ttB!=0) sound(ALERT); //sound when the bed has reached the temperature
+    if(_ttB ==0 && val==OBJECT_RELEASE_TEMP) sound(ALERT);
+    #ENDIF
     printBuffer(_msg);
     img_SetWord(hndl, iGauge3, IMAGE_INDEX, tempGauge(str2w(_msg),_ttB,GAUGE_MAX_TEMP_B));
     img_Show(hndl,iGauge3);
@@ -399,7 +400,7 @@ func remove_currentTrackpad()
 endfunc
 
 func initTrackbar(var type)
-     gfx_Panel(PANEL_RAISED, 26, 140, 184, 36, COLOUR_TRACKPAD); //TrackPad Container
+     gfx_Panel(PANEL_RAISED, 26, 140, 184, 36, COLOURSEL_INDICATOR); //TrackPad Container
     if(type == EXTMM_ACT)
         gfx_TriangleFilled(71, 183, 60, 172,  82, 172, COLOURSEL_INDICATOR);
         WINDOW := W_EXTMM;
@@ -537,13 +538,13 @@ endfunc
 
 func updateButtonSwitchEx(var type)
     if(type==EVENT)
-        current_extruder:=!current_extruder;
+        extruder_selected:=!extruder_selected;
     endif
-    if(current_extruder==0)
-        img_SetWord(hndl, iWinbutton9, IMAGE_INDEX,current_extruder);
+    if(extruder_selected==0)
+        img_SetWord(hndl, iWinbutton9, IMAGE_INDEX,extruder_selected);
         img_Show(hndl,iWinbutton9);
     else
-        img_SetWord(hndl, iWinbutton10, IMAGE_INDEX,current_extruder);
+        img_SetWord(hndl, iWinbutton10, IMAGE_INDEX,extruder_selected);
         img_Show(hndl,iWinbutton10);
     endif
 endfunc
@@ -559,42 +560,21 @@ func updateButtonFileList()
     else if(sd_current_page<0)
         sd_current_page:=sd_page_count;
     endif
-    count:=(sd_current_page)*24;
+    count:=(sd_current_page)*24; //24 is max button file in one page
     updatePageFileIndex();
     for(i:=0; i<8 && STOP==FALSE; i++) // Button files is 8x3 Matrix
         for(j:=0; j<3 && STOP==FALSE; j++)
             if(count<file_count)
                      gfx_Button(1,BUTTON_FILES_X[j],BUTTON_FILES_Y[i],GRAY,WHITE,FONT1, 1, 1,files[count]);
-                     //drawSingleButtonFile(BUTTON_FILES_X[j],BUTTON_FILES_Y[i],count,files[count]);
                 count++;
             else
-                STOP:=FALSE;
+                STOP:=TRUE;
             endif
         next
     next
 
 endfunc
 
-/*
-func drawSingleButtonFile(var x,var y,var index,var *_msg)
-    var str;
-    var i,len;
-    len:=str_Length(files[index]);
-    if(len>MAX_FILE_NAME)
-        for(i:=0; i<MAX_FILE_NAME-len; i++)
-            if(i==0)to(str);
-            if(i>0)to(APPEND);
-            print(" ");
-            if(i==(MAX_FILE_NAME-len-1))
-                to(APPEND);
-                str_Printf(&_msg,"%s");
-            endif
-        next
-    endif
-    gfx_Button(1,x,y,GRAY,WHITE,FONT1, 1, 1,str);
-
-endfunc
-*/
 
 func updatePageFileIndex()
     gfx_RectangleFilled(34, 188, 280, 204, 0xD699) ;
@@ -632,8 +612,8 @@ func updateButtonPagesRight(var state)
 endfunc
 
 func drawWinPrintingOption()
-    gfx_Panel(PANEL_RAISED, 228, 130, 84, 86, 0x8D9C);
-    gfx_TriangleFilled(299, 228, 288, 212,  310, 212, 0x8D9C);
+    gfx_Panel(PANEL_RAISED, 228, 130, 84, 86, COLOURSEL_INDICATOR);
+    gfx_TriangleFilled(299, 228, 288, 212,  310, 212, COLOURSEL_INDICATOR);
     gfx_Panel(PANEL_RAISED, 232, 134, 76, 78, 0xD699);
     updatePauseButton(OFF);
     updateResumeButton(OFF);
@@ -662,7 +642,7 @@ endfunc
 func WinPrintConfirm(var index,var *_msg)
     var offset:=0;
     offset:= ((MAX_FILE_NAME*7) - ((str_Length(files[index])+1)*7))/2; //Offset for Center String
-    gfx_Panel(PANEL_RAISED, 88, 68, 132, 69, 0x8D9C);
+    gfx_Panel(PANEL_RAISED, 88, 68, 132, 69, COLOURSEL_INDICATOR);
     gfx_Panel(PANEL_RAISED, 91, 72, 126, 61, 0xD699) ;
     img_SetWord(hndl, iWinbutton11, IMAGE_INDEX,OFF);
     img_Show(hndl,iWinbutton11) ;
@@ -679,8 +659,8 @@ endfunc
 
 func drawWinZCalibration()
     var i;
-    gfx_Panel(PANEL_RAISED, 36, 50, 190, 153, 0x8D9C);
-    gfx_TriangleFilled(141, 223, 128, 200,  154, 200, 0x8D9C);
+    gfx_Panel(PANEL_RAISED, 36, 50, 190, 153, COLOURSEL_INDICATOR);
+    gfx_TriangleFilled(141, 223, 128, 200,  154, 200, COLOURSEL_INDICATOR);
     gfx_Panel(PANEL_RAISED, 39, 54, 183, 147, 0xD699);
     for(i:=0; i<11; i++)
          updateButtonZCal(i,OFF);

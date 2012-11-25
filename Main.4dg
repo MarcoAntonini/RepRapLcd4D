@@ -66,7 +66,7 @@ func bootSplash()
     putstr("LCD Interface v.");
     putstr(VERSION);
     gfx_MoveTo(84, 232);
-    putstr("marcomail.anto@gmail.com");
+    putstr(AUTHOR);
 endfunc
 
 var BLOCK:=TRUE;
@@ -80,8 +80,8 @@ func HiddenTouchCalibration()
     while(touch_Get(TOUCH_STATUS)!=TOUCH_PRESSED && BLOCK)
     wend
     if(BLOCK==TRUE)
-         sys_SetTimer(TIMER1,0);
-        file_Exec("touchcal.4XE",0);
+        sys_SetTimer(TIMER1,0);
+        file_Exec("TOUCHCAL.4XE",0);
     endif
 endfunc
 
@@ -89,9 +89,11 @@ func main()
 
     touch_Set(TOUCH_ENABLE);
     startupSD();
+#IFNOT EXISTS DEBUG_NO_BOOTSPLASH
     bootSplash();
     HiddenTouchCalibration();
-    pause(STARTUP_TIMEOUT);
+    //pause(STARTUP_TIMEOUT);
+#ENDIF
     initVars();
     EnableAllTocuhButtonImage();
     gfx_Cls();
@@ -134,7 +136,7 @@ func initVars()
     EN_TOUCH_MOVING:=FALSE;
     WINDOW:=W_MAIN;
     //WINDOW:=W_SDCARD; //for DEBUG
-    current_extruder:=0;
+    extruder_selected:=0;
     //Init Global Vars
     _ttH0:=0; //Temp Target HotEnd0
     to(ttH0); print("000");
@@ -154,7 +156,7 @@ func initVars()
     to(bed_setTemp); print("55"); //Buttpn Set Bed Temp
     to(msg); print(""); //Max 46 char
     //Z Calibration
-    z_cal_sign:=1;
+    z_cal_sign:=-1;
     z_cal_int:=0;
     z_cal_dec1:=0;
     z_cal_dec2:=0;
@@ -189,19 +191,20 @@ endfunc
 */
 
 func sound(var type)
-     snd_Volume(80);
+     snd_Volume(SOUND_VOLUME);
      if(type==STARTUP)
         if(file_Exists("STARTUP.WAV"))
             file_PlayWAV("STARTUP.WAV");
         endif
      else if(type==ALERT)
-         if(file_Exists("alert.wav"))
-            file_PlayWAV("alert.wav");
+         if(file_Exists("ALERT.WAV"))
+            file_PlayWAV("ALERT.WAV");
          endif
      else if(type==FINISH)
-         if(file_Exists("finish.wav"))
-            file_PlayWAV("finish.wav");
+         if(file_Exists("FINISH.WAV"))
+            file_PlayWAV("FINISH.WAV");
          endif
+         PRINTING:=FALSE;
     endif
 endfunc
 

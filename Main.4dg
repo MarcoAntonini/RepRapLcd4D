@@ -1,5 +1,7 @@
 #platform "uLCD-32PT_GFX2"
 #MODE RUNFLASH
+#STACK 500
+
 /*
  ReprapLcd4D LCD Firmware for RepRap 3D Printer.
  designed for 4D Systems uLCD-32PT
@@ -161,34 +163,7 @@ func initVars()
     z_cal_dec1:=0;
     z_cal_dec2:=0;
     z_cal_dec3:=0;
-    /*
-    #IF EXISTS CONTRAST_TIMEOUT
-    CONTRAST_STATUS:=ON;
-    #ENDIF
-    */
 endfunc
-
-/*
-#IF EXISTS CONTRAST_TIMEOUT
-func ContrastTimeout(var type)
-    if(type==SET_TIMER)
-         sys_SetTimerEvent(TIMER1,ContrastTimeoutEvent);
-         sys_SetTimer(TIMER1,CONTRAST_TIMEOUT);
-    else if(type==REMOVE_TIMER)
-         sys_SetTimer(TIMER0,0);
-         gfx_Set(CONTRAST,ON);
-         CONTRAST_STATUS:=ON;
-    else if(type==GET_TIMER)
-         return sys_GetTimer(TIMER0);
-    endif
-endfunc
-
-func ContrastTimeoutEvent()
-     gfx_Set(CONTRAST,OFF);
-     CONTRAST_STATUS:=OFF;
-endfunc
-#ENDIF
-*/
 
 func sound(var type)
      snd_Volume(SOUND_VOLUME);

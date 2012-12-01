@@ -129,32 +129,27 @@ func drawStatusBar()
     updateSDPerc(str_Ptr(sdPerc));
 endfunc
 
-func setFontLabel(var x,var y)
-    txt_Set(FONT_ID,FONT3);
-    txt_FGcolour(BLACK);
-    txt_BGcolour(0xD699);
+func setFont(var x,var y,var font,var fcolor,var bcolor)
+    txt_Set(FONT_ID,font);
+    txt_FGcolour(fcolor);
+    txt_BGcolour(bcolor);
     gfx_MoveTo(x,y);
+endfunc
+
+func setFontLabel(var x,var y)
+    setFont(x,y,FONT3,BLACK,0xD699);
 endfunc
 
 func setFontLabelAlert(var x,var y)
-    txt_Set(FONT_ID,FONT3);
-    txt_FGcolour(RED);
-    txt_BGcolour(0xD699);
-    gfx_MoveTo(x,y);
+    setFont(x,y,FONT3,RED,0xD699);
 endfunc
 
 func setFontInfo(var x,var y)
-    txt_Set(FONT_ID,FONT2);
-    txt_FGcolour(WHITE);
-    txt_BGcolour(BLACK);
-    gfx_MoveTo(x,y);
+    setFont(x,y,FONT2,WHITE,BLACK);
 endfunc
 
 func setFontMessage(var x,var y)
-    txt_Set(FONT_ID,FONT1);
-    txt_FGcolour(WHITE);
-    txt_BGcolour(BLACK);
-    gfx_MoveTo(x,y);
+    setFont(x,y,FONT1,WHITE,BLACK);
 endfunc
 
 func updateMessage(var *_msg0,var *_msg1,var *_msg2)
@@ -193,8 +188,7 @@ func updateHotEnd0(var *_msg)
         setFontLabel(240,44);
     endif
     printBuffer(_msg);
-    img_SetWord(hndl, iGauge1, IMAGE_INDEX, tempGauge(val,_ttH0,GAUGE_MAX_TEMP_H));
-    img_Show(hndl,iGauge1);
+    updateImg(iGauge1,tempGauge(val,_ttH0,GAUGE_MAX_TEMP_H));
 endfunc
 
 func updateHotEnd1(var *_msg)
@@ -206,8 +200,7 @@ func updateHotEnd1(var *_msg)
         setFontLabel(240,104);
     endif
     printBuffer(_msg);
-    img_SetWord(hndl, iGauge2, IMAGE_INDEX, tempGauge(val,_ttH1,GAUGE_MAX_TEMP_H));
-    img_Show(hndl,iGauge2) ;
+    updateImg(iGauge2,tempGauge(val,_ttH1,GAUGE_MAX_TEMP_H));
 endfunc
 
 func updateTHotEnd0(var *_msg)
@@ -246,8 +239,7 @@ func updateBed(var *_msg )
     if(_ttB ==0 && val==OBJECT_RELEASE_TEMP) sound(ALERT);
     #ENDIF
     printBuffer(_msg);
-    img_SetWord(hndl, iGauge3, IMAGE_INDEX, tempGauge(str2w(_msg),_ttB,GAUGE_MAX_TEMP_B));
-    img_Show(hndl,iGauge3);
+    updateImg(iGauge3,tempGauge(str2w(_msg),_ttB,GAUGE_MAX_TEMP_B));
 endfunc
 
 func updateTBed(var *_msg)
@@ -297,21 +289,15 @@ func tempGauge(var current_val,var target,var max_temp)
 endfunc
 
 func updateLedEx0(var state)
-    img_Show(hndl,iLed1);
-    img_SetWord(hndl, iLed1, IMAGE_INDEX,!state);
-    img_Show(hndl,iLed1);
+    updateImg(iLed1,!state);
 endfunc
 
 func updateLedEx1(var state)
-    img_Show(hndl,iLed2);
-    img_SetWord(hndl, iLed2, IMAGE_INDEX,!state);
-    img_Show(hndl,iLed2);
+    updateImg(iLed2,!state);
 endfunc
 
 func updateLedBed(var state)
-    img_Show(hndl,iLed3);
-    img_SetWord(hndl, iLed3, IMAGE_INDEX,!state);
-    img_Show(hndl,iLed3);
+    updateImg(iLed3,!state);
 endfunc
 
 func str2w(var *buffer)
@@ -322,64 +308,46 @@ func str2w(var *buffer)
 endfunc
 
 func updateButtonExtrude(var state)
-    img_SetWord(hndl, iWinbutton1, IMAGE_INDEX, state);
-    img_Show(hndl,iWinbutton1) ;
+    updateImg(iWinbutton1,state);
 endfunc
 
 func updateButtonReverse(var state)
-    img_SetWord(hndl, iWinbutton2, IMAGE_INDEX, state);
-    img_Show(hndl,iWinbutton2) ;
+    updateImg(iWinbutton2,state);
 endfunc
 
 func updateButtonExOff(var state)
-   img_SetWord(hndl, iWinbutton3, IMAGE_INDEX, state);
-   img_Show(hndl,iWinbutton3) ;
+   updateImg(iWinbutton3,state);
 endfunc
 
 func updateButtonBedOff(var state)
-    img_SetWord(hndl, iWinbutton4, IMAGE_INDEX, state);
-    img_Show(hndl,iWinbutton4) ;
+    updateImg(iWinbutton4,state);
 endfunc
 
 func updateButtonExSet(var state)
-    img_SetWord(hndl, iWinbutton5, IMAGE_INDEX, state);
-    img_Show(hndl,iWinbutton5) ;
+    updateImg(iWinbutton5,state);
 endfunc
 
 func updateButtonBedSet(var state)
-    img_SetWord(hndl, iWinbutton6, IMAGE_INDEX, state);
-    img_Show(hndl,iWinbutton6) ;
+    updateImg(iWinbutton6,state);
 endfunc
 
 func updateExmm(var *value,var colour)
-    txt_Set(FONT_ID,FONT1);
-    txt_FGcolour(colour);
-    txt_BGcolour(0xD699);
-    gfx_MoveTo(63, 188);
+    setFont(63,188,FONT1,colour,0xD699);
     printBuffer(value);
 endfunc
 
 func updateExmm_min(var *value,var colour)
-    txt_Set(FONT_ID,FONT1);
-    txt_FGcolour(colour);
-    txt_BGcolour(0xD699);
-    gfx_MoveTo(63, 202);
+    setFont(63,202,FONT1,colour,0xD699);
     printBuffer(value);
 endfunc
 
 func updateExSetTemp(var *value,var colour)
-    txt_Set(FONT_ID,FONT1);
-    txt_FGcolour(colour);
-    txt_BGcolour(0xD699);
-    gfx_MoveTo(175, 188);
+    setFont(175,203,FONT1,colour,0xD699);
     printBuffer(value);
 endfunc
 
 func updateBedSetTemp(var *value,var colour)
-    txt_Set(FONT_ID,FONT1);
-    txt_FGcolour(colour);
-    txt_BGcolour(0xD699);
-    gfx_MoveTo(175, 203);
+    setFont(175,203,FONT1,colour,0xD699);
     printBuffer(value);
 endfunc
 
@@ -484,10 +452,8 @@ func updateTrackbarEvent(var type,var x) // x coord.
 endfunc
 
 func updateButtonFine(var state)
-    img_SetWord(hndl, iWinbutton7, IMAGE_INDEX, state);
-    img_Show(hndl,iWinbutton7);
-    img_SetWord(hndl, iWinbutton8, IMAGE_INDEX, state);
-    img_Show(hndl,iWinbutton8);
+    updateImg(iWinbutton7,state);
+    updateImg(iWinbutton8,state);
 endfunc
 
 func ButtonFinePlusAction()
@@ -541,11 +507,9 @@ func updateButtonSwitchEx(var type)
         extruder_selected:=!extruder_selected;
     endif
     if(extruder_selected==0)
-        img_SetWord(hndl, iWinbutton9, IMAGE_INDEX,extruder_selected);
-        img_Show(hndl,iWinbutton9);
+        updateImg(iWinbutton9,extruder_selected);
     else
-        img_SetWord(hndl, iWinbutton10, IMAGE_INDEX,extruder_selected);
-        img_Show(hndl,iWinbutton10);
+        updateImg(iWinbutton10,extruder_selected);
     endif
 endfunc
 
@@ -577,11 +541,8 @@ endfunc
 
 
 func updatePageFileIndex()
-    gfx_RectangleFilled(34, 188, 280, 204, 0xD699) ;
-    txt_Set(FONT_ID,FONT1);
-    txt_FGcolour(BLACK) ;
-    txt_BGcolour(0xD699) ;
-    gfx_MoveTo(70, 193) ;
+    gfx_RectangleFilled(34, 188, 280, 204, 0xD699);
+    setFont(70,193,FONT1,BLACK,0xD699);
     putstr("page ");
     putnum(DEC,sd_current_page+1);
     putstr(" of ");
@@ -592,7 +553,7 @@ func updatePageFileIndex()
 endfunc
 
 func drawSDScreen()
-     gfx_RectangleFilled(200, 200, 318, 221,BLACK);
+    gfx_RectangleFilled(200, 200, 318, 221,BLACK);
     gfx_Panel(PANEL_RAISED, 0, 0, 320, 215, COLOURSEL_INDICATOR);
     gfx_TriangleFilled(299, 228, 288, 212,  310, 212, COLOURSEL_INDICATOR);
     gfx_Panel(PANEL_RAISED, 4, 4, 312, 207, 0xD699);
@@ -602,13 +563,11 @@ func drawSDScreen()
 endfunc
 
 func updateButtonPagesLeft(var state)
-    img_SetWord(hndl, iWinbutton13, IMAGE_INDEX, state);
-    img_Show(hndl,iWinbutton13) ;
+    updateImg(iWinbutton13,state);
 endfunc
 
 func updateButtonPagesRight(var state)
-    img_SetWord(hndl, iWinbutton14, IMAGE_INDEX, state);
-    img_Show(hndl,iWinbutton14);
+    updateImg(iWinbutton14,state);
 endfunc
 
 func drawWinPrintingOption()
@@ -621,18 +580,15 @@ func drawWinPrintingOption()
 endfunc
 
 func updatePauseButton(var state)
-    img_SetWord(hndl, iWinbutton16, IMAGE_INDEX,state);
-    img_Show(hndl,iWinbutton16);
+    updateImg(iWinbutton16,state);
 endfunc
 
 func updateResumeButton(var state)
-    img_SetWord(hndl, iWinbutton15, IMAGE_INDEX,state);
-    img_Show(hndl,iWinbutton15);
+    updateImg(iWinbutton15,state);
 endfunc
 
 func updateOpenFileButton(var state)
-    img_SetWord(hndl, iWinbutton17, IMAGE_INDEX,state);
-    img_Show(hndl,iWinbutton17);
+    updateImg(iWinbutton17,state);
 endfunc
 
 func map(var x, var in_min,var in_max,var out_min,var out_max)
@@ -643,17 +599,12 @@ func WinPrintConfirm(var index,var *_msg)
     var offset:=0;
     offset:= ((MAX_FILE_NAME*7) - ((str_Length(files[index])+1)*7))/2; //Offset for Center String
     gfx_Panel(PANEL_RAISED, 88, 68, 132, 69, COLOURSEL_INDICATOR);
-    gfx_Panel(PANEL_RAISED, 91, 72, 126, 61, 0xD699) ;
-    img_SetWord(hndl, iWinbutton11, IMAGE_INDEX,OFF);
-    img_Show(hndl,iWinbutton11) ;
-    img_SetWord(hndl, iWinbutton12, IMAGE_INDEX,OFF);
-    img_Show(hndl,iWinbutton12) ;
-    txt_FGcolour(BLACK);
-    txt_BGcolour(0xD699);
-    gfx_MoveTo(116, 76);
+    gfx_Panel(PANEL_RAISED, 91, 72, 126, 61, 0xD699);
+    updateImg(iWinbutton11,OFF);
+    updateImg(iWinbutton12,OFF);
+    setFont(116,76,FONT1,BLACK,0xD699);
     putstr("Print file");
-    txt_BGcolour(0xD699);
-    gfx_MoveTo(106+offset, 88);
+    setFont(106+offset,88,FONT1,BLACK,0xD699);
     str_Printf(&_msg,"%s ?");
 endfunc
 
@@ -665,24 +616,17 @@ func drawWinZCalibration()
     for(i:=0; i<11; i++)
          updateButtonZCal(i,OFF);
     next
-    txt_Set(FONT_ID,FONT1);
+    setFont(137,92,FONT1,BLACK,0xD699);
     txt_Height(2);
     txt_Width(1);
-    txt_FGcolour(BLACK) ;
-    txt_BGcolour(0xD699) ;
-    gfx_MoveTo(137, 92) ;
-    putstr(",") ;
-    txt_Height(1);
-    txt_Width(1);
+    putstr(",");
+    Font1x1();
 endfunc
 
 func setFontZCal(var x , var y)
-    txt_Set(FONT_ID,FONT1);
+    setFont(x,y,FONT1,BLACK,SILVER);
     txt_Height(2);
     txt_Width(2);
-    txt_FGcolour(BLACK);
-    txt_BGcolour(SILVER);
-    gfx_MoveTo(x,y);
 endfunc
 
 func Font1x1()
@@ -694,17 +638,14 @@ func updateButtonZCal(var type,var state)
 
     //setOffset
     if(type==Z_SET_OFFSET)
-        img_SetWord(hndl, iWinbutton21, IMAGE_INDEX, state);
-        img_Show(hndl,iWinbutton21) ;
+        updateImg(iWinbutton21,state);
     //Zprobe
     else if(type==Z_PROBE)
-        img_SetWord(hndl, iWinbutton18, IMAGE_INDEX, state);
-        img_Show(hndl,iWinbutton18) ;
+        updateImg(iWinbutton18,state);
     //Sign
     else if(type==Z_SIGN)
         gfx_Panel(PANEL_RAISED, 82, 80, 22, 30, SILVER) ;
-        img_SetWord(hndl, iWinbutton30, IMAGE_INDEX, state);
-        img_Show(hndl,iWinbutton30) ;
+        updateImg(iWinbutton30,state);
         setFontZCal(87,87);
         if(z_cal_sign>0)
             putstr("+");
@@ -715,64 +656,56 @@ func updateButtonZCal(var type,var state)
     //Int+
     else if(type==Z_INT_PLUS)
         gfx_Panel(PANEL_RAISED, 110, 80, 22, 30, SILVER) ;
-        img_SetWord(hndl, iWinbutton19, IMAGE_INDEX, state);
-        img_Show(hndl,iWinbutton19) ;
+        updateImg(iWinbutton19,state);
         setFontZCal(115,87);
         putnum(DEC,z_cal_int);
         Font1x1();
     //Int-
     else if(type==Z_INT_MINUS)
         gfx_Panel(PANEL_RAISED, 110, 80, 22, 30, SILVER);
-        img_SetWord(hndl, iWinbutton26, IMAGE_INDEX, state);
-        img_Show(hndl,iWinbutton26) ;
+        updateImg(iWinbutton26,state);
         setFontZCal(115,87);
         putnum(DEC,z_cal_int);
         Font1x1();
     //Dec1+
     else if(type==Z_DEC1_PLUS)
         gfx_Panel(PANEL_RAISED, 146, 80, 22, 30, SILVER) ;
-        img_SetWord(hndl, iWinbutton20, IMAGE_INDEX, state);
-        img_Show(hndl,iWinbutton20) ;
+        updateImg(iWinbutton20,state);
         setFontZCal(151,87);
         putnum(DEC,z_cal_dec1);
         Font1x1();
     //Dec1-
     else if(type==Z_DEC1_MINUS)
         gfx_Panel(PANEL_RAISED, 146, 80, 22, 30, SILVER) ;
-        img_SetWord(hndl, iWinbutton27, IMAGE_INDEX, state);
-        img_Show(hndl,iWinbutton27) ;
+        updateImg(iWinbutton27,state);
         setFontZCal(151,87);
         putnum(DEC,z_cal_dec1);
         Font1x1();
     //Dec2+
     else if(type==Z_DEC2_PLUS)
         gfx_Panel(PANEL_RAISED, 170, 80, 22, 30, SILVER);
-        img_SetWord(hndl, iWinbutton22, IMAGE_INDEX, state);
-        img_Show(hndl,iWinbutton22) ;
+        updateImg(iWinbutton22,state);
         setFontZCal(175,87);
         putnum(DEC,z_cal_dec2);
         Font1x1();
     //Dec2-
     else if(type==Z_DEC2_MINUS)
         gfx_Panel(PANEL_RAISED, 170, 80, 22, 30, SILVER);
-        img_SetWord(hndl, iWinbutton28, IMAGE_INDEX, state);
-        img_Show(hndl,iWinbutton28) ;
+        updateImg(iWinbutton28,state);
         setFontZCal(175,87);
         putnum(DEC,z_cal_dec2);
         Font1x1();
     //Dec3+
     else if(type==Z_DEC3_PLUS)
         gfx_Panel(PANEL_RAISED, 194, 80, 22, 30, SILVER) ;
-        img_SetWord(hndl, iWinbutton23, IMAGE_INDEX, state);
-        img_Show(hndl,iWinbutton23) ;
+        updateImg(iWinbutton23,state);
         setFontZCal(199,87);
         putnum(DEC,z_cal_dec3);
         Font1x1();
     //Dec3-
     else if(type==Z_DEC3_MINUS)
         gfx_Panel(PANEL_RAISED, 194, 80, 22, 30, SILVER) ;
-        img_SetWord(hndl, iWinbutton29, IMAGE_INDEX, state);
-        img_Show(hndl,iWinbutton29) ;
+        updateImg(iWinbutton29,state);
         setFontZCal(199,87);
         putnum(DEC,z_cal_dec3);
         Font1x1();
@@ -812,6 +745,11 @@ func EnableAllTocuhButtonImage()
     img_SetWord(hndl, iWinbutton18, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton18, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
     */
 
+endfunc
+
+func updateImg(var img,var state)
+    img_SetWord(hndl,img,IMAGE_INDEX,state);
+    img_Show(hndl,img);
 endfunc
 
 func switchWinSDtoMain()

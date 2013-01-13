@@ -342,7 +342,7 @@ func updateExmm_min(var *value,var colour)
 endfunc
 
 func updateExSetTemp(var *value,var colour)
-    setFont(175,203,FONT1,colour,0xD699);
+    setFont(175,188,FONT1,colour,0xD699);
     printBuffer(value);
 endfunc
 
@@ -460,19 +460,27 @@ func ButtonFinePlusAction()
    var value;
    if(WINDOW == EXTMM_ACT)
         value:=str2w(str_Ptr(ex_setmm));
-        value++;
+        if(value < TRACKPAD_MAX_EXTMM)
+            value++;
+        endif
         to(ex_setmm); putnum(DEC,value);
     else if(WINDOW == EXTMM_MIN_ACT)
         value:=str2w(str_Ptr(ex_setmm_min));
-        value++;
+        if(value < TRACKPAD_MAX_EXTMM_MIN)
+            value++;
+        endif
         to(ex_setmm_min); putnum(DEC,value);
     else if(WINDOW == EXTTEMP_ACT)
         value:=str2w(str_Ptr(ex_setTemp));
-        value++;
+        if(value < TRACKPAD_MAX_EXTTEMP)
+            value++;
+        endif
         to(ex_setTemp); putnum(DEC,value);
     else if(WINDOW == BEDTEMP_ACT)
         value:=str2w(str_Ptr(bed_setTemp));
-        value++;
+        if(value < TRACKPAD_MAX_BEDTEMP)
+            value++;
+        endif
         to(bed_setTemp); putnum(DEC,value);
     endif
     updateTrackbarStatus(WINDOW);
@@ -483,19 +491,27 @@ func ButtonFineMinusAction()
    var value;
    if(WINDOW == EXTMM_ACT)
         value:=str2w(str_Ptr(ex_setmm));
-        value--;
+        if(value > 0 )
+            value--;
+        endif
         to(ex_setmm); putnum(DEC,value);
     else if(WINDOW == EXTMM_MIN_ACT)
         value:=str2w(str_Ptr(ex_setmm_min));
-        value--;
+        if(value > 0 )
+            value--;
+        endif
         to(ex_setmm_min); putnum(DEC,value);
     else if(WINDOW == EXTTEMP_ACT)
         value:=str2w(str_Ptr(ex_setTemp));
-        value--;
+        if(value >0)
+            value--;
+        endif
         to(ex_setTemp); putnum(DEC,value);
     else if(WINDOW == BEDTEMP_ACT)
         value:=str2w(str_Ptr(bed_setTemp));
-        value--;
+        if(value > 0 )
+            value--;
+        endif
         to(bed_setTemp); putnum(DEC,value);
     endif
     updateTrackbarStatus(WINDOW);

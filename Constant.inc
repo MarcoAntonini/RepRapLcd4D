@@ -25,7 +25,7 @@
 //DEBUG_NO_EXTR_PREVENT
 //DEBUG_NO_BOOTSPLASH
 
-VERSION "0.2dem" // "de" double extruder
+VERSION "0.21" //
 AUTHOR "marcomail.anto@gmail.com"
 
 //CONTRAST_TIMEOUT 5000 //Screen Timeout, Comment out to disable

@@ -519,6 +519,10 @@ func ButtonFineMinusAction()
 endfunc
 
 func updateButtonSwitchEx(var type)
+
+    if(extruder_selected<0)           // check if the variable is populated (error only IDE 4 ??
+        extruder_selected:=0;         // why? already initialized in initVars() !!
+    endif
     if(type==EVENT)
         extruder_selected:=!extruder_selected;
     endif
@@ -558,7 +562,8 @@ endfunc
 
 func updatePageFileIndex()
 
-    if( sd_current_page <0 || file_count <0 || sd_page_count<0) // check if the variable is populated, only for IDE 4.0 why?
+    if( sd_current_page <0 || file_count <0 || sd_page_count<0) // check if the variable is populated (error only IDE 4 ?? )
+                                                                // why? already initialized in initVars() !!
          sd_current_page:=0;
          file_count:=0;
          sd_page_count:=0;

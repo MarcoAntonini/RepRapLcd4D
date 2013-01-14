@@ -38,7 +38,7 @@ This be considered a beta version, I tested on the 4D Workshop IDE with a uLCD-3
   * a FTDI usb to serial converter (or equivalent)
   * a 4D Workshop3 IDE Tool
   
- **Upload the Firmware**
+**Upload the Firmware**
 
   * Download and install the 4D Workshop3 IDE Tool.
   * Connect your LCD using the FTDI cable to the PC.
@@ -56,10 +56,11 @@ if the Graphical interface does not appear correctly, the problem can be caused 
 Try to reformat or use the 4D-Systems Removable Media Partition Edit Tool
 
 **Dev note**
+
 Changes to be made:
 
-1) In the new IDE 4 button "switch Extruder" does not appear correctly
-2) move Gfx Interface function in the micro sd to free up space on the Picaso flash.
-3) Add Print-STOP and sd card eject buttons (in menu SD-card)
-4) Add Fan menu (ON,OFF,speed)
-5) Add Enable/Disable motor buttons
+  * In the new IDE 4 button "switch Extruder" does not appear correctly 
+  * move Gfx Interface function in the micro sd to free up space on the Picaso flash.
+  * Add Print-STOP and sd card eject buttons (in menu SD-card)
+  * Add Fan menu (ON,OFF,speed)
+  * Add Enable/Disable motor buttons

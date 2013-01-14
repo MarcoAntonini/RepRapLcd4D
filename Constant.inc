@@ -32,7 +32,7 @@ AUTHOR "marcomail.anto@gmail.com"
 STARTUP_TIMEOUT 3000
 
 SOUND_VOLUME 60 //60 for low PWR
-SOUND_BED_NOTIFY //Notify Bed
+//SOUND_BED_NOTIFY //to change, does not work correctly
 OBJECT_RELEASE_TEMP 40 //Temperature release of Object on the bed
                        //which is used only as a notification sound
 

@@ -558,7 +558,7 @@ endfunc
 
 func updatePageFileIndex()
 
-    if( sd_current_page <0 || file_count <0 || sd_page_count<0)
+    if( sd_current_page <0 || file_count <0 || sd_page_count<0) // check if the variable is populated, only for IDE 4.0 why?
          sd_current_page:=0;
          file_count:=0;
          sd_page_count:=0;

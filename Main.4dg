@@ -1,4 +1,4 @@
-#platform "uLCD-32PT_GFX2"
+#platform "uLCD-32PT"
 #MODE RUNFLASH
 #STACK 500
 
@@ -94,7 +94,6 @@ func main()
 #IFNOT EXISTS DEBUG_NO_BOOTSPLASH
     bootSplash();
     HiddenTouchCalibration();
-    //pause(STARTUP_TIMEOUT);
 #ENDIF
     initVars();
     EnableAllTocuhButtonImage();
@@ -137,8 +136,10 @@ func initVars()
     PRINTING:=FALSE;
     EN_TOUCH_MOVING:=FALSE;
     WINDOW:=W_MAIN;
-    //WINDOW:=W_SDCARD; //for DEBUG
     extruder_selected:=0;
+    sd_current_page:=0; //Curretn SD file pages
+    sd_page_count:=0;   //Max SD file pages
+    to(file_count); putnum(DEC,0);
     //Init Global Vars
     _ttH0:=0; //Temp Target HotEnd0
     to(ttH0); print("000");

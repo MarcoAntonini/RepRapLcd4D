@@ -31,7 +31,7 @@ func MainGfxInterface()
     drawStatusBar();
     drawTempIndicator();
     drawButtonControl();
-    updateMessage(str_Ptr(msg),"","");
+    updateMessage(str_Ptr(msg)," "," ");
 endfunc
 
 
@@ -170,7 +170,7 @@ func updateMessage(var *_msg0,var *_msg1,var *_msg2)
 endfunc
 
 func updateBlankMessage()
-    updateMessage("","","");
+    updateMessage(" "," "," ");
 endfunc
 
 func setTimerMessage(var time)
@@ -522,10 +522,10 @@ func updateButtonSwitchEx(var type)
     if(type==EVENT)
         extruder_selected:=!extruder_selected;
     endif
-    if(extruder_selected==0)
-        updateImg(iWinbutton9,extruder_selected);
+    if(extruder_selected==1)
+        updateImg(iWinbutton10,OFF);
     else
-        updateImg(iWinbutton10,extruder_selected);
+        updateImg(iWinbutton9,OFF);
     endif
 endfunc
 
@@ -557,6 +557,12 @@ endfunc
 
 
 func updatePageFileIndex()
+
+    if( sd_current_page <0 || file_count <0 || sd_page_count<0)
+         sd_current_page:=0;
+         file_count:=0;
+         sd_page_count:=0;
+    endif
     gfx_RectangleFilled(34, 188, 280, 204, 0xD699);
     setFont(70,193,FONT1,BLACK,0xD699);
     putstr("page ");

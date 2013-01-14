@@ -40,7 +40,7 @@ func TouchEvent(var x,var y)
                         pause(5);
                         SerialPrintlnBuffer("G90");
                         if(i==HOMING_ACTION_INDEX)
-                            updateMessage(MSG_HOMING,"","");
+                            updateMessage(MSG_HOMING," "," ");
                             setTimerMessage(4500);
                         endif
                         pause(50);
@@ -48,7 +48,7 @@ func TouchEvent(var x,var y)
                     endif
                 next
             else
-                updateMessage( MSG_OP_NOT_PERMITTED,"","");
+                updateMessage( MSG_OP_NOT_PERMITTED," "," ");
                 setTimerMessage(3000);
             endif
         else if(touched==iImage3) //SD Card TouchEvent
@@ -72,12 +72,12 @@ func TouchEvent(var x,var y)
                         setTimerMessage(3000);
                     #IFNOT EXISTS DEBUG_NO_EXTR_PREVENT
                     else
-                         updateMessage(MSG_COLD_EXTR_PREVENT,"","");
+                         updateMessage(MSG_COLD_EXTR_PREVENT," "," ");
                          setTimerMessage(3000);
                     endif
                     #ENDIF
                 else
-                    updateMessage(MSG_OP_NOT_PERMITTED,"","");
+                    updateMessage(MSG_OP_NOT_PERMITTED," "," ");
                     setTimerMessage(3000);
                 endif
         else if(touched==iWinbutton2) //Reverse Button
@@ -98,12 +98,12 @@ func TouchEvent(var x,var y)
                         setTimerMessage(3000);
                     #IFNOT EXISTS DEBUG_NO_EXTR_PREVENT
                     else
-                         updateMessage(MSG_COLD_EXTR_PREVENT,"","");
+                         updateMessage(MSG_COLD_EXTR_PREVENT," "," ");
                          setTimerMessage(3000);
                     endif
                     #ENDIF
                 else
-                    updateMessage(MSG_OP_NOT_PERMITTED,"","");
+                    updateMessage(MSG_OP_NOT_PERMITTED," "," ");
                     setTimerMessage(3000);
                 endif
         else if(touched==iWinbutton3) //Extruder Off
@@ -115,13 +115,13 @@ func TouchEvent(var x,var y)
             else
                 SerialPrintBuffer("\n");
             endif
-            updateMessage(MSG_HEATER_SHUTDOWN,"","");
+            updateMessage(MSG_HEATER_SHUTDOWN," "," ");
             setTimerMessage(3000);
         else if(touched==iWinbutton4) //Bed Off
             updateButtonBedOff(ON);
             //Send Gcode
             SerialPrintlnBuffer("M140 S0");
-            updateMessage(MSG_BED_SHUTDOWN,"","");
+            updateMessage(MSG_BED_SHUTDOWN," "," ");
             setTimerMessage(3000);
         else if(touched==iWinbutton5) //Extruder Set
             updateButtonExSet(ON);
@@ -145,9 +145,9 @@ func TouchEvent(var x,var y)
         else if(touched==iWinbutton9 || touched==iWinbutton10) //Switch Extruder
             updateButtonSwitchEx(EVENT);
             if(extruder_selected==0)
-                updateMessage(MSG_SWITCH_EXTRUDER,"0","");
+                updateMessage(MSG_SWITCH_EXTRUDER,"0"," ");
             else
-                 updateMessage(MSG_SWITCH_EXTRUDER,"1","");
+                 updateMessage(MSG_SWITCH_EXTRUDER,"1"," ");
             endif
             setTimerMessage(3000);
         else if(checkRegion( @ BUTTON_Z_CAL_TOUCH_REGION))
@@ -219,7 +219,7 @@ func TouchEvent(var x,var y)
             SerialPrintBuffer("M23 "); // Print file
             SerialPrintlnBuffer(files[file_selected]);
             pause(200);
-            updateMessage("Printing file ",files[file_selected],"");
+            updateMessage("Printing file ",files[file_selected]," ");
             //setTimerMessage(3000);
             SerialPrintlnBuffer("M24");
             PRINTING:=TRUE;

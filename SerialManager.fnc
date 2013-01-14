@@ -72,7 +72,7 @@ func parseCmd(var *buffer,var n)
     p_cmd_val := str_Ptr(cmd_val_buff);
 
     if( cmd_id[0] == MESSAGE_ID )
-        updateMessage(p_cmd_val,"","");
+        updateMessage(p_cmd_val," "," ");
         to(msg); printBuffer(p_cmd_val);
     else if( cmd_id[0] == HOTEND_ID )
         if(cmd_id[1]=='0')
@@ -144,7 +144,7 @@ func parseSDFile(var *buffer,var n)
         p_filenames := str_Ptr(filenames);
         // allocate a buffer for the filenames
         if(!filenames)
-            updateMessage("LCD ERRORR: Out of memory !\n","","");
+            updateMessage("LCD ERRORR: Out of memory !\n"," "," ");
             //Reset...
          endif
     else if(str_Match(&p,"End file list"))

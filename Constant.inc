@@ -147,8 +147,8 @@ var ex_setTemp[4]; //Set Ext. Temp
 var bed_setTemp[4]; //Set Bed Temp
 var msg[MESSAGE_DIM]; //Message string
 var extruder_selected; //Current Extruder
-var sd_current_page:=0; //Curretn SD file pages
-var sd_page_count:=0;   //Max SD file pages
+var sd_current_page; //Curretn SD file pages
+var sd_page_count;   //Max SD file pages
 
 //SD File Vars
 var filenames; //Pointer to the file list

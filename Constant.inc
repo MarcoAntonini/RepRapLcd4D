@@ -29,9 +29,9 @@ VERSION "0.21" //
 AUTHOR "marcomail.anto@gmail.com"
 
 //CONTRAST_TIMEOUT 5000 //Screen Timeout, Comment out to disable
-STARTUP_TIMEOUT 3000
+STARTUP_TIMEOUT 800
 
-SOUND_VOLUME 60 //60 for low PWR
+SOUND_VOLUME 30 //60 for low PWR
 //SOUND_BED_NOTIFY //to change, does not work correctly
 OBJECT_RELEASE_TEMP 40 //Temperature release of Object on the bed
                        //which is used only as a notification sound

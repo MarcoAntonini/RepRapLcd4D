@@ -27,7 +27,6 @@
 #inherit "SerialManager.fnc"
 #inherit "TouchManager.fnc"
 #inherit "GfxInterfaceConst.inc"
-#inherit "Constant.inc"
 
 func startupSD()
     gfx_Set(SCREEN_MODE,LANDSCAPE);
@@ -42,7 +41,8 @@ func startupSD()
         putstr("Try Remounting...\n");
         while(!(disk :=file_Mount()))
             err++;
-            if(err>30)
+            pause(500);
+            if(err>5)
                 putstr("Rebooting..\n");
                 pause(1000);
                 SystemReset();
@@ -97,9 +97,10 @@ func main()
 #ENDIF
     initVars();
     EnableAllTocuhButtonImage();
-    gfx_Cls();
-    drawGfxInterface();
     SerialInit();
+    gfx_Cls();
+    SerialPrintlnBuffer(FORCE_UPDATE_CMD);
+    drawGfxInterface();
     sound(ALERT);
     repeat
         //--------------------------------------------------

@@ -267,6 +267,7 @@ func TouchEvent(var x,var y)
              SerialPrintNumber(z_cal_dec1);
              SerialPrintNumber(z_cal_dec2);
              SerialPrintlnNumber(z_cal_dec3);
+             SerialPrintlnBuffer(HOMING_ACT);
 
         else if(checkRegion(@ BUTTON_Z_PROBE_TOUCH_REGION)) //Zprobe
             updateButtonZCal(Z_PROBE,ON);

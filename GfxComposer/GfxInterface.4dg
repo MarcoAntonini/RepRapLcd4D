@@ -6,31 +6,4 @@ func main()
 endfunc
 
 
-0
-0
-190
-180
-
-
-188
-0
-41
-180
-
-0
-0
-231
-180
-
-
-    // Panel28 1.0 generated 25/11/2012 15:13:07
-    gfx_Panel(PANEL_RAISED, 24, 0, 180, 180, 0xD699);
-
-
-
- // Line1 1.0 generated 25/11/2012 15:39:24
- gfx_LinePattern(LPDASHDOT) ;
- gfx_Line(92, 176, 234, 221, SPRINGGREEN) ;
- gfx_LinePattern(LPSOLID) ;
-
 

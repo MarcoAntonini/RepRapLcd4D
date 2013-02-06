@@ -82,22 +82,32 @@ func drawButtonControl()
     updateButtonBedSet(FALSE);
 
     updateButtonSwitchEx(UPDATE);
+
+    //ALAN
+     updateMotorsOffBtn(FALSE);
+     updateCentreBedBtn(FALSE);
+    // END ALAN
 endfunc
 
 func drawTempIndicator()
     //draw Extruder0
-    gfx_Panel(PANEL_RAISED, 230, 0, 90, 61, 0xD699) ; //Panel Container
-    setFontLabel(268,44);
-    putstr("/");
-    updateHotEnd0(str_Ptr(tH0));
-    updateTHotEnd0(str_Ptr(ttH0));
-
-    //draw Extruder1
     gfx_Panel(PANEL_RAISED, 230, 60, 90, 61, 0xD699) ; //Panel Container
     setFontLabel(268,104);
     putstr("/");
+    updateHotEnd0(str_Ptr(tH0));
+    updateTHotEnd0(str_Ptr(ttH0));
+/*
+    //draw Extruder1
+    gfx_Panel(PANEL_RAISED, 230, 0, 90, 61, 0xD699) ; //Panel Container
+    setFontLabel(268,44);
+    putstr("/");
     updateHotEnd1(str_Ptr(tH1));
     updateTHotEnd1(str_Ptr(ttH1));
+    */
+
+//ALAN
+gfx_Panel(PANEL_RAISED, 230, 0, 90, 61, 0x0000) ; //Panel Container for top buttons - the final argument is the pane colour which looks to be independentof what is set in the designer
+// end ALAN
 
     //draw Bed
     gfx_Panel(PANEL_RAISED, 230, 120, 90, 61, 0xD699) ; //Panel Container
@@ -183,26 +193,26 @@ func updateHotEnd0(var *_msg)
     var val;
     val := str2w(_msg);
     if(val > _ttH0 && _ttH0 != 0)
-        setFontLabelAlert(240,44);
-    else
-        setFontLabel(240,44);
-    endif
-    printBuffer(_msg);
-    updateImg(iGauge1,tempGauge(val,_ttH0,GAUGE_MAX_TEMP_H));
-endfunc
-
-func updateHotEnd1(var *_msg)
-    var val;
-    val := str2w(_msg);
-    if(val > _ttH1 && _ttH1 != 0)
-         setFontLabelAlert(240,104);
+        setFontLabelAlert(240,104);
     else
         setFontLabel(240,104);
     endif
     printBuffer(_msg);
+    updateImg(iGauge1,tempGauge(val,_ttH0,GAUGE_MAX_TEMP_H));
+endfunc
+/*
+func updateHotEnd1(var *_msg)
+    var val;
+    val := str2w(_msg);
+    if(val > _ttH1 && _ttH1 != 0)
+         setFontLabelAlert(240,44);
+    else
+        setFontLabel(240,44);
+    endif
+    printBuffer(_msg);
     updateImg(iGauge2,tempGauge(val,_ttH1,GAUGE_MAX_TEMP_H));
 endfunc
-
+*/
 func updateTHotEnd0(var *_msg)
     _ttH0:=str2w(_msg);
     if(_ttH0 == 0 )
@@ -210,10 +220,11 @@ func updateTHotEnd0(var *_msg)
     else
         updateLedEx0(ON);
     endif
-    setFontLabel(280,44);
+    setFontLabel(280,104);
     printBuffer(_msg);
 endfunc
 
+/*
 func updateTHotEnd1(var *_msg)
     _ttH1:=str2w(_msg);
     if(_ttH1 == 0 )
@@ -221,10 +232,10 @@ func updateTHotEnd1(var *_msg)
     else
         updateLedEx1(ON);
     endif
-    setFontLabel(280,104);
+    setFontLabel(280,44);
     printBuffer(_msg);
 endfunc
-
+*/
 func updateBed(var *_msg )
     var val;
     val := str2w(_msg);
@@ -292,10 +303,11 @@ func updateLedEx0(var state)
     updateImg(iLed1,!state);
 endfunc
 
+/*
 func updateLedEx1(var state)
     updateImg(iLed2,!state);
 endfunc
-
+*/
 func updateLedBed(var state)
     updateImg(iLed3,!state);
 endfunc
@@ -330,6 +342,18 @@ endfunc
 func updateButtonBedSet(var state)
     updateImg(iWinbutton6,state);
 endfunc
+
+//ALAN
+func updateCentreBedBtn(var state)
+    updateImg(iCentreBedBtn,state);
+endfunc
+
+func updateMotorsOffBtn(var state)
+    updateImg(iMotorsOffBtn,state);
+endfunc
+// END ALAN
+
+
 
 func updateExmm(var *value,var colour)
     setFont(63,188,FONT1,colour,0xD699);
@@ -520,13 +544,13 @@ endfunc
 
 func updateButtonSwitchEx(var type)
 
-    if(extruder_selected<0)           // check if the variable is populated (error only IDE 4 ??
-        extruder_selected:=0;         // why? already initialized in initVars() !!
+    if(fan_state<0)           // check if the variable is populated (error only IDE 4 ??
+        fan_state:=0;         // why? already initialized in initVars() !!
     endif
     if(type==EVENT)
-        extruder_selected:=!extruder_selected;
+        fan_state:=!fan_state;
     endif
-    if(extruder_selected==1)
+    if(fan_state==1)
         updateImg(iWinbutton10,OFF);
     else
         updateImg(iWinbutton9,OFF);
@@ -758,6 +782,17 @@ func EnableAllTocuhButtonImage()
     img_SetWord(hndl, iWinbutton17, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton17, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
     img_SetWord(hndl, iWinbutton11, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton11, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
     img_SetWord(hndl, iWinbutton12, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton12, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
+
+    // CentreBedBtn 1.0 generated 2/1/2013 9:56:41 AM
+    img_SetWord(hndl, iCentreBedBtn, IMAGE_FLAGS, (img_GetWord(hndl, iCentreBedBtn, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE); // set to enable touch, only need to do this once
+
+
+    // MotorsOffBtn 1.0 generated 2/1/2013 9:57:31 AM
+    img_SetWord(hndl, iMotorsOffBtn, IMAGE_FLAGS, (img_GetWord(hndl, iMotorsOffBtn, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE); // set to enable touch, only need to do this once
+
+
+
+
     /*
     img_SetWord(hndl, iWinbutton30, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton30, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
     img_SetWord(hndl, iWinbutton19, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton19, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);

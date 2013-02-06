@@ -5,42 +5,42 @@
     iImage1         // offset 0x0
     iImage2         // offset 0x10C00
     iGauge1         // offset 0x14600
-    iGauge2         // offset 0x65600
-    iGauge3         // offset 0xB6600
-    iImage3         // offset 0x107600
-    iWinbutton1     // offset 0x107800
-    iWinbutton2     // offset 0x108400
-    iWinbutton3     // offset 0x109000
-    iWinbutton4     // offset 0x109800
-    iWinbutton5     // offset 0x10A000
-    iWinbutton6     // offset 0x10AC00
-    iLed2           // offset 0x10B800
-    iLed3           // offset 0x10C600
-    iLed1           // offset 0x10D000
-    iTrackbar1      // offset 0x10DE00
-    iWinbutton9     // offset 0x1C4000
-    iWinbutton7     // offset 0x1C5C00
-    iWinbutton8     // offset 0x1C6200
-    iWinbutton10    // offset 0x1C6800
-    iWinbutton13    // offset 0x1C8400
-    iWinbutton14    // offset 0x1C8C00
-    iWinbutton11    // offset 0x1C9400
-    iWinbutton12    // offset 0x1CA200
-    iWinbutton15    // offset 0x1CB000
-    iWinbutton16    // offset 0x1CC200
-    iWinbutton17    // offset 0x1CD400
-    iWinbutton18    // offset 0x1CE800
-    iWinbutton19    // offset 0x1CFC00
-    iWinbutton20    // offset 0x1D0200
-    iWinbutton22    // offset 0x1D0800
-    iWinbutton23    // offset 0x1D0E00
-    iWinbutton26    // offset 0x1D1400
-    iWinbutton27    // offset 0x1D1A00
-    iWinbutton28    // offset 0x1D2000
-    iWinbutton29    // offset 0x1D2600
-    iWinbutton30    // offset 0x1D2C00
-    iWinbutton21    // offset 0x1D3400
-    iImage4         // offset 0x1D4800
+    iGauge3         // offset 0x65600
+    iImage3         // offset 0xB6600
+    iWinbutton1     // offset 0xB6800
+    iWinbutton2     // offset 0xB7400
+    iWinbutton3     // offset 0xB8000
+    iWinbutton4     // offset 0xB8800
+    iWinbutton5     // offset 0xB9000
+    iWinbutton6     // offset 0xB9C00
+    iLed1           // offset 0xBA800
+    iLed3           // offset 0xBB600
+    iTrackbar1      // offset 0xBC000
+    iWinbutton9     // offset 0x172200
+    iMotorsOffBtn   // offset 0x173E00
+    iCentreBedBtn   // offset 0x175600
+    iWinbutton7     // offset 0x176E00
+    iWinbutton8     // offset 0x177400
+    iWinbutton10    // offset 0x177A00
+    iWinbutton13    // offset 0x179600
+    iWinbutton14    // offset 0x179E00
+    iWinbutton11    // offset 0x17A600
+    iWinbutton12    // offset 0x17B400
+    iWinbutton15    // offset 0x17C200
+    iWinbutton16    // offset 0x17D400
+    iWinbutton17    // offset 0x17E600
+    iWinbutton18    // offset 0x17FA00
+    iWinbutton19    // offset 0x180E00
+    iWinbutton20    // offset 0x181400
+    iWinbutton22    // offset 0x181A00
+    iWinbutton23    // offset 0x182000
+    iWinbutton26    // offset 0x182600
+    iWinbutton27    // offset 0x182C00
+    iWinbutton28    // offset 0x183200
+    iWinbutton29    // offset 0x183800
+    iWinbutton30    // offset 0x183E00
+    iWinbutton21    // offset 0x184600
+    iImage4         // offset 0x185A00
 #END
 
 var disk, hndl ;
@@ -128,13 +128,13 @@ word Z_MINUS_NORMAL  196, 109, 220, 124
 word Z_MINUS_SLOW  196, 92, 220, 107
 
 //Action
-byte Z_PLUS_FAST_ACT "G1 Z10 F1000\0"
-byte Z_PLUS_NORMAL_ACT "G1 Z1 F1000\0"
-byte Z_PLUS_SLOW_ACT "G1 Z0.1 F1000\0"
+byte Z_PLUS_FAST_ACT "G1 Z10 F200\0"
+byte Z_PLUS_NORMAL_ACT "G1 Z1 F200\0"
+byte Z_PLUS_SLOW_ACT "G1 Z0.1 F200\0"
 
-byte Z_MINUS_FAST_ACT "G1 Z-10 F1000\0"
-byte Z_MINUS_NORMAL_ACT "G1 Z-1 F1000\0"
-byte Z_MINUS_SLOW_ACT "G1 Z-0.1 F1000\0"
+byte Z_MINUS_FAST_ACT "G1 Z-10 F200\0"
+byte Z_MINUS_NORMAL_ACT "G1 Z-1 F200\0"
+byte Z_MINUS_SLOW_ACT "G1 Z-0.1 F200\0"
 
 //Homing
 word HOMING  4, 140, 35, 168
@@ -231,10 +231,15 @@ byte MSG_SET_BED "set Bed target to \0"
 byte MSG_HEATER_SHUTDOWN "Heater shutdown\0"
 byte MSG_BED_SHUTDOWN "Bed shutdown\0"
 byte MSG_CENT " C\0"
-byte MSG_HOMING "Homing..\0"
+byte MSG_HOMING "Homing...\0"
 byte MSG_MM_OF_FILAMENT "mm of filament..\0"
 byte MSG_COLD_EXTR_PREVENT "Cold Extrusion Prevent!\0"
-byte MSG_SWITCH_EXTRUDER "Switch Extruder to T\0"
+byte MSG_TOGGLE_FAN "Switching cooling fan \0"
+
+//ALAN
+byte MSG_CentreBed "Centreing ...\0"
+byte MSG_MotorsOff "Motors off \0"
+// end ALAN
 
 #END
 

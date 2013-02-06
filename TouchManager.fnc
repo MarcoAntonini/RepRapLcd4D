@@ -61,9 +61,10 @@ func TouchEvent(var x,var y)
                     if(_ttH0 !=0 && str2w(str_Ptr(tH0))>=_ttH0 ) //cold extrude prevent
                     #ENDIF
                         //Send Gcode
-                        SerialPrintBuffer("T");
-                        SerialPrintlnNumber(extruder_selected);
-                        SerialPrintBuffer("G91\nG1 E");
+                    //    SerialPrintBuffer("T");
+                    //    SerialPrintlnNumber(extruder_selected);
+                    //    SerialPrintBuffer("G91\nG1 E");
+                    SerialPrintBuffer("G1 E");
                         SerialPrintNumber(str2w(str_Ptr(ex_setmm)));
                         SerialPrintBuffer(" F");
                         SerialPrintlnNumber(str2w(str_Ptr(ex_setmm_min)));
@@ -87,9 +88,10 @@ func TouchEvent(var x,var y)
                      if(_ttH0 !=0 && str2w(str_Ptr(tH0))>=_ttH0 ) //cold extrude prevent
                      #ENDIF
                         //Send Gcode
-                        SerialPrintBuffer("T");
-                        SerialPrintlnNumber(extruder_selected);
-                        SerialPrintBuffer("G91\nG1 E-");
+                      //  SerialPrintBuffer("T");
+                      //  SerialPrintlnNumber(extruder_selected);
+                      //  SerialPrintBuffer("G91\nG1 E-");
+                        SerialPrintBuffer("G1 E-");
                         SerialPrintNumber(str2w(str_Ptr(ex_setmm)));
                         SerialPrintBuffer(" F");
                         SerialPrintlnNumber(str2w(str_Ptr(ex_setmm_min)));
@@ -110,11 +112,11 @@ func TouchEvent(var x,var y)
             updateButtonExOff(ON);
             //Send Gcode
             SerialPrintBuffer("M104 S0");
-            if(extruder_selected==1)
-                SerialPrintlnBuffer(" T1");
-            else
+         //   if(extruder_selected==1)
+         //       SerialPrintlnBuffer(" T1");
+         //   else
                 SerialPrintBuffer("\n");
-            endif
+        //    endif
             updateMessage(MSG_HEATER_SHUTDOWN," "," ");
             setTimerMessage(3000);
         else if(touched==iWinbutton4) //Bed Off
@@ -128,13 +130,43 @@ func TouchEvent(var x,var y)
             //Send Gcode
             SerialPrintBuffer("M104 S");
             SerialPrintNumber(str2w(str_Ptr(ex_setTemp)));
-            if(extruder_selected==1)
-                SerialPrintlnBuffer(" T1");
-            else
+      //      if(extruder_selected==1)
+      //          SerialPrintlnBuffer(" T1");
+      //      else
                 SerialPrintBuffer("\n");
-            endif
+      //      endif
             updateMessage(MSG_SET_HEATER,str_Ptr(ex_setTemp),MSG_CENT);
             setTimerMessage(3000);
+
+//ALAN
+         else if (touched==iCentreBedBtn) // Centre the print bed
+               if(PRINTING==FALSE)
+                 //Send Gcode
+                 SerialPrintlnBuffer("G1 X70 Y70 F2000");
+                 updateMessage(MSG_CentreBed," "," ");
+                 setTimerMessage(3000);
+               else
+                  updateMessage(MSG_OP_NOT_PERMITTED," "," ");
+                  setTimerMessage(3000);
+               endif
+
+
+          else if (touched==iMotorsOffBtn) // Deactivate motors
+               if(PRINTING==FALSE)
+                  //Send Gcode
+                  SerialPrintlnBuffer("M84");
+                  updateMessage(MSG_MotorsOff," "," ");
+                  setTimerMessage(3000);
+               else
+                  updateMessage(MSG_OP_NOT_PERMITTED," "," ");
+                  setTimerMessage(3000);
+               endif
+
+// END ALAN
+
+
+
+
         else if(touched==iWinbutton6) //Bed Set
             updateButtonBedSet(ON);
             //Send Gcode
@@ -142,12 +174,15 @@ func TouchEvent(var x,var y)
             SerialPrintlnNumber(str2w(str_Ptr(bed_setTemp)));
             updateMessage(MSG_SET_BED,str_Ptr(bed_setTemp),MSG_CENT);
             setTimerMessage(3000);
-        else if(touched==iWinbutton9 || touched==iWinbutton10) //Switch Extruder
+
+        else if(touched==iWinbutton9 || touched==iWinbutton10) //Switch Extruder - now used to switch fan on and off
             updateButtonSwitchEx(EVENT);
-            if(extruder_selected==0)
-                updateMessage(MSG_SWITCH_EXTRUDER,"0"," ");
+            if(fan_state==0)
+                updateMessage(MSG_TOGGLE_FAN,"off"," ");
+                SerialPrintlnBuffer("M107");
             else
-                 updateMessage(MSG_SWITCH_EXTRUDER,"1"," ");
+                 updateMessage(MSG_TOGGLE_FAN,"on"," ");
+                 SerialPrintlnBuffer("M106");
             endif
             setTimerMessage(3000);
         else if(checkRegion( @ BUTTON_Z_CAL_TOUCH_REGION))
@@ -162,6 +197,7 @@ func TouchEvent(var x,var y)
                     break;
                 endif
             next
+
         endif
 
     else if(WINDOW==W_EXTMM || WINDOW==W_EXTMM_MIN || WINDOW==W_EXTTEMP || WINDOW==W_BEDTEMP) //Window Button Set Number TouchEvent

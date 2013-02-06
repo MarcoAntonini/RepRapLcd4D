@@ -25,8 +25,8 @@
 //DEBUG_NO_EXTR_PREVENT
 //DEBUG_NO_BOOTSPLASH
 
-VERSION "0.21" //
-AUTHOR "marcomail.anto@gmail.com"
+VERSION "0.22" //
+AUTHOR "Alan@Print3D.me.uk"
 
 //CONTRAST_TIMEOUT 5000 //Screen Timeout, Comment out to disable
 STARTUP_TIMEOUT 800
@@ -146,7 +146,7 @@ var ex_setmm_min[4]; //Extruder mm/min
 var ex_setTemp[4]; //Set Ext. Temp
 var bed_setTemp[4]; //Set Bed Temp
 var msg[MESSAGE_DIM]; //Message string
-var extruder_selected; //Current Extruder
+var fan_state; //Cooling fan on or off
 var sd_current_page; //Curretn SD file pages
 var sd_page_count;   //Max SD file pages
 

@@ -1,4 +1,4 @@
-#platform "uLCD-32PT_GFX2"
+#platform "uLCD-32PTU"
 #inherit "4DGL_16bitColours.fnc"
 // This programs is used to calibrate the touch screen.
 // Touchscreen calibration is provided as it is sometimes necessary to

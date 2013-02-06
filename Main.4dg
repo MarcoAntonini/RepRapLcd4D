@@ -1,4 +1,4 @@
-#platform "uLCD-32PT"
+#platform "uLCD-32PTU"
 #MODE RUNFLASH
 #STACK 500
 
@@ -58,6 +58,7 @@ endfunc
 
 func bootSplash()
     img_Show(hndl,iImage4);
+/* Little point in showing version and so on as the boot screen sequence is so rapid
     txt_FGcolour(WHITE);
     txt_BGcolour(BLACK);
     gfx_MoveTo(124, 180);
@@ -69,6 +70,7 @@ func bootSplash()
     putstr(VERSION);
     gfx_MoveTo(84, 232);
     putstr(AUTHOR);
+*/
 endfunc
 
 var BLOCK:=TRUE;
@@ -138,27 +140,27 @@ func initVars()
     PRINTING:=FALSE;
     EN_TOUCH_MOVING:=FALSE;
     WINDOW:=W_MAIN;
-    extruder_selected:=0;
-    sd_current_page:=0; //Curretn SD file pages
+    fan_state:=0;
+    sd_current_page:=0; //Current SD file pages
     sd_page_count:=0;   //Max SD file pages
     file_count:=0;
     //Init Global Vars
     _ttH0:=0; //Temp Target HotEnd0
     to(ttH0); print("000");
-    _ttH1:=0; //Temp Target HotEnd1
-    to(ttH1); print("000");
+//    _ttH1:=0; //Temp Target HotEnd1
+//    to(ttH1); print("000");
     _ttB:=0;  //Temp Target Bed
     to(ttB); print("000");
     to(tH0); print("000");  //Temp HotEnd0
-    to(tH1); print("000");  //Temp HotEnd1
+//  to(tH1); print("000");  //Temp HotEnd1
     to(tB); print("000");   //Temp Bed
     to(zPos); print("+000.00");
     to(timePrint); print("00h00m");
     to(sdPerc); print("000");
     to(ex_setmm); print("10");     // Extrude mm of filament
     to(ex_setmm_min); print("200"); // Extruder mm/min
-    to(ex_setTemp); print("205"); //Button Set Ext. Temp
-    to(bed_setTemp); print("55"); //Buttpn Set Bed Temp
+    to(ex_setTemp); print("200"); //Button Set Ext. Temp
+    to(bed_setTemp); print("65"); //Buttpn Set Bed Temp
     to(msg); print(""); //Max 46 char
     //Z Calibration
     z_cal_sign:=-1;

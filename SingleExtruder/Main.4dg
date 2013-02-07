@@ -1,0 +1,188 @@
+#platform "uLCD-32PT"
+#MODE RUNFLASH
+#STACK 500
+
+/*
+ ReprapLcd4D LCD Firmware for RepRap 3D Printer.
+ designed for 4D Systems uLCD-32PT
+
+ Copyright (C) 2012 Marco Antonini
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#inherit "4DGL_16bitColours.fnc"
+#inherit "GfxInterface.fnc"
+#inherit "SerialManager.fnc"
+#inherit "TouchManager.fnc"
+#inherit "GfxInterfaceConst.inc"
+
+func startupSD()
+    gfx_Set(SCREEN_MODE,LANDSCAPE);
+    var err:=0;
+    var disk;
+    setFontInfo(0,0);
+    putstr("init..\n");
+    putstr("mounting..\n");
+    if (!(disk:=file_Mount()))
+        txt_FGcolour(RED);
+        putstr("Error: Drive not found!\n");
+        putstr("Try Remounting...\n");
+        while(!(disk :=file_Mount()))
+            err++;
+            pause(500);
+            if(err>5)
+                putstr("Rebooting..\n");
+                pause(1000);
+                SystemReset();
+            endif
+        wend
+    endif
+    putstr("Starting Interface..\n");
+    hndl := file_LoadImageControl("GFXINT~1.dat", "GFXINT~1.gci", 1);
+    gfx_TransparentColour(0x0020);
+    gfx_Transparency(ON);
+    gfx_Cls();
+endfunc
+
+func bootSplash()
+    img_Show(hndl,iImage4);
+    txt_FGcolour(WHITE);
+    txt_BGcolour(BLACK);
+    gfx_MoveTo(124, 180);
+    putstr("3D Printer");
+    txt_FGcolour(WHITE);
+    txt_BGcolour(BLACK);
+    gfx_MoveTo(100, 220);
+    putstr("LCD Interface v.");
+    putstr(VERSION);
+    gfx_MoveTo(84, 232);
+    putstr(AUTHOR);
+endfunc
+
+var BLOCK:=TRUE;
+func BlockStartupEvent()
+    BLOCK:=FALSE;
+endfunc
+
+func HiddenTouchCalibration()
+    sys_SetTimerEvent(TIMER1,BlockStartupEvent);
+    sys_SetTimer(TIMER1,STARTUP_TIMEOUT);
+    while(touch_Get(TOUCH_STATUS)!=TOUCH_PRESSED && BLOCK)
+    wend
+    if(BLOCK==TRUE)
+        sys_SetTimer(TIMER1,0);
+        file_Exec("TOUCHCAL.4XE",0);
+    endif
+endfunc
+
+func main()
+
+    touch_Set(TOUCH_ENABLE);
+    startupSD();
+#IFNOT EXISTS DEBUG_NO_BOOTSPLASH
+    bootSplash();
+    HiddenTouchCalibration();
+#ENDIF
+    initVars();
+    EnableAllTocuhButtonImage();
+    SerialInit();
+    gfx_Cls();
+    SerialPrintlnBuffer(FORCE_UPDATE_CMD);
+    drawGfxInterface();
+    sound(ALERT);
+    repeat
+        //--------------------------------------------------
+        // scan for Touch
+        //--------------------------------------------------
+
+        var touchState;
+        var touchX,touchY;
+
+        touchState := touch_Get(TOUCH_STATUS);
+        touchX := touch_Get(TOUCH_GETX);
+        touchY := touch_Get(TOUCH_GETY);
+
+        if(touchState == TOUCH_PRESSED)
+            TouchEvent(touchX,touchY);
+        else if(touchState == TOUCH_MOVING && EN_TOUCH_MOVING && WINDOW != W_MAIN && WINDOW != W_SDCARD )
+            TouchEvent(touchX,touchY);
+        else if(touchState == TOUCH_RELEASED && WINDOW != W_SDCARD )
+            TouchReleasedEvent();
+        endif
+
+        //--------------------------------------------------
+        // scan for Serial Data
+        //--------------------------------------------------
+        SerialEvent();
+        SerialErrorWatchDog();
+    forever
+endfunc
+
+//=======================================================
+
+func initVars()
+    FILE_START:=FALSE;
+    SD_READING:=FALSE;
+    PRINTING:=FALSE;
+    EN_TOUCH_MOVING:=FALSE;
+    WINDOW:=W_MAIN;
+    extruder_selected:=0;
+    sd_current_page:=0; //Curretn SD file pages
+    sd_page_count:=0;   //Max SD file pages
+    file_count:=0;
+    //Init Global Vars
+    _ttH0:=0; //Temp Target HotEnd0
+    to(ttH0); print("000");
+    _ttH1:=0; //Temp Target HotEnd1
+    to(ttH1); print("000");
+    _ttB:=0;  //Temp Target Bed
+    to(ttB); print("000");
+    to(tH0); print("000");  //Temp HotEnd0
+    to(tH1); print("000");  //Temp HotEnd1
+    to(tB); print("000");   //Temp Bed
+    to(zPos); print("+000.00");
+    to(timePrint); print("00h00m");
+    to(sdPerc); print("000");
+    to(ex_setmm); print("10");     // Extrude mm of filament
+    to(ex_setmm_min); print("200"); // Extruder mm/min
+    to(ex_setTemp); print("205"); //Button Set Ext. Temp
+    to(bed_setTemp); print("55"); //Buttpn Set Bed Temp
+    to(msg); print(""); //Max 46 char
+    //Z Calibration
+    z_cal_sign:=-1;
+    z_cal_int:=0;
+    z_cal_dec1:=0;
+    z_cal_dec2:=0;
+    z_cal_dec3:=0;
+endfunc
+
+func sound(var type)
+     snd_Volume(SOUND_VOLUME);
+     if(type==STARTUP)
+        if(file_Exists("STARTUP.WAV"))
+            file_PlayWAV("STARTUP.WAV");
+        endif
+     else if(type==ALERT)
+         if(file_Exists("ALERT.WAV"))
+            file_PlayWAV("ALERT.WAV");
+         endif
+     else if(type==FINISH)
+         if(file_Exists("FINISH.WAV"))
+            file_PlayWAV("FINISH.WAV");
+         endif
+         PRINTING:=FALSE;
+    endif
+endfunc
+

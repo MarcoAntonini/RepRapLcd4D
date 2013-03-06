@@ -1,7 +1,8 @@
 /*
  this file is part of ReprapLcd4D Project
 
- Copyright (C) 2012 Marco Antonini
+ Original file from Marco Antonini
+ Amended by Alan D. Ryder 6th March 2013
 
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -25,8 +26,8 @@
 //DEBUG_NO_EXTR_PREVENT
 //DEBUG_NO_BOOTSPLASH
 
-VERSION "0.21" //
-AUTHOR "marcomail.anto@gmail.com"
+VERSION "0.23" //
+AUTHOR "Alan@Print3D.me.uk"
 
 //CONTRAST_TIMEOUT 5000 //Screen Timeout, Comment out to disable
 STARTUP_TIMEOUT 800
@@ -35,6 +36,21 @@ SOUND_VOLUME 30 //60 for low PWR
 //SOUND_BED_NOTIFY //to change, does not work correctly
 OBJECT_RELEASE_TEMP 40 //Temperature release of Object on the bed
                        //which is used only as a notification sound
+
+// Identifiers used for Preset Temperature state setting for the Preset temperature button
+ABStyrene 2
+PLA 1
+
+//Preset temperatures - change these according to requirements
+PLAExtrude 200
+PLABed 65
+
+ABSExtrude 215
+ABSBed 105
+
+//This is used to prevent extrusion of filament when the extruder is not hot enough.
+//The value should be the same as that found in CONFIGURATION.H in the Marlin firmware
+EXTRUDE_MINTEMP 170
 
 //Gauge & Slider Temperature range
 GAUGE_TTEMP 85
@@ -120,7 +136,7 @@ Z_DEC3_MINUS 10
 #END
 
 /*** Global Vars  ***/
-
+var PresetTempState;
 //Semaphore Vars
 var EN_TOUCH_MOVING; //Enable Touch Moving
 var WINDOW; //Current Window
@@ -131,13 +147,12 @@ var PRINTING; //Print status
 //Storing the current state
 var _ttH0; //Temp Target HotEnd0
 var ttH0[4];
-var _ttH1; //Temp Target HotEnd1
-var ttH1[4];
 var _ttB;  //Temp Target Bed
 var ttB[4];
+
 var tH0[4];//Temp HotEnd0
-var tH1[4];//Temp HotEnd1
 var tB[4]; //Temp Bed
+
 var zPos[8]; //Z Position
 var timePrint[7]; //Time printing
 var sdPerc[4]; //Printing percentage
@@ -146,7 +161,6 @@ var ex_setmm_min[4]; //Extruder mm/min
 var ex_setTemp[4]; //Set Ext. Temp
 var bed_setTemp[4]; //Set Bed Temp
 var msg[MESSAGE_DIM]; //Message string
-var extruder_selected; //Current Extruder
 var sd_current_page; //Curretn SD file pages
 var sd_page_count;   //Max SD file pages
 

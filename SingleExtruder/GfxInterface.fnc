@@ -1,7 +1,8 @@
 /*
  this file is part of ReprapLcd4D Project
 
- Copyright (C) 2012 Marco Antonini
+ Original file: Marco Antonini
+ Amended Alan D. Ryder 5th March 2013
 
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -16,6 +17,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 #inherit "Constant.inc"
 
 func drawGfxInterface()
@@ -81,23 +83,23 @@ func drawButtonControl()
 
     updateButtonBedSet(FALSE);
 
-    updateButtonSwitchEx(UPDATE);
+    updateMotorsOffBtn(FALSE);
+    updateFanONBtn(FALSE);
+    updateFanOFFBtn(FALSE);
+    if (PresetTempState == PLA) updatePresetBtn(PLA); else updatePresetBtn(ABStyrene);
+    
 endfunc
 
 func drawTempIndicator()
     //draw Extruder0
-    gfx_Panel(PANEL_RAISED, 230, 0, 90, 61, 0xD699) ; //Panel Container
-    setFontLabel(268,44);
+    gfx_Panel(PANEL_RAISED, 230, 60, 90, 61, 0xD699) ; //Panel Container
+    setFontLabel(268,104);
     putstr("/");
     updateHotEnd0(str_Ptr(tH0));
     updateTHotEnd0(str_Ptr(ttH0));
 
-    //draw Extruder1
-    gfx_Panel(PANEL_RAISED, 230, 60, 90, 61, 0xD699) ; //Panel Container
-    setFontLabel(268,104);
-    putstr("/");
-    updateHotEnd1(str_Ptr(tH1));
-    updateTHotEnd1(str_Ptr(ttH1));
+gfx_Panel(PANEL_RAISED, 230, 0, 90, 61, 0x0000) ; //Panel Container for top buttons - the final argument is the pane colour which looks to be independentof what is set in the designer
+// end ALAN
 
     //draw Bed
     gfx_Panel(PANEL_RAISED, 230, 120, 90, 61, 0xD699) ; //Panel Container
@@ -183,25 +185,14 @@ func updateHotEnd0(var *_msg)
     var val;
     val := str2w(_msg);
     if(val > _ttH0 && _ttH0 != 0)
-        setFontLabelAlert(240,44);
+        setFontLabelAlert(240,104);
     else
-        setFontLabel(240,44);
+        setFontLabel(240,104);
     endif
     printBuffer(_msg);
     updateImg(iGauge1,tempGauge(val,_ttH0,GAUGE_MAX_TEMP_H));
 endfunc
 
-func updateHotEnd1(var *_msg)
-    var val;
-    val := str2w(_msg);
-    if(val > _ttH1 && _ttH1 != 0)
-         setFontLabelAlert(240,104);
-    else
-        setFontLabel(240,104);
-    endif
-    printBuffer(_msg);
-    updateImg(iGauge2,tempGauge(val,_ttH1,GAUGE_MAX_TEMP_H));
-endfunc
 
 func updateTHotEnd0(var *_msg)
     _ttH0:=str2w(_msg);
@@ -210,20 +201,10 @@ func updateTHotEnd0(var *_msg)
     else
         updateLedEx0(ON);
     endif
-    setFontLabel(280,44);
-    printBuffer(_msg);
-endfunc
-
-func updateTHotEnd1(var *_msg)
-    _ttH1:=str2w(_msg);
-    if(_ttH1 == 0 )
-        updateLedEx1(OFF);
-    else
-        updateLedEx1(ON);
-    endif
     setFontLabel(280,104);
     printBuffer(_msg);
 endfunc
+
 
 func updateBed(var *_msg )
     var val;
@@ -262,9 +243,9 @@ endfunc
 func updateSDPerc(var *_msg)
     setFontInfo(242,232);
     printBuffer(_msg);
-    if(str2w(_msg)==100)
-        PRINTING:=FALSE;
-    endif
+    if((str2w(_msg)<100) && (str2w(msg)> 0))
+        PRINTING:= TRUE; else PRINTING := FALSE;
+
 endfunc
 
 func updateZpos(var *_msg)
@@ -292,9 +273,6 @@ func updateLedEx0(var state)
     updateImg(iLed1,!state);
 endfunc
 
-func updateLedEx1(var state)
-    updateImg(iLed2,!state);
-endfunc
 
 func updateLedBed(var state)
     updateImg(iLed3,!state);
@@ -330,6 +308,23 @@ endfunc
 func updateButtonBedSet(var state)
     updateImg(iWinbutton6,state);
 endfunc
+
+func updateFanONBtn(var state)
+    updateImg(iFanONBtn,state);
+endfunc
+
+func updateMotorsOffBtn(var state)
+    updateImg(iMotorsOffBtn,state);
+endfunc
+
+func updateFanOFFBtn(var state)
+    updateImg(iFanOFFBtn,state);
+endfunc
+
+func updatePresetBtn(var state)
+    updateImg(iPresetTempBtn,state);
+endfunc
+
 
 func updateExmm(var *value,var colour)
     setFont(63,188,FONT1,colour,0xD699);
@@ -517,22 +512,6 @@ func ButtonFineMinusAction()
     updateTrackbarStatus(WINDOW);
 
 endfunc
-
-func updateButtonSwitchEx(var type)
-
-    if(extruder_selected<0)           // check if the variable is populated (error only IDE 4 ??
-        extruder_selected:=0;         // why? already initialized in initVars() !!
-    endif
-    if(type==EVENT)
-        extruder_selected:=!extruder_selected;
-    endif
-    if(extruder_selected==1)
-        updateImg(iWinbutton10,OFF);
-    else
-        updateImg(iWinbutton9,OFF);
-    endif
-endfunc
-
 
 func updateButtonFileList()
     var i,j,count;
@@ -739,7 +718,7 @@ func updateButtonZCal(var type,var state)
     endif
 endfunc
 
-func EnableAllTocuhButtonImage()
+func EnableAllTouchButtonImage()
     img_SetWord(hndl, iWinbutton1, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton1, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
     img_SetWord(hndl, iWinbutton2, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton2, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
     img_SetWord(hndl, iWinbutton3, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton3, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
@@ -749,8 +728,6 @@ func EnableAllTocuhButtonImage()
     img_SetWord(hndl, iTrackbar1, IMAGE_FLAGS, (img_GetWord(hndl, iTrackbar1, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
     img_SetWord(hndl, iWinbutton7, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton7, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
     img_SetWord(hndl, iWinbutton8, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton8, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
-    img_SetWord(hndl, iWinbutton9, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton9, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
-    img_SetWord(hndl, iWinbutton10, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton10, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
     img_SetWord(hndl, iWinbutton13, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton13, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
     img_SetWord(hndl, iWinbutton14, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton14, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
     img_SetWord(hndl, iWinbutton16, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton16, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
@@ -758,19 +735,11 @@ func EnableAllTocuhButtonImage()
     img_SetWord(hndl, iWinbutton17, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton17, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
     img_SetWord(hndl, iWinbutton11, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton11, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
     img_SetWord(hndl, iWinbutton12, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton12, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
-    /*
-    img_SetWord(hndl, iWinbutton30, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton30, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
-    img_SetWord(hndl, iWinbutton19, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton19, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
-    img_SetWord(hndl, iWinbutton26, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton26, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
-    img_SetWord(hndl, iWinbutton20, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton20, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
-    img_SetWord(hndl, iWinbutton27, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton27, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
-    img_SetWord(hndl, iWinbutton22, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton22, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
-    img_SetWord(hndl, iWinbutton28, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton28, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
-    img_SetWord(hndl, iWinbutton23, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton23, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
-    img_SetWord(hndl, iWinbutton29, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton29, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
-    img_SetWord(hndl, iWinbutton21, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton21, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
-    img_SetWord(hndl, iWinbutton18, IMAGE_FLAGS, (img_GetWord(hndl, iWinbutton18, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE);
-    */
+
+    img_SetWord(hndl, iFanONBtn, IMAGE_FLAGS, (img_GetWord(hndl, iFanONBtn, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE); // set to enable touch, only need to do this once
+    img_SetWord(hndl, iMotorsOffBtn, IMAGE_FLAGS, (img_GetWord(hndl, iMotorsOffBtn, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE); // set to enable touch, only need to do this once
+    img_SetWord(hndl, iFanOFFBtn, IMAGE_FLAGS, (img_GetWord(hndl, iFanOFFBtn, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE); // set to enable touch, only need to do this once
+    img_SetWord(hndl, iPresetTempBtn, IMAGE_FLAGS, (img_GetWord(hndl, iPresetTempBtn, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE); // set to enable touch, only need to do this once
 
 endfunc
 
@@ -794,3 +763,12 @@ func switchWinSDtoMain()
     drawGfxInterface();
 endfunc
 
+func PopulateTemperatures(var ExTemp, var BedTemp)
+   to(ex_setTemp); putnum(DEC,ExTemp);
+         updateExSetTemp("   ",BLACK);
+         updateExSetTemp(str_Ptr(ex_setTemp),BLACK);
+
+    to(bed_setTemp); putnum(DEC,BedTemp);
+         updateBedSetTemp("   ",BLACK);
+         updateBedSetTemp(str_Ptr(bed_setTemp),BLACK);
+endfunc

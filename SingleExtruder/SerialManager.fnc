@@ -1,7 +1,8 @@
 /*
  this file is part of ReprapLcd4D Project
 
- Copyright (C) 2012 Marco Antonini
+ Original File: Marco Antonini
+ Amended Alan D. Ryder 5th March 2013
 
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -66,8 +67,7 @@ func parseCmd(var *buffer,var n)
             cmd_id[i]:=buffer[i];
         endif
      next
-   // buff2str(cmd_id,index_val,cmd_id_buff);
-   // p_cmd_id := str_Ptr(cmd_id_buff);
+
     buff2str(cmd_val,n-index_val-1,cmd_val_buff);
     p_cmd_val := str_Ptr(cmd_val_buff);
 
@@ -75,13 +75,10 @@ func parseCmd(var *buffer,var n)
         updateMessage(p_cmd_val," "," ");
         to(msg); printBuffer(p_cmd_val);
     else if( cmd_id[0] == HOTEND_ID )
-        if(cmd_id[1]=='0')
+
             if(WINDOW!=W_SDCARD && WINDOW !=W_PRINT_CONFIRM) updateHotEnd0(p_cmd_val);
             to(tH0); printBuffer(p_cmd_val);
-        else if(cmd_id[1]=='1')
-            if(WINDOW!=W_SDCARD && WINDOW !=W_PRINT_CONFIRM) updateHotEnd1(p_cmd_val);
-            to(tH1); printBuffer(p_cmd_val);
-        endif
+      
     else if( cmd_id[0] == TARGETT_ID )
         if(cmd_id[1]=='0')
             if(WINDOW!=W_SDCARD && WINDOW !=W_PRINT_CONFIRM)
@@ -89,12 +86,7 @@ func parseCmd(var *buffer,var n)
                 updateHotEnd0(str_Ptr(tH0));
             endif
             to(ttH0); printBuffer(p_cmd_val);
-        else if(cmd_id[1]=='1')
-            if(WINDOW!=W_SDCARD && WINDOW !=W_PRINT_CONFIRM)
-                updateTHotEnd1(p_cmd_val);
-                updateHotEnd1(str_Ptr(tH1));
-            endif
-            to(ttH1); printBuffer(p_cmd_val);
+
         else if(cmd_id[1]=='B')
             if(WINDOW!=W_SDCARD && WINDOW!=W_PRINTING_OPTION && WINDOW !=W_PRINT_CONFIRM)
                 updateTBed(p_cmd_val);
@@ -210,4 +202,3 @@ func SerialErrorWatchDog()
         SerialInit();
     endif
 endfunc
-

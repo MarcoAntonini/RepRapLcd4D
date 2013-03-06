@@ -1,11 +1,11 @@
 ﻿Version     0.0
-Platform    uLCD-32PT-L
-PlatImage   'Basic uLCD-32PT'
+Platform    uLCD-32PTU-L
+PlatRes     240x320
 Depends
 end
 Options
     Visualizer
-    Speed                        -1
+    Speed                        0
     Checksum                     No
     ResponseSize                 0
     Multidrop                    No
@@ -60,116 +60,8 @@ Image
     OnTouchPressed               ''
     OnTouchReleased              ''
 end
-Panel
-    Name                         Panel2
-    Color                        'Office 2003 Classic'
-    Height                       61
-    Left                         230
-    Outlined                     No
-    OutlineColor                 WHITE
-    Pattern                      Fine
-    State                        Raised
-    Top                          0
-    Width                        90
-end
 Gauge
     Name                         Gauge1
-    Analogue                     (None)
-    Bevel.BorderColor            clBtnFace
-    Bevel.BorderWidth            0
-    Bevel.InnerColor             BLACK
-    Bevel.InnerHighlight         clBtnHighlight
-    Bevel.InnerOutline           None
-    Bevel.InnerShadow            clBtnShadow
-    Bevel.InnerSpace             1
-    Bevel.InnerStyle             Lowered
-    Bevel.Innerwidth             2
-    Bevel.OuterColor             clBtnFace
-    Bevel.OuterHighlight         clBtnHighlight
-    Bevel.OuterOutline           Outer
-    Bevel.OuterShadow            clBtnShadow
-    Bevel.OuterSpace             0
-    Bevel.OuterStyle             Raised
-    Bevel.Outerwidth             1
-    Bevel.Visible                Yes
-    Color                        BLACK
-    Height                       20
-    Interval                     100
-    Left                         232
-    Maxvalue                     100
-    Minvalue                     0
-    Orientation                  Horizontal
-    Palette1.High                clLime
-    Palette1.Low                 clGreen
-    Palette2.High                clYellow
-    Palette2.Low                 clOlive
-    Palette3.High                clRed
-    Palette3.Low                 clMaroon
-    Percent1                     60
-    Percent2                     25
-    Spacing                      1
-    Step                         10
-    Style                        BottomLeft
-    TickHeight                   1
-    Timer                        (None)
-    Top                          20
-    Visible                      Yes
-    Width                        82
-    OnChanged                    ''
-    OnTouchMoving                ''
-    OnTouchPressed               ''
-    OnTouchReleased              ''
-end
-Label
-    Name                         Label2
-    4DGLFont.Font                FONT3
-    4DGLFont.Bold                No
-    4DGLFont.Italic              No
-    4DGLFont.Inverse             No
-    4DGLFont.Underline           No
-    4DGLFont.MagWidth            1
-    4DGLFont.MagHeight           1
-    4DGLFont.Opaque              Yes
-    BGcolor                      'Office 2003 Classic'
-    Caption                      00
-    FGcolor                      BLUE
-    Left                         245
-    Top                          44
-end
-Label
-    Name                         Label3
-    4DGLFont.Font                FONT3
-    4DGLFont.Bold                No
-    4DGLFont.Italic              No
-    4DGLFont.Inverse             No
-    4DGLFont.Underline           No
-    4DGLFont.MagWidth            1
-    4DGLFont.MagHeight           1
-    4DGLFont.Opaque              Yes
-    BGcolor                      'Office 2003 Classic'
-    Caption                      000
-    FGcolor                      BLUE
-    Left                         280
-    Top                          44
-end
-Label
-    Name                         Label4
-    4DGLFont.Font                FONT3
-    4DGLFont.Bold                No
-    4DGLFont.Italic              No
-    4DGLFont.Inverse             No
-    4DGLFont.Underline           No
-    4DGLFont.MagWidth            1
-    4DGLFont.MagHeight           1
-    4DGLFont.Opaque              Yes
-    BGcolor                      'Office 2003 Classic'
-    Caption                      /
-    FGcolor                      BLUE
-    Left                         268
-    Top                          44
-end
-Gauge
-    Name                         Gauge2
     Analogue                     (None)
     Bevel.BorderColor            clBtnFace
     Bevel.BorderWidth            0
@@ -217,7 +109,7 @@ Gauge
     OnTouchReleased              ''
 end
 Label
-    Name                         Label6
+    Name                         Label2
     4DGLFont.Font                FONT3
     4DGLFont.Bold                No
     4DGLFont.Italic              No
@@ -233,7 +125,7 @@ Label
     Top                          104
 end
 Label
-    Name                         Label7
+    Name                         Label4
     4DGLFont.Font                FONT3
     4DGLFont.Bold                No
     4DGLFont.Italic              No
@@ -249,7 +141,7 @@ Label
     Top                          104
 end
 Label
-    Name                         Label8
+    Name                         Label3
     4DGLFont.Font                FONT3
     4DGLFont.Bold                No
     4DGLFont.Italic              No
@@ -766,7 +658,7 @@ WinButton
     AutoSizeToPicture            No
     Bevel                        Yes
     BevelColor                   clWhite
-    Caption                      off
+    Caption                      Off
     Color                        'Office 2003 Classic'
     Font.Color                   clWindowText
     Font.Effects                 []
@@ -814,7 +706,7 @@ WinButton
     AutoSizeToPicture            No
     Bevel                        Yes
     BevelColor                   clWhite
-    Caption                      off
+    Caption                      Off
     Color                        'Office 2003 Classic'
     Font.Color                   clWindowText
     Font.Effects                 []
@@ -918,7 +810,7 @@ WinButton
     AutoSizeToPicture            No
     Bevel                        Yes
     BevelColor                   clWhite
-    Caption                      'set Extr'
+    Caption                      'Set Extr'
     Color                        'Office 2003 Classic'
     Font.Color                   clWindowText
     Font.Effects                 []
@@ -966,7 +858,7 @@ WinButton
     AutoSizeToPicture            No
     Bevel                        Yes
     BevelColor                   clWhite
-    Caption                      'set Bed'
+    Caption                      'Set Bed'
     Color                        'Office 2003 Classic'
     Font.Color                   clWindowText
     Font.Effects                 []
@@ -1005,8 +897,8 @@ WinButton
     OnTouchReleased              ''
 end
 Led
-    Name                         Led2
-    Caption                      Extr1
+    Name                         Led1
+    Caption                      'Hot End'
     Color                        'Office 2003 Classic'
     Font.Color                   0x010101
     Font.Effects                 []
@@ -1046,28 +938,6 @@ Led
     Top                          124
     Visible                      Yes
     Width                        44
-    OnChanged                    ''
-end
-Led
-    Name                         Led1
-    Caption                      Extr0
-    Color                        'Office 2003 Classic'
-    Font.Color                   0x010101
-    Font.Effects                 []
-    Font.Name                    '4D Font3 (8x12)'
-    Font.Size                    6
-    Font.Style                   [Bold]
-    Glyphs                       (None)
-    Height                       12
-    Layout                       Left
-    LedType                      Rounded
-    Left                         236
-    Palette.High                 RED
-    Palette.Low                  LIME
-    Spacing                      5
-    Top                          4
-    Visible                      Yes
-    Width                        72
     OnChanged                    ''
 end
 Label
@@ -1215,7 +1085,55 @@ Triangle
     Y3                           172
 end
 WinButton
-    Name                         Winbutton9
+    Name                         MotorsOffBtn
+    Appearance.Alignment         Center
+    Appearance.Layout            None
+    Appearance.PictureAlignment  Center
+    Appearance.SimpleLayout      No
+    Appearance.Spacing           3
+    AutoSizeToPicture            No
+    Bevel                        Yes
+    BevelColor                   clWhite
+    Caption                      'Motors Off'
+    Color                        'Office 2003 Classic'
+    Font.Color                   clWindowText
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    8
+    Font.Style                   []
+    Height                       19
+    Left                         236
+    Matrix                       -1
+    Momentary                    Yes
+    Picture                      (None)
+    StatusWhenOff.BGcolor        RED
+    StatusWhenOff.Caption        ''
+    StatusWhenOff.Glow           Yes
+    StatusWhenOff.Color          WHITE
+    StatusWhenOff.Effects        []
+    StatusWhenOff.Name           Tahoma
+    StatusWhenOff.Size           8
+    StatusWhenOff.Style          []
+    StatusWhenOff.Visible        Yes
+    StatusWhenOn.BGcolor         RED
+    StatusWhenOn.Caption         ''
+    StatusWhenOn.Glow            Yes
+    StatusWhenOn.Color           WHITE
+    StatusWhenOn.Effects         []
+    StatusWhenOn.Name            Tahoma
+    StatusWhenOn.Size            8
+    StatusWhenOn.Style           []
+    StatusWhenOn.Visible         Yes
+    Top                          4
+    Visible                      Yes
+    Width                        75
+    OnChanged                    ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+WinButton
+    Name                         FanONBtn
     Appearance.Alignment         Center
     Appearance.Layout            Left
     Appearance.PictureAlignment  Right
@@ -1224,21 +1142,117 @@ WinButton
     AutoSizeToPicture            No
     Bevel                        Yes
     BevelColor                   clWhite
-    Caption                      'switch Extr'
+    Caption                      'Fan ON'
     Color                        'Office 2003 Classic'
     Font.Color                   clWindowText
     Font.Effects                 []
     Font.Name                    Tahoma
     Font.Size                    8
     Font.Style                   []
-    Height                       34
-    Left                         264
+    Height                       28
+    Left                         236
     Matrix                       -1
     Momentary                    Yes
     Picture                      (None)
+    StatusWhenOff.BGcolor        RED
+    StatusWhenOff.Caption        ''
+    StatusWhenOff.Glow           Yes
+    StatusWhenOff.Color          WHITE
+    StatusWhenOff.Effects        []
+    StatusWhenOff.Name           Tahoma
+    StatusWhenOff.Size           8
+    StatusWhenOff.Style          []
+    StatusWhenOff.Visible        Yes
+    StatusWhenOn.BGcolor         RED
+    StatusWhenOn.Caption         ''
+    StatusWhenOn.Glow            Yes
+    StatusWhenOn.Color           WHITE
+    StatusWhenOn.Effects         []
+    StatusWhenOn.Name            Tahoma
+    StatusWhenOn.Size            8
+    StatusWhenOn.Style           []
+    StatusWhenOn.Visible         Yes
+    Top                          28
+    Visible                      Yes
+    Width                        31
+    OnChanged                    ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+WinButton
+    Name                         FanOFFBtn
+    Appearance.Alignment         Center
+    Appearance.Layout            Left
+    Appearance.PictureAlignment  Right
+    Appearance.SimpleLayout      No
+    Appearance.Spacing           3
+    AutoSizeToPicture            No
+    Bevel                        Yes
+    BevelColor                   clWhite
+    Caption                      'Fan OFF'
+    Color                        'Office 2003 Classic'
+    Font.Color                   clWindowText
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    8
+    Font.Style                   []
+    Height                       28
+    Left                         276
+    Matrix                       -1
+    Momentary                    Yes
+    Picture                      (None)
+    StatusWhenOff.BGcolor        RED
+    StatusWhenOff.Caption        ''
+    StatusWhenOff.Glow           Yes
+    StatusWhenOff.Color          WHITE
+    StatusWhenOff.Effects        []
+    StatusWhenOff.Name           Tahoma
+    StatusWhenOff.Size           8
+    StatusWhenOff.Style          []
+    StatusWhenOff.Visible        Yes
+    StatusWhenOn.BGcolor         RED
+    StatusWhenOn.Caption         ''
+    StatusWhenOn.Glow            Yes
+    StatusWhenOn.Color           WHITE
+    StatusWhenOn.Effects         []
+    StatusWhenOn.Name            Tahoma
+    StatusWhenOn.Size            8
+    StatusWhenOn.Style           []
+    StatusWhenOn.Visible         Yes
+    Top                          28
+    Visible                      Yes
+    Width                        31
+    OnChanged                    ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+WinButton
+    Name                         PresetTempBtn
+    Appearance.Alignment         Center
+    Appearance.Layout            Left
+    Appearance.PictureAlignment  Right
+    Appearance.SimpleLayout      No
+    Appearance.Spacing           3
+    AutoSizeToPicture            No
+    Bevel                        Yes
+    BevelColor                   clWhite
+    Caption                      Preset
+    Color                        'Office 2003 Classic'
+    Font.Color                   clWindowText
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    8
+    Font.Style                   []
+    Height                       28
+    Left                         264
+    Matrix                       -1
+    Momentary                    No
+    Picture                      (None)
     StatusWhenOff.BGcolor        'Office 2003 (Blue)'
-    StatusWhenOff.Caption        0
-    StatusWhenOff.Glow           No
+    StatusWhenOff.Caption        PLA
+    StatusWhenOff.Glow           Yes
     StatusWhenOff.Color          WHITE
     StatusWhenOff.Effects        []
     StatusWhenOff.Name           Tahoma
@@ -1246,17 +1260,17 @@ WinButton
     StatusWhenOff.Style          []
     StatusWhenOff.Visible        Yes
     StatusWhenOn.BGcolor         'Office 2003 (Blue)'
-    StatusWhenOn.Caption         1
-    StatusWhenOn.Glow            No
+    StatusWhenOn.Caption         ABS
+    StatusWhenOn.Glow            Yes
     StatusWhenOn.Color           WHITE
     StatusWhenOn.Effects         []
     StatusWhenOn.Name            Tahoma
     StatusWhenOn.Size            8
     StatusWhenOn.Style           []
     StatusWhenOn.Visible         Yes
-    Top                          182
+    Top                          184
     Visible                      Yes
-    Width                        50
+    Width                        56
     OnChanged                    ''
     OnTouchMoving                ''
     OnTouchPressed               ''
@@ -1386,54 +1400,6 @@ Form
     OnActivate                   ''
     OnCreate                     ''
     OnRepeat                     ''
-    OnTouchMoving                ''
-    OnTouchPressed               ''
-    OnTouchReleased              ''
-end
-WinButton
-    Name                         Winbutton10
-    Appearance.Alignment         Center
-    Appearance.Layout            Left
-    Appearance.PictureAlignment  Right
-    Appearance.SimpleLayout      No
-    Appearance.Spacing           3
-    AutoSizeToPicture            No
-    Bevel                        Yes
-    BevelColor                   clWhite
-    Caption                      'switch Extr'
-    Color                        'Office 2003 Classic'
-    Font.Color                   clWindowText
-    Font.Effects                 []
-    Font.Name                    Tahoma
-    Font.Size                    8
-    Font.Style                   []
-    Height                       34
-    Left                         264
-    Matrix                       -1
-    Momentary                    Yes
-    Picture                      (None)
-    StatusWhenOff.BGcolor        'Office 2003 (Blue)'
-    StatusWhenOff.Caption        1
-    StatusWhenOff.Glow           No
-    StatusWhenOff.Color          WHITE
-    StatusWhenOff.Effects        []
-    StatusWhenOff.Name           Tahoma
-    StatusWhenOff.Size           8
-    StatusWhenOff.Style          []
-    StatusWhenOff.Visible        Yes
-    StatusWhenOn.BGcolor         'Office 2003 (Blue)'
-    StatusWhenOn.Caption         1
-    StatusWhenOn.Glow            No
-    StatusWhenOn.Color           WHITE
-    StatusWhenOn.Effects         []
-    StatusWhenOn.Name            Tahoma
-    StatusWhenOn.Size            8
-    StatusWhenOn.Style           []
-    StatusWhenOn.Visible         Yes
-    Top                          182
-    Visible                      Yes
-    Width                        50
-    OnChanged                    ''
     OnTouchMoving                ''
     OnTouchPressed               ''
     OnTouchReleased              ''
@@ -3237,8 +3203,8 @@ Label
     BGcolor                      BLACK
     Caption                      'LCD Interface v. '
     FGcolor                      WHITE
-    Left                         100
-    Top                          220
+    Left                         104
+    Top                          204
 end
 Label
     Name                         Label39
@@ -3251,10 +3217,10 @@ Label
     4DGLFont.MagHeight           1
     4DGLFont.Opaque              Yes
     BGcolor                      BLACK
-    Caption                      marcomail.anto@gmail.com
+    Caption                      Alan@Print3D.me.uk
     FGcolor                      WHITE
-    Left                         84
-    Top                          232
+    Left                         108
+    Top                          220
 end
 Label
     Name                         Label40
@@ -3269,8 +3235,8 @@ Label
     BGcolor                      BLACK
     Caption                      0.1
     FGcolor                      WHITE
-    Left                         212
-    Top                          220
+    Left                         216
+    Top                          204
 end
 Image
     Name                         Image4

@@ -5,44 +5,43 @@
     iImage1         // offset 0x0
     iImage2         // offset 0x10C00
     iGauge1         // offset 0x14600
-    iGauge2         // offset 0x65600
-    iGauge3         // offset 0xB6600
-    iImage3         // offset 0x107600
-    iWinbutton1     // offset 0x107800
-    iWinbutton2     // offset 0x108400
-    iWinbutton3     // offset 0x109000
-    iWinbutton4     // offset 0x109800
-    iWinbutton5     // offset 0x10A000
-    iWinbutton6     // offset 0x10AC00
-    iLed2           // offset 0x10B800
-    iLed3           // offset 0x10C600
-    iLed1           // offset 0x10D000
-    iTrackbar1      // offset 0x10DE00
-    iWinbutton9     // offset 0x1C4000
-    iWinbutton7     // offset 0x1C5C00
-    iWinbutton8     // offset 0x1C6200
-    iWinbutton10    // offset 0x1C6800
-    iWinbutton13    // offset 0x1C8400
-    iWinbutton14    // offset 0x1C8C00
-    iWinbutton11    // offset 0x1C9400
-    iWinbutton12    // offset 0x1CA200
-    iWinbutton15    // offset 0x1CB000
-    iWinbutton16    // offset 0x1CC200
-    iWinbutton17    // offset 0x1CD400
-    iWinbutton18    // offset 0x1CE800
-    iWinbutton19    // offset 0x1CFC00
-    iWinbutton20    // offset 0x1D0200
-    iWinbutton22    // offset 0x1D0800
-    iWinbutton23    // offset 0x1D0E00
-    iWinbutton26    // offset 0x1D1400
-    iWinbutton27    // offset 0x1D1A00
-    iWinbutton28    // offset 0x1D2000
-    iWinbutton29    // offset 0x1D2600
-    iWinbutton30    // offset 0x1D2C00
-    iWinbutton21    // offset 0x1D3400
-    iImage4         // offset 0x1D4800
+    iGauge3         // offset 0x65600
+    iImage3         // offset 0xB6600
+    iWinbutton1     // offset 0xB6800
+    iWinbutton2     // offset 0xB7400
+    iWinbutton3     // offset 0xB8000
+    iWinbutton4     // offset 0xB8800
+    iWinbutton5     // offset 0xB9000
+    iWinbutton6     // offset 0xB9C00
+    iLed1           // offset 0xBA800
+    iLed3           // offset 0xBB600
+    iTrackbar1      // offset 0xBC000
+    iMotorsOffBtn   // offset 0x172200
+    iFanONBtn       // offset 0x173A00
+    iFanOFFBtn      // offset 0x174800
+    iPresetTempBtn  // offset 0x175600
+    iWinbutton7     // offset 0x178800
+    iWinbutton8     // offset 0x178E00
+    iWinbutton13    // offset 0x179400
+    iWinbutton14    // offset 0x179C00
+    iWinbutton11    // offset 0x17A400
+    iWinbutton12    // offset 0x17B200
+    iWinbutton15    // offset 0x17C000
+    iWinbutton16    // offset 0x17D200
+    iWinbutton17    // offset 0x17E400
+    iWinbutton18    // offset 0x17F800
+    iWinbutton19    // offset 0x180C00
+    iWinbutton20    // offset 0x181200
+    iWinbutton22    // offset 0x181800
+    iWinbutton23    // offset 0x181E00
+    iWinbutton26    // offset 0x182400
+    iWinbutton27    // offset 0x182A00
+    iWinbutton28    // offset 0x183000
+    iWinbutton29    // offset 0x183600
+    iWinbutton30    // offset 0x183C00
+    iWinbutton21    // offset 0x184400
+    iImage4         // offset 0x185800
 #END
-
 var disk, hndl ;
 
 
@@ -128,13 +127,13 @@ word Z_MINUS_NORMAL  196, 109, 220, 124
 word Z_MINUS_SLOW  196, 92, 220, 107
 
 //Action
-byte Z_PLUS_FAST_ACT "G1 Z10 F1000\0"
-byte Z_PLUS_NORMAL_ACT "G1 Z1 F1000\0"
-byte Z_PLUS_SLOW_ACT "G1 Z0.1 F1000\0"
+byte Z_PLUS_FAST_ACT "G1 Z10 F200\0"
+byte Z_PLUS_NORMAL_ACT "G1 Z1 F200\0"
+byte Z_PLUS_SLOW_ACT "G1 Z0.1 F200\0"
 
-byte Z_MINUS_FAST_ACT "G1 Z-10 F1000\0"
-byte Z_MINUS_NORMAL_ACT "G1 Z-1 F1000\0"
-byte Z_MINUS_SLOW_ACT "G1 Z-0.1 F1000\0"
+byte Z_MINUS_FAST_ACT "G1 Z-10 F200\0"
+byte Z_MINUS_NORMAL_ACT "G1 Z-1 F200\0"
+byte Z_MINUS_SLOW_ACT "G1 Z-0.1 F200\0"
 
 //Homing
 word HOMING  4, 140, 35, 168
@@ -226,15 +225,17 @@ byte FORCE_UPDATE_CMD "M116"
 #DATA
 
 byte MSG_OP_NOT_PERMITTED "Operation not permitted while printing.\0"
-byte MSG_SET_HEATER "set Heater target to \0"
-byte MSG_SET_BED "set Bed target to \0"
+byte MSG_SET_HEATER "Set Heater target to \0"
+byte MSG_SET_BED "Set Bed target to \0"
 byte MSG_HEATER_SHUTDOWN "Heater shutdown\0"
 byte MSG_BED_SHUTDOWN "Bed shutdown\0"
 byte MSG_CENT " C\0"
-byte MSG_HOMING "Homing..\0"
+byte MSG_HOMING "Homing...\0"
 byte MSG_MM_OF_FILAMENT "mm of filament..\0"
 byte MSG_COLD_EXTR_PREVENT "Cold Extrusion Prevent!\0"
-byte MSG_SWITCH_EXTRUDER "Switch Extruder to T\0"
+byte MSG_FanON "Cooling fan ON\0"
+byte MSG_FanOFF "Cooling fan OFF\0"
+byte MSG_MotorsOff "Motors off \0"
 
 #END
 

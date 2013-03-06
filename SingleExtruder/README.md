@@ -59,6 +59,7 @@ Try to reformat or use the 4D-Systems Removable Media Partition Edit Tool
 
 Changes to be made:
 
+  * In the new IDE 4 button "switch Extruder" does not appear correctly 
   * move Gfx Interface function in the micro sd to free up space on the Picaso flash.
   * Add Print-STOP and sd card eject buttons (in menu SD-card)
   * Add Fan menu (ON,OFF,speed)

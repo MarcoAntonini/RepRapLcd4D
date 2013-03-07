@@ -1,7 +1,8 @@
 /*
  this file is part of ReprapLcd4D Project
 
- Copyright (C) 2012 Marco Antonini
+ Original File: Marco Antonini
+ Amended by Alan D. Ryder 6th March 2013
 
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -55,53 +56,43 @@ func TouchEvent(var x,var y)
             WINDOW:=W_PRINTING_OPTION;
             drawWinPrintingOption();
         else if(touched==iWinbutton1) //Extrude Button
-                 updateButtonExtrude(ON);
+
                 if(PRINTING==FALSE)
-                    #IFNOT EXISTS DEBUG_NO_EXTR_PREVENT
-                    if(_ttH0 !=0 && str2w(str_Ptr(tH0))>=_ttH0 ) //cold extrude prevent
-                    #ENDIF
+                     if (str2w(str_Ptr(tH0))>= EXTRUDE_MINTEMP)
+                        updateButtonExtrude(ON);
                         //Send Gcode
-                        SerialPrintBuffer("T");
-                        SerialPrintlnNumber(extruder_selected);
-                        SerialPrintBuffer("G91\nG1 E");
+                        SerialPrintBuffer("G1 E");
                         SerialPrintNumber(str2w(str_Ptr(ex_setmm)));
                         SerialPrintBuffer(" F");
                         SerialPrintlnNumber(str2w(str_Ptr(ex_setmm_min)));
                         SerialPrintlnBuffer("G90");
                         updateMessage("Extrude ",str_Ptr(ex_setmm),MSG_MM_OF_FILAMENT);
                         setTimerMessage(3000);
-                    #IFNOT EXISTS DEBUG_NO_EXTR_PREVENT
-                    else
+                      else
                          updateMessage(MSG_COLD_EXTR_PREVENT," "," ");
                          setTimerMessage(3000);
                     endif
-                    #ENDIF
                 else
                     updateMessage(MSG_OP_NOT_PERMITTED," "," ");
                     setTimerMessage(3000);
                 endif
         else if(touched==iWinbutton2) //Reverse Button
-                updateButtonReverse(ON);
+
                 if(PRINTING==FALSE)
-                     #IFNOT EXISTS DEBUG_NO_EXTR_PREVENT
-                     if(_ttH0 !=0 && str2w(str_Ptr(tH0))>=_ttH0 ) //cold extrude prevent
-                     #ENDIF
-                        //Send Gcode
-                        SerialPrintBuffer("T");
-                        SerialPrintlnNumber(extruder_selected);
-                        SerialPrintBuffer("G91\nG1 E-");
+                      if (str2w(str_Ptr(tH0))>= EXTRUDE_MINTEMP)
+                        updateButtonReverse(ON);
+                       //Send Gcode
+                        SerialPrintBuffer("G1 E-");
                         SerialPrintNumber(str2w(str_Ptr(ex_setmm)));
                         SerialPrintBuffer(" F");
                         SerialPrintlnNumber(str2w(str_Ptr(ex_setmm_min)));
                         SerialPrintlnBuffer("G90");
                         updateMessage("Reverse ",str_Ptr(ex_setmm),MSG_MM_OF_FILAMENT);
                         setTimerMessage(3000);
-                    #IFNOT EXISTS DEBUG_NO_EXTR_PREVENT
-                    else
+                      else
                          updateMessage(MSG_COLD_EXTR_PREVENT," "," ");
                          setTimerMessage(3000);
                     endif
-                    #ENDIF
                 else
                     updateMessage(MSG_OP_NOT_PERMITTED," "," ");
                     setTimerMessage(3000);
@@ -110,13 +101,10 @@ func TouchEvent(var x,var y)
             updateButtonExOff(ON);
             //Send Gcode
             SerialPrintBuffer("M104 S0");
-            if(extruder_selected==1)
-                SerialPrintlnBuffer(" T1");
-            else
-                SerialPrintBuffer("\n");
-            endif
+            SerialPrintBuffer("\n");
             updateMessage(MSG_HEATER_SHUTDOWN," "," ");
             setTimerMessage(3000);
+
         else if(touched==iWinbutton4) //Bed Off
             updateButtonBedOff(ON);
             //Send Gcode
@@ -128,58 +116,87 @@ func TouchEvent(var x,var y)
             //Send Gcode
             SerialPrintBuffer("M104 S");
             SerialPrintNumber(str2w(str_Ptr(ex_setTemp)));
-            if(extruder_selected==1)
-                SerialPrintlnBuffer(" T1");
-            else
-                SerialPrintBuffer("\n");
-            endif
+            SerialPrintBuffer("\n");
             updateMessage(MSG_SET_HEATER,str_Ptr(ex_setTemp),MSG_CENT);
             setTimerMessage(3000);
-        else if(touched==iWinbutton6) //Bed Set
+
+         else if (touched==iFanONBtn) // Turn on cooling fan
+                 //Send Gcode
+                 SerialPrintlnBuffer("M106");
+                 updateMessage(MSG_FanON," "," ");
+                 setTimerMessage(3000);
+
+         else if (touched==iFanOFFBtn) // Turn off cooling fan
+                 //Send Gcode
+                 SerialPrintlnBuffer("M107");
+                 updateMessage(MSG_FanOFF," "," ");
+                 setTimerMessage(3000);
+
+         else if (touched==iMotorsOffBtn) // Deactivate motors
+               if(PRINTING==FALSE)
+                  //Send Gcode
+                  SerialPrintlnBuffer("M84");
+                  updateMessage(MSG_MotorsOff," "," ");
+                  setTimerMessage(3000);
+               else
+                  updateMessage(MSG_OP_NOT_PERMITTED," "," ");
+                  setTimerMessage(3000);
+               endif
+
+         else if(touched==iWinbutton6) //Bed Set
             updateButtonBedSet(ON);
             //Send Gcode
             SerialPrintBuffer("M140 S");
             SerialPrintlnNumber(str2w(str_Ptr(bed_setTemp)));
             updateMessage(MSG_SET_BED,str_Ptr(bed_setTemp),MSG_CENT);
             setTimerMessage(3000);
-        else if(touched==iWinbutton9 || touched==iWinbutton10) //Switch Extruder
-            updateButtonSwitchEx(EVENT);
-            if(extruder_selected==0)
-                updateMessage(MSG_SWITCH_EXTRUDER,"0"," ");
-            else
-                 updateMessage(MSG_SWITCH_EXTRUDER,"1"," ");
-            endif
-            setTimerMessage(3000);
-        else if(checkRegion( @ BUTTON_Z_CAL_TOUCH_REGION))
-            WINDOW:=W_Z_CALIBRATION;
-            drawWinZCalibration();
-        else  //ALL "Button Set NUMBER"
-            for(i:=0; i<sizeof(BUTTON_SET_NUMBER); i++)
-                if(checkRegion( @ BUTTON_SET_NUMBER[i]))
-                    initTrackbar(i);
-                    updateTrackbarStatus(i);
-                    updateButtonFine(FALSE);
-                    break;
-                endif
-            next
-        endif
 
-    else if(WINDOW==W_EXTMM || WINDOW==W_EXTMM_MIN || WINDOW==W_EXTTEMP || WINDOW==W_BEDTEMP) //Window Button Set Number TouchEvent
-        if(touched==iTrackbar1)
-             updateTrackbarEvent(WINDOW,x);
-             EN_TOUCH_MOVING:=TRUE;
-             //pause(50);
-        else if(touched==iWinbutton7) //Fine Plus
-            ButtonFinePlusAction();
+         else if(touched==iPresetTempBtn) //Preset temperature button
+                if(PRINTING==FALSE)
+                    if (PresetTempState == ABStyrene) //Currently showing ABS
+                          updatePresetBtn(PLA); //Now show PLA
+                          PresetTempState := PLA;
+                          PopulateTemperatures(PLAExtrude,PLABed);
+                    else
+                          updatePresetBtn(ABStyrene); //Now show ABS
+                          PresetTempState := ABStyrene;
+                          PopulateTemperatures(ABSExtrude,ABSBed);
+                    endif
+                 else updateMessage(MSG_OP_NOT_PERMITTED," "," ");
+
+           else if(checkRegion( @ BUTTON_Z_CAL_TOUCH_REGION))
+                WINDOW:=W_Z_CALIBRATION;
+                drawWinZCalibration();
+                else  //ALL "Button Set NUMBER"
+                  for(i:=0; i<sizeof(BUTTON_SET_NUMBER); i++)
+                       if(checkRegion( @ BUTTON_SET_NUMBER[i]))
+                             initTrackbar(i);
+                        updateTrackbarStatus(i);
+                        updateButtonFine(FALSE);
+                        break;
+                       endif
+                  next
+                 endif
+
+           else if(WINDOW==W_EXTMM || WINDOW==W_EXTMM_MIN || WINDOW==W_EXTTEMP || WINDOW==W_BEDTEMP) //Window Button Set Number TouchEvent
+                    if(touched==iTrackbar1)
+                      updateTrackbarEvent(WINDOW,x);
+                      EN_TOUCH_MOVING:=TRUE;
+
+                    else if(touched==iWinbutton7) //Fine Plus
+                            ButtonFinePlusAction();
+                            pause(70);
+
+            else if(touched==iWinbutton8) //Fine Minus
+                   ButtonFineMinusAction();
             pause(70);
-        else if(touched==iWinbutton8) //Fine Minus
-            ButtonFineMinusAction();
-            pause(70);
-        else if(!checkRegion( @ TRACKPAD_CONTAINER))
-            remove_currentTrackpad();
-            EN_TOUCH_MOVING:=FALSE;
-            WINDOW:=W_MAIN; //Return to Windows Main
-        endif
+
+           else if(!checkRegion( @ TRACKPAD_CONTAINER))
+                    remove_currentTrackpad();
+                    EN_TOUCH_MOVING:=FALSE;
+                    WINDOW:=W_MAIN; //Return to Windows Main
+                 endif
+
     else if(WINDOW==W_SDCARD) //Window SDCard Touch event
         if(touched==iWinbutton14 && sd_page_count!=0) //left button
             updateButtonPagesLeft(ON);

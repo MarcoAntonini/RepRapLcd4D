@@ -1,9 +1,33 @@
-#platform "uLCD-32PT_GFX2"
+
+
+#platform "uLCD-32PTU"
+#MODE RUNFLASH
 
 #inherit "4DGL_16bitColours.fnc"
 
+
 func main()
 endfunc
+
+
+
+    // PresetTempBtn 1.0 generated 3/4/2013 5:48:54 PM
+    img_SetWord(hndl, iPresetTempBtn, IMAGE_FLAGS, (img_GetWord(hndl, iPresetTempBtn, IMAGE_FLAGS) | I_STAYONTOP) & ~I_TOUCH_DISABLE); // set to enable touch, only need to do this once
+    img_Show(hndl, iPresetTempBtn);  // show button, only do this once
+    img_SetWord(hndl, iPresetTempBtn, IMAGE_INDEX, state); // where state is 0 for up, 1 for down, 2 for 'on' up and 3 for 'on' down
+    img_Show(hndl,iPresetTempBtn) ;
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

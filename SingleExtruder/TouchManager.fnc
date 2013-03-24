@@ -31,7 +31,7 @@ func TouchEvent(var x,var y)
     touched:=img_Touched(hndl,-1);
 
     if(WINDOW==W_MAIN)  //Window Main TouchEvent
-        if(touched==iImage1 || touched==iImage2) //Axis Move
+        if( checkRegion( @ TOUCH_AXIS_IMAGE_REGION)) //Axis Move
             if(PRINTING==FALSE)
                 for(i:=0; i<sizeof(AXIS_MOVE_TOUCH_REGION); i++)
                     if( checkRegion( @ AXIS_MOVE_TOUCH_REGION[i] ) ) //Moves the axes depending on the region Touched

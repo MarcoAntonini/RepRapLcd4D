@@ -2,8 +2,6 @@
 
 **This project is designed to work on board a Touch TFT LCD model uLCD-32PT**
 
-Wiki: (http://www.marcoantonini.eu/doku.php?id=reprap:lcd4d)
-
 Another LCD for Marlin firmware? 
 Yes, my Melzi board is equipped with a atmega1284P, the only free pins (with 2 extruders) are TX1 and RX1.
 This is perfect for a serial LCD like 4D-Systems uLCD-32PT.
